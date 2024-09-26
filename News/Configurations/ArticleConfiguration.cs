@@ -1,8 +1,8 @@
-﻿using DB_NEWS.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using News.Entities;
 
-namespace DB_NEWS.Configurations
+namespace News.Configurations
 {
     public class ArticleConfiguration : IEntityTypeConfiguration<ArticleEntity>
     {
