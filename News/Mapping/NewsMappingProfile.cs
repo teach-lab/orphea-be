@@ -11,6 +11,10 @@ public class NewsMappingProfile : Profile
     {
         CreateMap<CommentModel, CommentEntity>().ReverseMap();
         CreateMap<UserModel, UserEntity>().ReverseMap();
+        CreateMap<ArticleModel, ArticleEntity>().ReverseMap();
+        CreateMap<TagModel, TagEntity>().ReverseMap();
+        CreateMap<ArticleTagModel, ArticleTagEntity>().ReverseMap();
+        CreateMap<PublisherModel, PublisherEntity>().ReverseMap();
 
         CreateMap<UserCreateModel, UserEntity>()
             .ForMember(dest => dest.Password, act => act.Ignore())
