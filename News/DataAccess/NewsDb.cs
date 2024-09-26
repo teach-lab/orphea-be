@@ -9,6 +9,11 @@ public class NewsDb : DbContext
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<CommentEntity> Comments { get; set; }
 
+    public DbSet<ArticleEntity> Articles { get; set; }
+    public DbSet<TagEntity> Tags { get; set; }
+    public DbSet<ArticleTagEntity> ArticleTags { get; set; }    
+    public DbSet<PublisherEntity> Publishers { get; set; }
+
     public NewsDb(DbContextOptions options) : base(options)
     {
     }

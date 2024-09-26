@@ -1,4 +1,4 @@
-﻿namespace DB_NEWS.Entities
+﻿namespace News.Entities
 {
     public class ArticleTagEntity
     {
