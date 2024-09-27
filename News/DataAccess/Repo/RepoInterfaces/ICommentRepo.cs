@@ -1,5 +1,5 @@
 ﻿namespace News.DataAccess.Repo.RepoInterfaces;
 
-public interface IArticleTagRepo
+public interface ICommentRepo
 {
 }
