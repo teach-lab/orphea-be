@@ -1,10 +1,9 @@
-﻿namespace News.Entities.Models
-{
-    public class TagModel
-    {
-        public string Name { get; set; }
+﻿namespace News.Entities.Models;
 
-        public List<ArticleModel>? Articles { get; set; }
-        
-    }
+public class TagModel
+{
+    public string Name { get; set; }
+
+    public List<ArticleModel>? Articles { get; set; }
+    
 }
