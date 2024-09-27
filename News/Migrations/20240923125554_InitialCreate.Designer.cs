@@ -9,72 +9,71 @@ using News.DataAccess;
 
 #nullable disable
 
-namespace News.Migrations
+namespace News.Migrations;
+
+[DbContext(typeof(NewsDb))]
+[Migration("20240923125554_InitialCreate")]
+partial class InitialCreate
 {
-    [DbContext(typeof(NewsDb))]
-    [Migration("20240923125554_InitialCreate")]
-    partial class InitialCreate
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "8.0.8")
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("News.Entities.CommentEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("News.Entities.CommentEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ArticleId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("ArticleId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Comment")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LikeCount")
-                        .HasColumnType("int");
+                b.Property<int>("LikeCount")
+                    .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                b.Property<Guid>("UserId")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Comments");
-                });
+                b.ToTable("Comments");
+            });
 
-            modelBuilder.Entity("News.Entities.UserEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+        modelBuilder.Entity("News.Entities.UserEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Login")
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Login")
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Salt")
-                        .HasColumnType("varbinary(max)");
+                b.Property<byte[]>("Salt")
+                    .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Username")
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Users");
-                });
+                b.ToTable("Users");
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

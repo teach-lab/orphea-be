@@ -25,10 +25,6 @@ builder.Services.AddTransient<IUserRepo, UserRepo>();
 builder.Services.AddTransient<ICommentRepo, CommentRepo>();
 builder.Services.AddTransient<IPasswordEncryptionHelper, PasswordEncryptionHelper>();
 builder.Services.AddTransient<UserEntityPasswordResolver>();
-builder.Services.AddTransient<IArticleRepo, ArticleRepo>();
-builder.Services.AddTransient<IArticleTagRepo, ArticleTagRepo>();
-builder.Services.AddTransient<ITagRepo, TagRepo>();
-builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
 
 
 
