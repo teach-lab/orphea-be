@@ -1,10 +1,9 @@
-﻿namespace News.Entities.Models
-{
-    public class PublisherModel
-    {
-        public string Name { get; set; }
-        public int TrustScore { get; set; }
+﻿namespace News.Entities.Models;
 
-        public List<ArticleEntity> Articles { get; set; }
-    }
+public class PublisherModel
+{
+    public string Name { get; set; }
+    public int TrustScore { get; set; }
+
+    public List<ArticleEntity> Articles { get; set; }
 }

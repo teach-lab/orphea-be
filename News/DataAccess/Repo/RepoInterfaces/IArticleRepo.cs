@@ -1,6 +1,5 @@
-﻿namespace News.DataAccess.Repo
+﻿namespace News.DataAccess.Repo;
+
+public interface IArticleRepo
 {
-    public interface IArticleRepo
-    {
-    }
 }
