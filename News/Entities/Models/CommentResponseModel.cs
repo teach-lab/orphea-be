@@ -1,6 +1,6 @@
 ﻿namespace News.Entities.Models;
 
-public class CommentModel
+public class CommentResponseModel
 {
     public Guid Id { get; set; }
 
@@ -11,5 +11,9 @@ public class CommentModel
     public Guid ArticleId { get; set; }
 
     public int LikeCount { get; set; }
+
+    //without User only string Username
+
+    public string Username { get; set; }
+    public UserResponseModel User { get; set; }
 }
-//add comment create model

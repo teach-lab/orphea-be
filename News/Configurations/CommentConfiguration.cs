@@ -9,5 +9,8 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
     public void Configure(EntityTypeBuilder<CommentEntity> builder)
     {
         builder.HasKey(e => e.Id);
+        builder.HasOne(e => e.User)
+            .WithMany(e => e.Comments)
+            .HasForeignKey(e => e.UserId);
     }
 }
