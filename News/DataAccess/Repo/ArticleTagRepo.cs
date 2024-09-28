@@ -14,5 +14,10 @@ namespace News.DataAccess.Repo
             _dbSet = context.Set<ArticleTagEntity>();
             _context = context;
         }
+        public void AddRange(List<ArticleTagEntity> entity)
+        {
+            _dbSet.AddRange(entity);
+            _context.SaveChanges();
+        }
     }
 }
