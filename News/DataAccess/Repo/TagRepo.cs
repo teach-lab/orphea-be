@@ -14,5 +14,35 @@ namespace News.DataAccess.Repo
             _dbSet = context.Set<TagEntity>();
             _context = context;
         }
+
+        public TagEntity GetById(Guid id)
+        {
+            var result = _dbSet
+                .Include(e => e.ArticleTags)
+                .ThenInclude(f => f.Article)
+                .FirstOrDefault(e => e.Id == id);
+
+            return result!;
+        }
+
+        public void Add(TagEntity entity)
+        {
+            var result = _dbSet.Add(entity);
+        }
+
+        public void Update(TagEntity entity)
+        {
+            var result = _dbSet.Update(entity);
+        }
+
+        public void Remove(TagEntity entity)
+        {
+            var result = _dbSet.Remove(entity);
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }
