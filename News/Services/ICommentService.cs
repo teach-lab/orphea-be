@@ -8,5 +8,7 @@ public interface ICommentService
 
     Task<CommentResponseModel> CreateComment(CommentCreateModel user);
 
+    Task<CommentResponseModel> UpdateComment(CommentUpdateModel user, string id);
+
     Task DeleteComment(Guid id);
 }

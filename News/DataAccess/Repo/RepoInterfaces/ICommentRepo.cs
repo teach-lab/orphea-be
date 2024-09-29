@@ -6,9 +6,9 @@ public interface ICommentRepo
 {
     Task<CommentEntity> GetCommentById(Guid id);
 
-    Task<CommentEntity> CreateComment(CommentEntity user);
+    Task<CommentEntity> CreateComment(CommentEntity comment);
 
-    Task<CommentEntity> UpdateComment(CommentEntity user);
+    Task<CommentEntity> UpdateComment(CommentEntity comment);
 
     Task DeleteComment(Guid id);
 }

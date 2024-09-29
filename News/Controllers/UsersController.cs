@@ -1,6 +1,8 @@
 ﻿using News.Services;
 using News.Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using Azure;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace News.Controllers;
 
@@ -27,6 +29,14 @@ public class UsersController : ControllerBase
     {
         var createdUser = await _service.CreateUser(user);
         return Ok(createdUser);
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateUser([FromRoute] string id, [FromBody] JsonPatchDocument<UserUpdateModel> user)
+    {
+
+        var updatedUser = await _service.UpdateUser(user, id);
+        return Ok(updatedUser);
     }
 
     [HttpDelete]

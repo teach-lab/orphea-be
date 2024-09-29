@@ -29,6 +29,14 @@ public class CommentsController : ControllerBase
         return Ok(createdComment);
     }
 
+    [HttpPut("{id}")]
+
+    public async Task<IActionResult> UpdateComment([FromRoute] string id, [FromBody] CommentUpdateModel comment)
+    {
+        var updatedComment = await _service.UpdateComment(comment, id);
+        return Ok(updatedComment);
+    }
+
     [HttpDelete]
     public async Task<IActionResult> DeleteComment([FromQuery] Guid id)
     {

@@ -12,5 +12,8 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.HasMany(e => e.Comments)
             .WithOne(e => e.User)
             .HasForeignKey(e => e.UserId);
+        builder.HasOne(e => e.Password)
+            .WithOne()
+            .HasForeignKey<UserEntity>(e => e.PasswordId);
     }
 }
