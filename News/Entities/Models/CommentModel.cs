@@ -12,4 +12,5 @@ public class CommentModel
 
     public int LikeCount { get; set; }
 }
-//add comment create model
+//should add created at and updated at? 
+//rename comment to content

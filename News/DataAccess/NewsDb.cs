@@ -18,6 +18,8 @@ public class NewsDb : DbContext
 
     public DbSet<PublisherEntity> Publishers { get; set; }
 
+    public DbSet<PasswordEntity> Password { get; set; }
+
     public NewsDb(DbContextOptions options) : base(options)
     {
     }

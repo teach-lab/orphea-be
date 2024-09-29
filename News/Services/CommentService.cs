@@ -33,6 +33,18 @@ public class CommentService : ICommentService
         return result;
     }
 
+    public async Task<CommentResponseModel> UpdateComment(CommentUpdateModel comment, string id)
+    {
+        var entity = await _repo.GetCommentById(Guid.Parse(id));
+
+        entity.Comment = comment.Comment;
+
+        var updatedEntity = await _repo.UpdateComment(entity);
+        var result = _mapper.Map<CommentEntity, CommentResponseModel>(updatedEntity);
+
+        return result;
+    }
+
     public async Task DeleteComment(Guid id)
     {
         await _repo.DeleteComment(id);

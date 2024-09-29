@@ -10,7 +10,7 @@ public class NewsMappingProfile : Profile
     public NewsMappingProfile()
     {
         CreateMap<CommentEntity, CommentModel>().ReverseMap();
-      
+        CreateMap<CommentUpdateModel, CommentEntity>().ReverseMap();
         CreateMap<CommentCreateModel, CommentEntity>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom<CommentEntityIdResolver>());
         CreateMap<CommentEntity, CommentResponseModel>()
@@ -21,10 +21,8 @@ public class NewsMappingProfile : Profile
         CreateMap<ArticleTagModel, ArticleTagEntity>().ReverseMap();
         CreateMap<PublisherModel, PublisherEntity>().ReverseMap();
         CreateMap<UserResponseModel, UserEntity>().ReverseMap();
-        CreateMap<UserCreateModel, UserEntity>()
-            .ForMember(dest => dest.Password, act => act.Ignore())
-            .ForMember(dest => dest.Id, opt => opt.MapFrom<UserEntityIdResolver>())
-            .ForMember(dest => dest.Salt, opt => opt.MapFrom<UserEntityPasswordResolver>());
+        //CreateMap<UserCreateModel, UserEntity>()
+        //    .ForMember(dest => dest.Password, act => act.Ignore())
+        //    .ForMember(dest => dest.Id, opt => opt.MapFrom<UserEntityIdResolver>());
     }
-    // Update with new mapping and new resolver ? 
 }

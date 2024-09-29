@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using News.DataAccess;
 
@@ -11,9 +12,11 @@ using News.DataAccess;
 namespace News.Migrations;
 
 [DbContext(typeof(NewsDb))]
-partial class NewsDbModelSnapshot : ModelSnapshot
+[Migration("20240929092228_AddPasswordInfoTable")]
+partial class AddPasswordInfoTable
 {
-    protected override void BuildModel(ModelBuilder modelBuilder)
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
 #pragma warning disable 612, 618
         modelBuilder
@@ -115,7 +118,13 @@ partial class NewsDbModelSnapshot : ModelSnapshot
                     .IsRequired()
                     .HasColumnType("varbinary(max)");
 
+                b.Property<Guid>("UserId")
+                    .HasColumnType("uniqueidentifier");
+
                 b.HasKey("Id");
+
+                b.HasIndex("UserId")
+                    .IsUnique();
 
                 b.ToTable("Password");
             });
@@ -173,9 +182,6 @@ partial class NewsDbModelSnapshot : ModelSnapshot
 
                 b.HasKey("Id");
 
-                b.HasIndex("PasswordId")
-                    .IsUnique();
-
                 b.ToTable("UserEntity");
             });
 
@@ -220,15 +226,15 @@ partial class NewsDbModelSnapshot : ModelSnapshot
                 b.Navigation("User");
             });
 
-        modelBuilder.Entity("News.Entities.UserEntity", b =>
+        modelBuilder.Entity("News.Entities.PasswordEntity", b =>
             {
-                b.HasOne("News.Entities.PasswordEntity", "Password")
-                    .WithOne()
-                    .HasForeignKey("News.Entities.UserEntity", "PasswordId")
+                b.HasOne("News.Entities.UserEntity", "User")
+                    .WithOne("Password")
+                    .HasForeignKey("News.Entities.PasswordEntity", "UserId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.Navigation("Password");
+                b.Navigation("User");
             });
 
         modelBuilder.Entity("News.Entities.ArticleEntity", b =>
@@ -249,6 +255,8 @@ partial class NewsDbModelSnapshot : ModelSnapshot
         modelBuilder.Entity("News.Entities.UserEntity", b =>
             {
                 b.Navigation("Comments");
+
+                b.Navigation("Password");
             });
 #pragma warning restore 612, 618
     }
