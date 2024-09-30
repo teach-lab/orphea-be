@@ -2,8 +2,5 @@
 
 public class TagModel
 {
-    public string Name { get; set; }
-
-    public List<ArticleModel>? Articles { get; set; }
-    
+    public string? Name { get; set; }    
 }
