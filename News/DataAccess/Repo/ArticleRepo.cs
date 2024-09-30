@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using News.Entities;
 
-namespace News.DataAccess.Repo
+namespace News.DataAccess.Repo;
+
+public class ArticleRepo : IArticleRepo
 {
-    public class ArticleRepo : IArticleRepo
-    {
-        private readonly DbSet<ArticleEntity> _dbSet;
-        private readonly DbContext _context;
+    private readonly DbSet<ArticleEntity> _dbSet;
+    private readonly DbContext _context;
 
         public ArticleRepo(DbContext context)
         {

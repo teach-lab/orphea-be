@@ -2,12 +2,12 @@
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Entities;
 
-namespace News.DataAccess.Repo
+namespace News.DataAccess.Repo;
+
+public class PublisherRepo : IPublisherRepo
 {
-    public class PublisherRepo : IPublisherRepo
-    {
-        private readonly DbSet<PublisherEntity> _dbSet;
-        private readonly DbContext _context;
+    private readonly DbSet<PublisherEntity> _dbSet;
+    private readonly DbContext _context;
 
         public PublisherRepo(DbContext context)
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using News.DataAccess.Repo.RepoInterfaces;
 using News.Entities;
 
 namespace News.DataAccess;
