@@ -12,12 +12,10 @@ public class PublisherConfiguration : IEntityTypeConfiguration<PublisherEntity>
 
     public void Configure(EntityTypeBuilder<PublisherEntity> builder)
     {
-        //toTable
         builder.HasKey(e => e.Id);
 
         builder.HasMany(e => e.Articles)
             .WithOne(e => e.Publisher)
             .HasForeignKey(e => e.PublisherId);
-            
     }
 }

@@ -1,8 +1,7 @@
-﻿using News.Services;
-using News.Entities.Models;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Azure;
-using Microsoft.AspNetCore.JsonPatch;
+using News.Entities.Models;
+using News.Services;
 
 namespace News.Controllers;
 
@@ -17,10 +16,11 @@ public class UsersController : ControllerBase
         _service = service;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetUserById([FromQuery] Guid id)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUserById([FromRoute] Guid id)
     {
         var user = await _service.GetUserById(id);
+
         return Ok(user);
     }
 
@@ -28,14 +28,15 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] UserCreateModel user)
     {
         var createdUser = await _service.CreateUser(user);
+
         return Ok(createdUser);
     }
 
     [HttpPatch("{id}")]
     public async Task<IActionResult> UpdateUser([FromRoute] string id, [FromBody] JsonPatchDocument<UserUpdateModel> user)
     {
-
         var updatedUser = await _service.UpdateUser(user, id);
+
         return Ok(updatedUser);
     }
 
@@ -43,6 +44,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> DeleteUser([FromQuery] Guid id)
     {
         await _service.DeleteUser(id);
+
         return Ok();
     }
 }

@@ -12,8 +12,7 @@ public class CommentResponseModel
 
     public int LikeCount { get; set; }
 
-    //without User only string Username
-
     public string Username { get; set; }
+
     public UserResponseModel User { get; set; }
 }

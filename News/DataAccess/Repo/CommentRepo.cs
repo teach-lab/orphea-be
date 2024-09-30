@@ -24,7 +24,6 @@ public class CommentRepo : ICommentRepo
 
     public async Task<CommentEntity> CreateComment(CommentEntity comment)
     {
-        //Include
         var entity = (await _dbSet.AddAsync(comment)).Entity;
         await _context.SaveChangesAsync();
 
@@ -34,7 +33,6 @@ public class CommentRepo : ICommentRepo
     public async Task<CommentEntity> UpdateComment(CommentEntity comment)
     {
         var entity = _dbSet.Update(comment).Entity;
-
         await _context.SaveChangesAsync();
 
         return entity;
