@@ -8,7 +8,7 @@ public class NewsDb : DbContext
 {
     public DbSet<UserEntity> Users { get; set; }
 
-    public DbSet<UserEntity> Comments { get; set; }
+    public DbSet<CommentEntity> Comments { get; set; }
 
     public DbSet<ArticleEntity> Articles { get; set; }
 

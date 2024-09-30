@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using News.Services;
 using News.Entities.Models;
+using News.Services;
 
 namespace News.Controllers;
 
@@ -15,10 +15,11 @@ public class CommentsController : ControllerBase
         _service = service;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetCommentById([FromQuery] Guid id)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCommentById([FromRoute] Guid id)
     {
         var comment = await _service.GetCommentById(id);
+
         return Ok(comment);
     }
 
@@ -26,14 +27,15 @@ public class CommentsController : ControllerBase
     public async Task<IActionResult> CreateComment([FromBody] CommentCreateModel comment)
     {
         var createdComment = await _service.CreateComment(comment);
+
         return Ok(createdComment);
     }
 
     [HttpPut("{id}")]
-
     public async Task<IActionResult> UpdateComment([FromRoute] string id, [FromBody] CommentUpdateModel comment)
     {
         var updatedComment = await _service.UpdateComment(comment, id);
+
         return Ok(updatedComment);
     }
 
@@ -41,6 +43,7 @@ public class CommentsController : ControllerBase
     public async Task<IActionResult> DeleteComment([FromQuery] Guid id)
     {
         await _service.DeleteComment(id);
+
         return Ok();
     }
 }
