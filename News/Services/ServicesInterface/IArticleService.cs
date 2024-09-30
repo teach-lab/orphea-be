@@ -7,6 +7,6 @@ namespace News.Services.ServicesInterface
         ArticleModel Add(ArticleModel model);
         ArticleModel GetById(Guid id);
         void Update(ArticleModel model);
-        void Remove(ArticleModel model);
+        void Remove(Guid id);
     }
 }

@@ -5,6 +5,8 @@ using News.DataAccess.Repo.RepoInterfaces;
 using News.Infrastructure;
 using News.Mapping;
 using News.Mapping.Resolvers;
+using News.Services;
+using News.Services.ServicesInterface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,16 @@ builder.Services.AddTransient<IUserRepo, UserRepo>();
 builder.Services.AddTransient<ICommentRepo, CommentRepo>();
 builder.Services.AddTransient<IPasswordEncryptionHelper, PasswordEncryptionHelper>();
 builder.Services.AddTransient<UserEntityPasswordResolver>();
+
+builder.Services.AddTransient<IArticleService, ArticleService>();
+builder.Services.AddTransient<IArticleRepo, ArticleRepo>();
+
+builder.Services.AddTransient<IPublisherService, PublisherService>();
+builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
+
+builder.Services.AddTransient<ITagService, TagService>();
+builder.Services.AddTransient<ITagRepo, TagRepo>();
+
 
 
 
