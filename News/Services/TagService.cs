@@ -28,7 +28,14 @@ namespace News.Services
 
         public TagModel GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = _repo.GetById(id);
+
+            if (entity is null)
+            {
+                return null;
+            }
+
+            return _mapper.Map<TagEntity, TagModel>(entity);
         }
         public void Update(TagModel model)
         {
@@ -38,14 +45,12 @@ namespace News.Services
             _repo.SaveChanges();
         }
 
-        public void Remove(TagModel model)
+        public void Remove(Guid id)
         {
-            var entity = _mapper.Map<TagModel, TagEntity>(model);
+            var entity = _repo.GetById(id);                      
 
             _repo.Remove(entity);
             _repo.SaveChanges();
-        }
-
-       
+        }        
     }
 }

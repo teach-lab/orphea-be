@@ -8,12 +8,10 @@ namespace News.Controllers;
 [ApiController]
 [Route("article")]
 public class ArticleController : ControllerBase
-{
-    private readonly DbContext _context;
+{    
     private readonly IArticleService _service;
     public ArticleController(DbContext context, IArticleService service)
-    {
-        _context = context;
+    {        
         _service = service;
     }
 
@@ -33,8 +31,7 @@ public class ArticleController : ControllerBase
     [HttpPost]
     public IActionResult Add([FromBody] ArticleModel model)
     {
-        _service.Add(model);
-        _context.SaveChanges();
+        _service.Add(model);        
 
         return Created();
     }
@@ -42,8 +39,7 @@ public class ArticleController : ControllerBase
     [HttpPut]
     public IActionResult UpdateFilm([FromBody] ArticleModel model)
     {
-        _service.Update(model);
-        _context.SaveChanges();
+        _service.Update(model);       
 
         return Accepted();
     }
@@ -55,8 +51,7 @@ public class ArticleController : ControllerBase
 
         if (result is not null)
         {
-            _service.Remove(result!);
-            _context.SaveChanges();
+            _service.Remove(id);
         }
 
         return NoContent();

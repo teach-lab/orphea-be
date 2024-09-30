@@ -7,6 +7,6 @@ namespace News.Services.ServicesInterface
         PublisherModel Add(PublisherModel model);
         PublisherModel GetById(Guid id);
         void Update(PublisherModel model);
-        void Remove(PublisherModel model);
+        void Remove(Guid id);
     }
 }

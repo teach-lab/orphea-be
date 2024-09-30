@@ -38,11 +38,17 @@ namespace News.Services
         
         public void Update(PublisherModel model)
         {
-            throw new NotImplementedException();
+            var entity = _mapper.Map<PublisherModel, PublisherEntity>(model);
+
+            _repo.Update(entity);
+            _repo.SaveChanges();
         }
-        public void Remove(PublisherModel model)
+        public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = _repo.GetById(id);
+
+            _repo.Remove(entity);
+            _repo.SaveChanges();
         }
     }
 }

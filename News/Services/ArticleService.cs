@@ -29,9 +29,9 @@ namespace News.Services
         public ArticleModel GetById(Guid id)
         {
             var entity = _repo.GetById(id);
-            var result = _mapper.Map<ArticleEntity, ArticleModel>(entity);
+            
 
-            return result;
+            return _mapper.Map<ArticleEntity, ArticleModel>(entity);
         }
         public void Update(ArticleModel model)
         {
@@ -40,9 +40,9 @@ namespace News.Services
             _repo.Update(entity);
             _repo.SaveChanges();
         }
-        public void Remove(ArticleModel model)
+        public void Remove(Guid id)
         {
-            var entity = _mapper.Map<ArticleModel, ArticleEntity>(model);
+            var entity = _repo.GetById(id);
 
             _repo.Remove(entity);
             _repo.SaveChanges();

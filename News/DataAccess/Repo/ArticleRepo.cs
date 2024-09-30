@@ -5,46 +5,39 @@ namespace News.DataAccess.Repo;
 
 public class ArticleRepo : IArticleRepo
 {
-    private readonly DbSet<ArticleEntity> _dbSet;
     private readonly DbContext _context;
 
-        public ArticleRepo(DbContext context)
-        {
-            _dbSet = context.Set<ArticleEntity>();
-            _context = context;
-        }        
+    public ArticleRepo(DbContext context)
+    {        
+        _context = context;
+    }        
 
-        public ArticleEntity Add(ArticleEntity entity)
-        {
-            var result = _dbSet.Add(entity);
-            _context.SaveChanges();
+    public ArticleEntity Add(ArticleEntity entity)
+    {
+        var result = _context.Add(entity);
+        _context.SaveChanges();
 
-            return result.Entity;
-        }
+        return result.Entity;
+    }
 
-        public ArticleEntity GetById(Guid id)
-        {
-            var result = _dbSet
-                .Include(e => e.ArticleTags)
-                .ThenInclude(at => at.Tag)
-                .FirstOrDefault(e => e.Id == id);               
+    public ArticleEntity GetById(Guid id)
+    {      
+        return _context.Set<ArticleEntity>().Find(id);
+    }
 
-            return result!;
-        }
+    public void Update(ArticleEntity entity)
+    {
+        var result = _context.Update(entity);
+    }
 
-        public void Update(ArticleEntity entity)
-        {
-            var result = _dbSet.Update(entity);
-        }
+    public void Remove(ArticleEntity entity)
+    {
+        var result = _context.Remove(entity);
+    }
 
-        public void Remove(ArticleEntity entity)
-        {
-            var result = _dbSet.Remove(entity);
-        }
-
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
+    public void SaveChanges()
+    {
+        _context.SaveChanges();
     }
 }
+
