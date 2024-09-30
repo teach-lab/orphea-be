@@ -18,7 +18,7 @@ public class ArticleController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetFilmById([FromQuery] Guid id)
+    public IActionResult GetById([FromQuery] Guid id)
     {
         var result = _service.GetById(id);
         if (result is null)

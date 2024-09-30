@@ -2,12 +2,12 @@
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Entities;
 
-namespace News.DataAccess.Repo
+namespace News.DataAccess.Repo;
+
+public class TagRepo : ITagRepo
 {
-    public class TagRepo : ITagRepo
-    {
-        private readonly DbSet<TagEntity> _dbSet;
-        private readonly DbContext _context;
+    private readonly DbSet<TagEntity> _dbSet;
+    private readonly DbContext _context;
 
         public TagRepo(DbContext context)
         {
