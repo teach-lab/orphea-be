@@ -17,6 +17,5 @@ public class PublisherConfiguration : IEntityTypeConfiguration<PublisherEntity>
         builder.HasMany(e => e.Articles)
             .WithOne(e => e.Publisher)
             .HasForeignKey(e => e.PublisherId);
-            
     }
 }
