@@ -15,8 +15,8 @@ public class ArticleController : ControllerBase
         _service = service;
     }
 
-    [HttpGet]
-    public IActionResult GetById([FromQuery] Guid id)
+    [HttpGet("{id}")]
+    public IActionResult Get([FromQuery] Guid id)
     {
         var result = _service.GetById(id);
         if (result is null)
@@ -37,7 +37,7 @@ public class ArticleController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult UpdateFilm([FromBody] ArticleModel model)
+    public IActionResult Update([FromBody] ArticleModel model)
     {
         _service.Update(model);       
 
@@ -45,7 +45,7 @@ public class ArticleController : ControllerBase
     }
 
     [HttpDelete]
-    public IActionResult DeleteFilmById(Guid id)
+    public IActionResult Delete(Guid id)
     {
         var result = _service.GetById(id);
 
