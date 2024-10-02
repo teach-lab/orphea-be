@@ -16,8 +16,8 @@ public class PublisherController : Controller
         _service = service;
     }
 
-    [HttpGet]
-    public IActionResult GetCompanyById([FromQuery] Guid id)
+    [HttpGet("{id}")]
+    public IActionResult Get([FromQuery] Guid id)
     {
         var result = _service.GetById(id);
         if (result is null)
@@ -28,7 +28,7 @@ public class PublisherController : Controller
     }
 
     [HttpPost]
-    public IActionResult CreateCompany([FromBody] PublisherModel model)
+    public IActionResult Create([FromBody] PublisherModel model)
     {
         _service.Add(model);            
 
@@ -36,7 +36,7 @@ public class PublisherController : Controller
     }
 
     [HttpPut]
-    public IActionResult UpdateCompany([FromBody] PublisherModel model)
+    public IActionResult Update([FromBody] PublisherModel model)
     {
         _service.Update(model);
 
@@ -44,7 +44,7 @@ public class PublisherController : Controller
     }
 
     [HttpDelete]
-    public IActionResult DeleteCompanyById(Guid id)
+    public IActionResult Delete(Guid id)
     {
         var result = _service.GetById(id);
 

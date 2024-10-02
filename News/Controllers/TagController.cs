@@ -17,8 +17,8 @@ public class TagController : Controller
         _service = service;
     }
 
-    [HttpGet]
-    public IActionResult GetFilmById([FromQuery] Guid id)
+    [HttpGet("{id}")]
+    public IActionResult Get([FromQuery] Guid id)
     {
         var result = _service.GetById(id);
         if (result is null)
@@ -37,7 +37,7 @@ public class TagController : Controller
     }
 
     [HttpPut]
-    public IActionResult UpdateFilm([FromBody] TagModel model)
+    public IActionResult Update([FromBody] TagModel model)
     {
         _service.Update(model);
 
@@ -45,7 +45,7 @@ public class TagController : Controller
     }
 
     [HttpDelete]
-    public IActionResult DeleteFilmById(Guid id)
+    public IActionResult Delete(Guid id)
     {
         var result = _service.GetById(id);
 
