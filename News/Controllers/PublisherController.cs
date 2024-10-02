@@ -43,7 +43,7 @@ public class PublisherController : Controller
         return Accepted();
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public IActionResult Delete(Guid id)
     {
         var result = _service.GetById(id);
