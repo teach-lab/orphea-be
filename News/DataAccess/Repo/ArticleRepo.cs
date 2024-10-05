@@ -6,38 +6,42 @@ namespace News.DataAccess.Repo;
 public class ArticleRepo : IArticleRepo
 {
     private readonly DbContext _context;
+    private readonly DbSet<ArticleEntity> _dbSet;
 
     public ArticleRepo(DbContext context)
     {        
+        _dbSet = context.Set<ArticleEntity>(); 
         _context = context;
     }        
 
-    public ArticleEntity Add(ArticleEntity entity)
+    public async Task<ArticleEntity> Add(ArticleEntity entity)
     {
-        var result = _context.Add(entity);
-        _context.SaveChanges();
+        var result = (await _dbSet.AddAsync(entity)).Entity;
+        await _context.SaveChangesAsync();
 
-        return result.Entity;
+        return result;
     }
 
-    public ArticleEntity GetById(Guid id)
+    public async Task<ArticleEntity> GetById(Guid id)
     {      
-        return _context.Set<ArticleEntity>().Find(id);
+        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+
+        return entity;
     }
 
-    public void Update(ArticleEntity entity)
+    public async Task<ArticleEntity> Update(ArticleEntity entity)
     {
-        var result = _context.Update(entity);
+        var result = _dbSet.Update(entity).Entity;
+        await _context.SaveChangesAsync();
+
+        return result;
     }
 
-    public void Remove(ArticleEntity entity)
+    public async Task Remove(Guid id)
     {
-        var result = _context.Remove(entity);
-    }
-
-    public void SaveChanges()
-    {
-        _context.SaveChanges();
+        var entity = await GetById(id);
+        _dbSet.Remove(entity);
+        await _context.SaveChangesAsync();
     }
 }
 

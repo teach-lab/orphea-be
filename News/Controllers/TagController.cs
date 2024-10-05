@@ -18,41 +18,34 @@ public class TagController : Controller
     }
 
     [HttpGet("{id}")]
-    public IActionResult Get([FromQuery] Guid id)
+    public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        var result = _service.GetById(id);
-        if (result is null)
-        {
-            return NotFound();
-        }
+        var result = await _service.GetById(id);
+        
         return Ok(result);
     }
 
     [HttpPost]
-    public IActionResult Add([FromBody] TagModel model)
+    public async Task<IActionResult> Add([FromBody] TagModel model)
     {
-        _service.Add(model);
+        var result = await _service.Add(model);
 
-        return Created();
+        return Ok(result);
     }
 
     [HttpPut]
-    public IActionResult Update([FromBody] TagModel model)
+    public async Task<IActionResult> Update([FromBody] TagModel model)
     {
-        _service.Update(model);
+        var result = await _service.Update(model);
 
-        return Accepted();
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        var result = _service.GetById(id);
+        var result = await _service.GetById(id);
 
-        if (result is not null)
-        {
-            _service.Remove(id);
-        }
-        return NoContent();
+        return Ok(result);
     }
 }

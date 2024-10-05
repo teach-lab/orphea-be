@@ -7,33 +7,40 @@ namespace News.DataAccess.Repo;
 public class PublisherRepo : IPublisherRepo
 {   
     private readonly DbContext _context;
+    private readonly DbSet<PublisherEntity> _dbSet;
 
-        public PublisherRepo(DbContext context)
-        {            
+    public PublisherRepo(DbContext context)
+        {                        
+            _dbSet = context.Set<PublisherEntity>();
             _context = context;
         }
-        public PublisherEntity GetById(Guid id)
+        public async Task<PublisherEntity> GetById(Guid id)
         {
-            return _context.Set<PublisherEntity>().Find(id);
+            var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+
+            return result;
         }
 
-        public void Add(PublisherEntity entity)
+        public async Task<PublisherEntity> Add(PublisherEntity entity)
         {
-            _context.Add(entity);
+            var result = (await _dbSet.AddAsync(entity)).Entity;
+            await _context.SaveChangesAsync();
+
+            return result;
         }
 
-        public void Update(PublisherEntity entity)
+        public async Task<PublisherEntity> Update(PublisherEntity entity)
         {
-            _context.Update(entity);
+            var result = _dbSet.Update(entity).Entity;
+            await _context.SaveChangesAsync();
+
+            return result;
         }
 
-        public void Remove(PublisherEntity entity)
+        public async Task Remove(Guid id)
         {
-            _context.Remove(entity);
-        }
-
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }    
+            var result = await GetById(id);
+            _dbSet.Remove(result);
+            await _context.SaveChangesAsync();
+        }        
 }

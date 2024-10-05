@@ -4,10 +4,9 @@ namespace News.DataAccess.Repo.RepoInterfaces
 {
     public interface ITagRepo
     {
-        TagEntity GetById(Guid id);
-        void Add(TagEntity entity);
-        void Update(TagEntity entity);
-        void Remove(TagEntity entity);
-        void SaveChanges();
+        Task<TagEntity> GetById(Guid id);
+        Task<TagEntity> Add(TagEntity entity);
+        Task<TagEntity> Update(TagEntity entity);
+        Task Remove(Guid id);
     }
 }

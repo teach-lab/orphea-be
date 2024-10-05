@@ -16,41 +16,34 @@ public class TagService : ITagService
         _repo = repo;
         _mapper = mapper;
     }
-    public TagModel Add(TagModel model)
+    public async Task<TagModel> Add(TagModel model)
     {
         var entity = _mapper.Map<TagModel, TagEntity>(model);
+        var addedEntity = await _repo.Add(entity);
+        var result = _mapper.Map<TagEntity, TagModel>(addedEntity);
 
-        _repo.Add(entity);
-        _repo.SaveChanges();
-
-        return _mapper.Map<TagEntity, TagModel>(entity);
+        return result;
     }
 
-    public TagModel GetById(Guid id)
+    public async Task<TagModel> GetById(Guid id)
     {
-        var entity = _repo.GetById(id);
+        var entity = await _repo.GetById(id);
+        var result = _mapper.Map<TagEntity, TagModel>(entity);
 
-        if (entity is null)
-        {
-            return null;
-        }
-
-        return _mapper.Map<TagEntity, TagModel>(entity);
+        return result;
     }
-    public void Update(TagModel model)
+    public async Task<TagModel> Update(TagModel model)
     {
         var entity = _mapper.Map<TagModel, TagEntity>(model);
+        var updatedEntity = await _repo.Update(entity);
+        var result = _mapper.Map<TagEntity, TagModel> (updatedEntity);
 
-        _repo.Update(entity);
-        _repo.SaveChanges();
+        return result;
     }
 
-    public void Remove(Guid id)
+    public async Task Remove(Guid id)
     {
-        var entity = _repo.GetById(id);                      
-
-        _repo.Remove(entity);
-        _repo.SaveChanges();
+        await _repo.Remove(id);
     }        
 }
 

@@ -6,35 +6,42 @@ namespace News.DataAccess.Repo;
 
 public class TagRepo : ITagRepo
 {
+    private readonly DbSet<TagEntity> _dbSet;
     private readonly DbContext _context;
 
     public TagRepo(DbContext context)
     {
+        _dbSet = context.Set<TagEntity>();
         _context = context;
     }
 
-    public TagEntity GetById(Guid id)
+    public async Task<TagEntity> GetById(Guid id)
     {
-        return _context.Set<TagEntity>().Find(id);        
+        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+
+        return entity;
     }
 
-    public void Add(TagEntity entity)
+    public async Task<TagEntity> Add(TagEntity entity)
     {
-        _context.Add(entity);
+        var result = (await _dbSet.AddAsync(entity)).Entity;
+        await _context.SaveChangesAsync();
+
+        return result;
     }
 
-    public void Update(TagEntity entity)
+    public async Task<TagEntity> Update(TagEntity entity)
     {
-        _context.Update(entity);
+        var result = _dbSet.Update(entity).Entity;
+        await _context.SaveChangesAsync();
+
+        return result;
     }
 
-    public void Remove(TagEntity entity)
+    public async Task Remove(Guid id)
     {
-        _context.Remove(entity);
-    }
-
-    public void SaveChanges()
-    {
-        _context.SaveChanges();
+        var result = await GetById(id);
+        _dbSet.Remove(result);
+        await _context.SaveChangesAsync();
     }    
 }

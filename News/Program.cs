@@ -4,7 +4,6 @@ using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Infrastructure;
 using News.Mapping;
-using News.Mapping.Resolvers;
 using News.Services.ServicesInterface;
 using News.Services;
 using Newtonsoft.Json.Serialization;
