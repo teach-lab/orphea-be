@@ -7,14 +7,16 @@ namespace News.DataAccess.Repo;
 public class ArticleTagRepo : IArticleTagRepo
 {
     private readonly DbContext _context;
+    private readonly DbSet<ArticleTagEntity> _dbSet;
 
     public ArticleTagRepo(DbContext context)
     {        
-        _context = context;
+        _dbSet = context.Set<ArticleTagEntity>();
+        _context = context;        
     }
-    public void AddRange(List<ArticleTagEntity> entity)
+    public async Task AddRange(List<ArticleTagEntity> entity)
     {
-        _context.AddRange(entity);        
-    }
-    
+        var result = _dbSet.AddRangeAsync(entity);   
+        await _context.SaveChangesAsync();        
+    }    
 }

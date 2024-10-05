@@ -16,36 +16,33 @@ namespace News.Services
             _repo = repo;
             _mapper = mapper;
         }
-        public ArticleModel Add(ArticleModel model)
+        public async Task<ArticleModel> Add(ArticleModel model)
         {
             var entity = _mapper.Map<ArticleModel, ArticleEntity>(model);
+            var addedEntity = await _repo.Add(entity);
+            var result = _mapper.Map<ArticleEntity, ArticleModel>(addedEntity);
 
-            _repo.Add(entity);
-            _repo.SaveChanges();
-
-            return _mapper.Map<ArticleEntity, ArticleModel>(entity);
+            return result;
         }
 
-        public ArticleModel GetById(Guid id)
+        public async Task<ArticleModel> GetById(Guid id)
         {
-            var entity = _repo.GetById(id);
-            
+            var entity = await _repo.GetById(id);                
+            var result = _mapper.Map<ArticleEntity, ArticleModel>(entity);
 
-            return _mapper.Map<ArticleEntity, ArticleModel>(entity);
+            return result;
         }
-        public void Update(ArticleModel model)
-        {
+        public async Task<ArticleModel> Update(ArticleModel model)
+        {   
             var entity = _mapper.Map<ArticleModel, ArticleEntity>(model);
+            var updatedEntity = await _repo.Update(entity);
+            var result = _mapper.Map<ArticleEntity, ArticleModel>(updatedEntity);
 
-            _repo.Update(entity);
-            _repo.SaveChanges();
+            return result;
         }
-        public void Remove(Guid id)
+        public async Task Remove(Guid id)
         {
-            var entity = _repo.GetById(id);
-
-            _repo.Remove(entity);
-            _repo.SaveChanges();
+            await _repo.Remove(id);       
         }
 
         

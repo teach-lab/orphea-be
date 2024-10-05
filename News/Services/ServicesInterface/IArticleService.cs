@@ -4,9 +4,9 @@ namespace News.Services.ServicesInterface
 {
     public interface IArticleService
     {
-        ArticleModel Add(ArticleModel model);
-        ArticleModel GetById(Guid id);
-        void Update(ArticleModel model);
-        void Remove(Guid id);
+        Task<ArticleModel> Add(ArticleModel model);
+        Task<ArticleModel> GetById(Guid id);
+        Task<ArticleModel> Update(ArticleModel model);
+        Task Remove(Guid id);
     }
 }

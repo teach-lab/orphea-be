@@ -4,10 +4,9 @@ namespace News.DataAccess.Repo.RepoInterfaces
 {
     public interface IPublisherRepo
     {
-        PublisherEntity GetById(Guid id);
-        void Add(PublisherEntity entity);
-        void Update(PublisherEntity entity);
-        void Remove(PublisherEntity entity);
-        void SaveChanges();
+        Task<PublisherEntity> GetById(Guid id);
+        Task<PublisherEntity> Add(PublisherEntity entity);
+        Task<PublisherEntity> Update(PublisherEntity entity);
+        Task Remove(Guid id);        
     }
 }

@@ -4,10 +4,9 @@ namespace News.DataAccess.Repo
 {
     public interface IArticleRepo
     {
-        ArticleEntity Add(ArticleEntity entity);
-        ArticleEntity GetById(Guid id);
-        void Update(ArticleEntity entity);
-        void Remove(ArticleEntity entity);
-        void SaveChanges();
+        Task<ArticleEntity> Add(ArticleEntity entity);
+        Task<ArticleEntity> GetById(Guid id);
+        Task<ArticleEntity> Update(ArticleEntity entity);
+        Task Remove(Guid id);        
     }
 }
