@@ -26,7 +26,7 @@ public class PublisherController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] PublisherModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] PublisherCreateModel model, CancellationToken cancellationToken)
     {
         var result = await _service.Add(model, cancellationToken);            
 

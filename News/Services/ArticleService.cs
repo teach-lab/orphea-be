@@ -16,11 +16,11 @@ namespace News.Services
             _repo = repo;
             _mapper = mapper;
         }
-        public async Task<ArticleModel> Add(ArticleModel model, CancellationToken cancellationToken)
+        public async Task<ArticleCreateModel> Add(ArticleCreateModel model, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<ArticleModel, ArticleEntity>(model);
+            var entity = _mapper.Map<ArticleCreateModel, ArticleEntity>(model);
             var addedEntity = await _repo.Add(entity, cancellationToken);
-            var result = _mapper.Map<ArticleEntity, ArticleModel>(addedEntity);
+            var result = _mapper.Map<ArticleEntity, ArticleCreateModel>(addedEntity);
 
             return result;
         }

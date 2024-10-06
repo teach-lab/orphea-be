@@ -26,7 +26,7 @@ public class TagController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] TagModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Add([FromBody] TagCreateModel model, CancellationToken cancellationToken)
     {
         var result = await _service.Add(model, cancellationToken);
 
