@@ -14,9 +14,9 @@ public class ArticleTagRepo : IArticleTagRepo
         _dbSet = context.Set<ArticleTagEntity>();
         _context = context;        
     }
-    public async Task AddRange(List<ArticleTagEntity> entity)
+    public async Task AddRange(List<ArticleTagEntity> entity, CancellationToken cancellationToken)
     {
-        var result = _dbSet.AddRangeAsync(entity);   
-        await _context.SaveChangesAsync();        
+        await _dbSet.AddRangeAsync(entity, cancellationToken);   
+        await _context.SaveChangesAsync(cancellationToken);        
     }    
 }

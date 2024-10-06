@@ -4,9 +4,9 @@ namespace News.DataAccess.Repo.RepoInterfaces
 {
     public interface ITagRepo
     {
-        Task<TagEntity> GetById(Guid id);
-        Task<TagEntity> Add(TagEntity entity);
-        Task<TagEntity> Update(TagEntity entity);
-        Task Remove(Guid id);
+        Task<TagEntity> GetById(Guid id, CancellationToken cancellationToken);
+        Task<TagEntity> Add(TagEntity entity, CancellationToken cancellationToken);
+        Task<TagEntity> Update(TagEntity entity, CancellationToken cancellationToken);
+        Task Remove(Guid id, CancellationToken cancellationToken);
     }
 }
