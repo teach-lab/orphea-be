@@ -18,34 +18,33 @@ public class TagController : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var result = await _service.GetById(id);
+        var result = await _service.GetById(id, cancellationToken);
         
         return Ok(result);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] TagModel model)
+    public async Task<IActionResult> Add([FromBody] TagModel model, CancellationToken cancellationToken)
     {
-        var result = await _service.Add(model);
+        var result = await _service.Add(model, cancellationToken);
 
         return Ok(result);
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] TagModel model)
+    public async Task<IActionResult> Update([FromBody] TagModel model, CancellationToken cancellationToken)
     {
-        var result = await _service.Update(model);
+        var result = await _service.Update(model, cancellationToken);
 
         return Ok(result);
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _service.GetById(id);
-
+        var result = await _service.GetById(id, cancellationToken);
         return Ok(result);
     }
 }

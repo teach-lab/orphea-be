@@ -4,9 +4,9 @@ namespace News.Services.ServicesInterface
 {
     public interface IPublisherService
     {
-        Task<PublisherModel> GetById(Guid id);
-        Task<PublisherModel> Add(PublisherModel model);        
-        Task<PublisherModel> Update(PublisherModel model);
-        Task Remove(Guid id);
+        Task<PublisherModel> GetById(Guid id, CancellationToken cancellationToken);
+        Task<PublisherModel> Add(PublisherModel model, CancellationToken cancellationToken);        
+        Task<PublisherModel> Update(PublisherModel model, CancellationToken cancellationToken);
+        Task Remove(Guid id, CancellationToken cancellationToken);
     }
 }
