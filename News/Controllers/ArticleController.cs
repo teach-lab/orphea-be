@@ -26,7 +26,7 @@ public class ArticleController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] ArticleModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Add([FromBody] ArticleCreateModel model, CancellationToken cancellationToken)
     {
         var result = await _service.Add(model, cancellationToken);        
 

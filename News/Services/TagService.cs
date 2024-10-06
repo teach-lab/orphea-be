@@ -16,11 +16,11 @@ public class TagService : ITagService
         _repo = repo;
         _mapper = mapper;
     }
-    public async Task<TagModel> Add(TagModel model, CancellationToken cancellationToken)
+    public async Task<TagCreateModel> Add(TagCreateModel model, CancellationToken cancellationToken)
     {
-        var entity = _mapper.Map<TagModel, TagEntity>(model);
+        var entity = _mapper.Map<TagCreateModel, TagEntity>(model);
         var addedEntity = await _repo.Add(entity, cancellationToken);
-        var result = _mapper.Map<TagEntity, TagModel>(addedEntity);
+        var result = _mapper.Map<TagEntity, TagCreateModel>(addedEntity);
 
         return result;
     }
