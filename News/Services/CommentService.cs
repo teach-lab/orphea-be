@@ -37,7 +37,7 @@ public class CommentService : ICommentService
     {
         var entity = await _repo.GetCommentById(Guid.Parse(id));
 
-        entity.Comment = comment.Comment;
+        entity.Content = comment.Content;
 
         var updatedEntity = await _repo.UpdateComment(entity);
         var result = _mapper.Map<CommentEntity, CommentResponseModel>(updatedEntity);

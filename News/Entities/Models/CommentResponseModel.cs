@@ -4,7 +4,7 @@ public class CommentResponseModel
 {
     public Guid Id { get; set; }
 
-    public string Comment { get; set; }
+    public string Content { get; set; }
 
     public Guid UserId { get; set; }
 
@@ -12,7 +12,7 @@ public class CommentResponseModel
 
     public int LikeCount { get; set; }
 
-    public string Username { get; set; }
+    public string FirstName { get; set; }
 
     public UserResponseModel User { get; set; }
 }

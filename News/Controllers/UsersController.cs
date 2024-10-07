@@ -10,10 +10,12 @@ namespace News.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IUserService _service;
+    private readonly ITokenService _tokenService;
 
-    public UsersController(IUserService service)
+    public UsersController(IUserService service, ITokenService tokenService)
     {
         _service = service;
+        _tokenService = tokenService;
     }
 
     [HttpGet("{id}")]
@@ -22,14 +24,6 @@ public class UsersController : ControllerBase
         var user = await _service.GetUserById(id);
 
         return Ok(user);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CreateUser([FromBody] UserCreateModel user)
-    {
-        var createdUser = await _service.CreateUser(user);
-
-        return Ok(createdUser);
     }
 
     [HttpPatch("{id}")]

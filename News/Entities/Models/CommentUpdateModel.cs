@@ -2,5 +2,5 @@
 
 public class CommentUpdateModel
 {
-    public string Comment { get; set; }
+    public string Content { get; set; }
 }
