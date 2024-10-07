@@ -6,6 +6,8 @@ public interface IUserRepo
 {
     Task<UserEntity> GetUserById(Guid id);
 
+    Task<UserEntity> GetUserByLogin(string login);
+
     Task<UserEntity> CreateUser(UserEntity user);
 
     Task<UserEntity> UpdateUser(UserEntity user);
