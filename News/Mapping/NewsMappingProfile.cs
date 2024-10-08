@@ -16,9 +16,12 @@ public class NewsMappingProfile : Profile
             .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
         CreateMap<UserModel, UserEntity>().ReverseMap();
         CreateMap<ArticleModel, ArticleEntity>().ReverseMap();
+        CreateMap<ArticleCreateModel, ArticleEntity>().ReverseMap();
         CreateMap<TagModel, TagEntity>().ReverseMap();
+        CreateMap<TagCreateModel, TagEntity>().ReverseMap();
         CreateMap<ArticleTagModel, ArticleTagEntity>().ReverseMap();
         CreateMap<PublisherModel, PublisherEntity>().ReverseMap();
-        CreateMap<UserResponseModel, UserEntity>().ReverseMap();
+        CreateMap<PublisherCreateModel, PublisherEntity>().ReverseMap();
+        CreateMap<UserResponseModel, UserEntity>().ReverseMap();        
     }
 }

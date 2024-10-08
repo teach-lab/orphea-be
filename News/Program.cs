@@ -4,7 +4,7 @@ using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Infrastructure;
 using News.Mapping;
-using News.Mapping.Resolvers;
+using News.Services.ServicesInterface;
 using News.Services;
 using Newtonsoft.Json.Serialization;
 
@@ -31,6 +31,16 @@ builder.Services.AddTransient<ICommentRepo, CommentRepo>();
 builder.Services.AddTransient<ICommentService, CommentService>();
 builder.Services.AddTransient<IPasswordRepo, PasswordRepo>();
 builder.Services.AddTransient<IPasswordEncryptionHelper, PasswordEncryptionHelper>();
+
+builder.Services.AddTransient<IArticleService, ArticleService>();
+builder.Services.AddTransient<IArticleRepo, ArticleRepo>();
+
+builder.Services.AddTransient<IPublisherService, PublisherService>();
+builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
+
+builder.Services.AddTransient<ITagService, TagService>();
+builder.Services.AddTransient<ITagRepo, TagRepo>();
+
 
 
 
