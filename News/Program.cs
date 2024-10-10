@@ -6,6 +6,7 @@ using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Infrastructure;
 using News.Mapping;
+using News.Services.ServicesInterface;
 using News.Services;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
@@ -61,6 +62,15 @@ builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 builder.Services.AddTransient<ITokenHelper, TokenHelper>();
 builder.Services.AddTransient<IPasswordEncryptionHelper, PasswordEncryptionHelper>();
+builder.Services.AddTransient<IArticleService, ArticleService>();
+builder.Services.AddTransient<IArticleRepo, ArticleRepo>();
+builder.Services.AddTransient<IPublisherService, PublisherService>();
+builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
+builder.Services.AddTransient<ITagService, TagService>();
+builder.Services.AddTransient<ITagRepo, TagRepo>();
+
+
+
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
