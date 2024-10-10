@@ -1,7 +1,6 @@
 ﻿namespace News.Entities.Models;
 
-public class TagModel
+public class TagCreateModel
 {
-    public Guid Id { get; set; }
     public string? Name { get; set; }    
 }
