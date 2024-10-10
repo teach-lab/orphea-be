@@ -20,4 +20,11 @@ public class PasswordRepo : IPasswordRepo
         var entity = (await _dbSet.AddAsync(password)).Entity;
         await _context.SaveChangesAsync();
     }
+
+    public async Task<PasswordEntity> GetPasswordById(Guid id)
+    {
+        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+
+        return entity;
+    }
 }

@@ -22,6 +22,13 @@ public class UserRepo : IUserRepo
         return entity;
     }
 
+    public async Task<UserEntity> GetUserByLogin(string login)
+    {
+        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Login == login);
+
+        return entity;
+    }
+
     public async Task<UserEntity> CreateUser(UserEntity user)
     {
         var entity = (await _dbSet.AddAsync(user)).Entity;
