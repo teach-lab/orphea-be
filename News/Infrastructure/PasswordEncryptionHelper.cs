@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Security.Cryptography;
 
 namespace News.Infrastructure;
 
@@ -30,5 +28,12 @@ internal class PasswordEncryptionHelper : IPasswordEncryptionHelper
         Array.Copy(hash, 0, hashBytes, SaltByteSize, HashByteSize);
 
         return Convert.ToBase64String(hashBytes);
+    }
+
+    public bool VerifyPassword(string password, string hash, byte[] salt)
+    {
+        var hasedPassword = HashPassword(password, salt);
+
+        return hasedPassword == hash;
     }
 }

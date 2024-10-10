@@ -13,7 +13,7 @@ public class NewsMappingProfile : Profile
         CreateMap<CommentCreateModel, CommentEntity>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
         CreateMap<CommentEntity, CommentResponseModel>()
-            .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
+            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName));
         CreateMap<UserModel, UserEntity>().ReverseMap();
         CreateMap<ArticleModel, ArticleEntity>().ReverseMap();
         CreateMap<ArticleCreateModel, ArticleEntity>().ReverseMap();
