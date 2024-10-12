@@ -98,7 +98,7 @@ public class TokenService : ITokenService
         new Claim("login", user.Login),
         new Claim("userId", user.Id.ToString()),
         new Claim("email", user.Email),
-        new Claim("name", user.FirstName)
+        new Claim("name", user.FullName)
         };
 
         var rsa = RSA.Create();

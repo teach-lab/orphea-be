@@ -16,7 +16,7 @@ public class NewsMappingProfile : Profile
         CreateMap<CommentCreateModel, CommentEntity>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
         CreateMap<CommentEntity, CommentResponseModel>()
-            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName));
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.User.FullName));
         CreateMap<UserModel, UserEntity>().ReverseMap();
         CreateMap<ArticleModel, ArticleEntity>().ReverseMap();
         CreateMap<ArticleCreateModel, ArticleEntity>().ReverseMap();

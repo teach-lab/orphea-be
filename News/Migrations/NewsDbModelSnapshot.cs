@@ -182,7 +182,7 @@ partial class NewsDbModelSnapshot : ModelSnapshot
                 b.Property<string>("Email")
                     .HasColumnType("nvarchar(max)");
 
-                b.Property<string>("FirstName")
+                b.Property<string>("FullName")
                     .HasColumnType("nvarchar(max)");
 
                 b.Property<string>("Login")

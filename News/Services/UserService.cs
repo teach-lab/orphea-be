@@ -61,14 +61,14 @@ public class UserService : IUserService
         var entity = await _repo.GetUserById(Guid.Parse(id));
         var userToUpdate = new UserUpdateModel
         {
-            FirstName = entity.FirstName,
+            FullName = entity.FullName,
             Email = entity.Email,
             Login = entity.Login
         };
 
         user.ApplyTo(userToUpdate);
 
-        entity.FirstName = userToUpdate.FirstName;
+        entity.FullName = userToUpdate.FullName;
         entity.Email = userToUpdate.Email;
         entity.Login = userToUpdate.Login;
 
@@ -95,7 +95,7 @@ public class UserService : IUserService
         var UserEntity = new UserEntity
         {
             Id = Guid.NewGuid(),
-            FirstName = user.FirstName,
+            FullName = user.FullName,
             Email = user.Email,
             Login = user.Login,
             PasswordId = passwordEntity.Id
