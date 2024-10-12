@@ -1,4 +1,4 @@
-﻿namespace News.Entities.Models;
+﻿namespace News.Entities.Models.ModelsUpdate;
 
 public class CommentUpdateModel
 {

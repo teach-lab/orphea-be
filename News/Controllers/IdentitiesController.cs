@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using News.Entities.Models;
-using News.Services;
+using News.Entities.Models.ModelsCreate;
+using News.Services.ServicesInterface;
 
 namespace News.Controllers;
 

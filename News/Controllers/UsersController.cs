@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using News.Entities.Models;
-using News.Services;
+using News.Entities.Models.ModelsUpdate;
+using News.Services.ServicesInterface;
 
 namespace News.Controllers;
 

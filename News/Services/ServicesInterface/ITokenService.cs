@@ -1,6 +1,7 @@
 ﻿using News.Entities.Models;
+using News.Entities.Models.ModelsRespones;
 
-namespace News.Services;
+namespace News.Services.ServicesInterface;
 
 public interface ITokenService
 {

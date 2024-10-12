@@ -1,4 +1,4 @@
-﻿namespace News.Infrastructure;
+﻿namespace News.Infrastructure.IInfrastructure;
 
 public interface ITokenHelper
 {

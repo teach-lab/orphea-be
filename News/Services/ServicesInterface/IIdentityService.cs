@@ -1,6 +1,7 @@
 ﻿using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
 
-namespace News.Services;
+namespace News.Services.ServicesInterface;
 
 public interface IIdentityService
 {

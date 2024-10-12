@@ -1,4 +1,5 @@
 ﻿using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
 
 namespace News.Services.ServicesInterface
 {

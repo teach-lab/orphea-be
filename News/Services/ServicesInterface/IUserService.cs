@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using News.Entities;
 using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
+using News.Entities.Models.ModelsRespones;
+using News.Entities.Models.ModelsUpdate;
 
-namespace News.Services;
+namespace News.Services.ServicesInterface;
 
 public interface IUserService
 {

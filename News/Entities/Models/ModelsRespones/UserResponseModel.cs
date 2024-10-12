@@ -1,7 +1,9 @@
-﻿namespace News.Entities.Models;
+﻿namespace News.Entities.Models.ModelsRespones;
 
-public class UserUpdateModel
+public class UserResponseModel
 {
+    public Guid? Id { get; set; }
+
     public string? FirstName { get; set; }
 
     public string? Email { get; set; }

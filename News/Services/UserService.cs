@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.JsonPatch;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Entities;
 using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
+using News.Entities.Models.ModelsRespones;
+using News.Entities.Models.ModelsUpdate;
 using News.Infrastructure;
+using News.Services.ServicesInterface;
 
 namespace News.Services;
 

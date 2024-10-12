@@ -1,4 +1,4 @@
-﻿namespace News.Entities.Models;
+﻿namespace News.Entities.Models.ModelsRespones;
 
 public class CommentResponseModel
 {

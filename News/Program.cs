@@ -10,6 +10,7 @@ using News.Services.ServicesInterface;
 using News.Services;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
+using News.Infrastructure.IInfrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
