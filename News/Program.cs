@@ -14,7 +14,6 @@ using System.Security.Cryptography;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
-builder.Services.Configure<GoogleAuthOptions>(builder.Configuration.GetSection(nameof(GoogleAuthOptions)));
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
         options.SerializerSettings.ContractResolver = new DefaultContractResolver());
@@ -64,7 +63,6 @@ connection = builder.Configuration.GetConnectionString("MySQLServer");
 builder.Services.AddDbContext<DbContext, NewsDb>(options =>
     options.UseSqlServer(connection));
 
-builder.Services.AddHttpClient<GoogleAuthService>();
 builder.Services.AddTransient<IUserRepo, UserRepo>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ICommentRepo, CommentRepo>();
@@ -82,10 +80,6 @@ builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
 builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
-
-
-
-
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
