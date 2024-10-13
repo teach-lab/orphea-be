@@ -26,23 +26,51 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public async Task<UserResponseModel> GetUserById(Guid id)
+    public async Task<UserResponseModel> CreateAsync(UserCreateModel user)
     {
-        var entity = await _repo.GetUserById(id);
+        var salt = _passwordEncryptionHelper.GenerateSalt(user.Password);
+        var hashedPassword = _passwordEncryptionHelper.HashPassword(user.Password, salt);
+        var passwordEntity = new PasswordEntity
+        {
+            Id = Guid.NewGuid(),
+            Salt = salt,
+            Hash = hashedPassword
+        };
+
+        await _passwordRepo.CreateAsync(passwordEntity);
+
+        var UserEntity = new UserEntity
+        {
+            Id = Guid.NewGuid(),
+            FullName = user.FullName,
+            Email = user.Email,
+            Login = user.Login,
+            PasswordId = passwordEntity.Id
+        };
+
+        var createdUser = await _repo.CreateAsync(UserEntity);
+        var result = _mapper.Map<UserEntity, UserResponseModel>(createdUser);
+
+        return result;
+    }
+
+    public async Task<UserResponseModel> GetAsync(Guid id)
+    {
+        var entity = await _repo.GetAsync(id);
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;
     }
 
-    public async Task<UserResponseModel> Login(LoginModel login)
+    public async Task<UserResponseModel> LoginAsync(LoginModel login)
     {
-        var user = await _repo.GetUserByLogin(login.Login);
+        var user = await _repo.GetLoginAsync(login.Login);
         if (user == null)
         {
             throw new Exception("User not found");
         }
 
-        var password = await _passwordRepo.GetPasswordById(user.PasswordId);
+        var password = await _passwordRepo.GetAsync(user.PasswordId);
 
         var hashedPassword = _passwordEncryptionHelper.VerifyPassword(login.Password, password.Hash, password.Salt);
 
@@ -56,9 +84,9 @@ public class UserService : IUserService
         return result;
     }
 
-    public async Task<UserResponseModel> UpdateUser(JsonPatchDocument<UserUpdateModel> user, string id)
+    public async Task<UserResponseModel> UpdateAsync(JsonPatchDocument<UserUpdateModel> user, string id)
     {
-        var entity = await _repo.GetUserById(Guid.Parse(id));
+        var entity = await _repo.GetAsync(Guid.Parse(id));
         var userToUpdate = new UserUpdateModel
         {
             FullName = entity.FullName,
@@ -72,44 +100,15 @@ public class UserService : IUserService
         entity.Email = userToUpdate.Email;
         entity.Login = userToUpdate.Login;
 
-        await _repo.UpdateUser(entity);
+        await _repo.UpdateAsync(entity);
 
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;
-    }
+    }        
 
-    public async Task<UserResponseModel> CreateUser(UserCreateModel user)
+    public async Task DeleteAsync(Guid id)
     {
-        var salt = _passwordEncryptionHelper.GenerateSalt(user.Password);
-        var hashedPassword = _passwordEncryptionHelper.HashPassword(user.Password, salt);
-        var passwordEntity = new PasswordEntity
-        {
-            Id = Guid.NewGuid(),
-            Salt = salt,
-            Hash = hashedPassword
-        };
-
-        await _passwordRepo.CreatePassword(passwordEntity);
-
-        var UserEntity = new UserEntity
-        {
-            Id = Guid.NewGuid(),
-            FullName = user.FullName,
-            Email = user.Email,
-            Login = user.Login,
-            PasswordId = passwordEntity.Id
-        };
-
-        var createdUser = await _repo.CreateUser(UserEntity);
-
-        var result = _mapper.Map<UserEntity, UserResponseModel>(createdUser);
-
-        return result;
-    }
-
-    public async Task DeleteUser(Guid id)
-    {
-        await _repo.DeleteUser(id);
+        await _repo.DeleteAsync(id);
     }
 }

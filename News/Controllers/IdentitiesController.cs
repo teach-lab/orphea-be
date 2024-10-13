@@ -45,7 +45,7 @@ public class IdentitiesController : ControllerBase
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh([FromBody] string refresh, CancellationToken cancellationToken)
     {
-        var token = await _tokenService.RefreshTokensPair(refresh, cancellationToken);
+        var token = await _tokenService.RefreshTokensPairAsync(refresh, cancellationToken);
 
         return Ok(token);
     }

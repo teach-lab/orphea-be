@@ -4,9 +4,7 @@ namespace News.DataAccess.Repo.RepoInterfaces;
 
 public interface ITokenRepo
 {
-    Task<TokenEntity> GetRefreshById(Guid id, CancellationToken cancellationToken);
-
-    Task SaveToken(TokenEntity refresh, CancellationToken cancellationToken);
-
-    Task DeleteToken(Guid refreshId, CancellationToken cancellationToken);
+    Task<TokenEntity> GetAsync(Guid id, CancellationToken cancellationToken);
+    Task SaveAsync(TokenEntity refresh, CancellationToken cancellationToken);
+    Task DeleteAsync(Guid refreshId, CancellationToken cancellationToken);
 }

@@ -1,12 +1,11 @@
 ﻿using News.Entities;
 
-namespace News.DataAccess.Repo
+namespace News.DataAccess.Repo;
+
+public interface IArticleRepo
 {
-    public interface IArticleRepo
-    {
-        Task<ArticleEntity> Add(ArticleEntity entity, CancellationToken cancellationToken);
-        Task<ArticleEntity> GetById(Guid id, CancellationToken cancellationToken);
-        Task<ArticleEntity> Update(ArticleEntity entity, CancellationToken cancellationToken);
-        Task Remove(Guid id, CancellationToken cancellationToken);        
-    }
+    Task<ArticleEntity> CreateAsync(ArticleEntity entity, CancellationToken cancellationToken);
+    Task<ArticleEntity> GetAsync(Guid id, CancellationToken cancellationToken);
+    Task<ArticleEntity> UpdateAsync(ArticleEntity entity, CancellationToken cancellationToken);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);        
 }

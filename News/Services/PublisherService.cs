@@ -18,34 +18,34 @@ namespace News.Services
             _repo = repo;
             _mapper = mapper;
         }
-        public async Task<PublisherCreateModel> Add(PublisherCreateModel model, CancellationToken cancellationToken)
+        public async Task<PublisherCreateModel> CreateAsync(PublisherCreateModel model, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<PublisherCreateModel, PublisherEntity>(model);
-            var addedEntity = await _repo.Add(entity, cancellationToken);
+            var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
             var result = _mapper.Map<PublisherEntity, PublisherCreateModel>(addedEntity);
 
             return result;
         }
 
-        public async Task<PublisherModel> GetById(Guid id, CancellationToken cancellationToken)
+        public async Task<PublisherModel> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await _repo.GetById(id, cancellationToken);
+            var entity = await _repo.GetAsync(id, cancellationToken);
             var result = _mapper.Map<PublisherEntity, PublisherModel>(entity);
             
             return result;
         }
         
-        public async Task<PublisherModel> Update(PublisherModel model, CancellationToken cancellationToken)
+        public async Task<PublisherModel> UpdateAsync(PublisherModel model, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<PublisherModel, PublisherEntity>(model);
-            var updatedEntity = await _repo.Update(entity, cancellationToken);
+            var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);
             var result = _mapper.Map<PublisherEntity, PublisherModel>(updatedEntity);
 
             return result;            
         }
-        public async Task Remove(Guid id, CancellationToken cancellationToken)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            await _repo.Remove(id, cancellationToken);
+            await _repo.DeleteAsync(id, cancellationToken);
         }
     }
 }

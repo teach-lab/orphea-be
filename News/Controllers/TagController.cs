@@ -18,34 +18,35 @@ public class TagController : Controller
         _service = service;
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get([FromRoute] Guid id, CancellationToken cancellationToken)
-    {
-        var result = await _service.GetById(id, cancellationToken);
-        
-        return Ok(result);
-    }
-
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] TagCreateModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync([FromBody] TagCreateModel model, CancellationToken cancellationToken)
     {
-        var result = await _service.Add(model, cancellationToken);
+        var createTag = await _service.CreateAsync(model, cancellationToken);
 
-        return Ok(result);
+        return Ok(createTag);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var getTag = await _service.GetAsync(id, cancellationToken);
+        
+        return Ok(getTag);
+    }    
 
     [HttpPut]
-    public async Task<IActionResult> Update([FromBody] TagModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromBody] TagModel model, CancellationToken cancellationToken)
     {
-        var result = await _service.Update(model, cancellationToken);
+        var updateTag = await _service.UpdateAsync(model, cancellationToken);
 
-        return Ok(result);
+        return Ok(updateTag);
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _service.GetById(id, cancellationToken);
-        return Ok(result);
+        var deleteTag = await _service.GetAsync(id, cancellationToken);
+
+        return Ok(deleteTag);
     }
 }

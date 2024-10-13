@@ -13,24 +13,23 @@ public class CommentRepo : ICommentRepo
     {
         _dbSet = context.Set<CommentEntity>();
         _context = context;
-    }
+    }   
 
-    public async Task<CommentEntity> GetCommentById(Guid id)
+    public async Task<CommentEntity> CreateAsync(CommentEntity comment)
     {
-        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
-
-        return entity;
-    }
-
-    public async Task<CommentEntity> CreateComment(CommentEntity comment)
-    {
-        var entity = (await _dbSet.AddAsync(comment)).Entity;
+        var result = (await _dbSet.AddAsync(comment)).Entity;
         await _context.SaveChangesAsync();
 
-        return entity;
+        return result;
+    }
+    public async Task<CommentEntity> GetAsync(Guid id)
+    {
+        var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+
+        return result;
     }
 
-    public async Task<CommentEntity> UpdateComment(CommentEntity comment)
+    public async Task<CommentEntity> UpdateAsync(CommentEntity comment)
     {
         var entity = _dbSet.Update(comment).Entity;
         await _context.SaveChangesAsync();
@@ -38,9 +37,9 @@ public class CommentRepo : ICommentRepo
         return entity;
     }
 
-    public async Task DeleteComment(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
-        var entity = await GetCommentById(id);
+        var entity = await GetAsync(id);
         _dbSet.Remove(entity);
         await _context.SaveChangesAsync();
     }

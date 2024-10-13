@@ -15,13 +15,13 @@ public class PasswordRepo : IPasswordRepo
         _context = context;
     }
 
-    public async Task CreatePassword(PasswordEntity password)
+    public async Task CreateAsync(PasswordEntity password)
     {
         var entity = (await _dbSet.AddAsync(password)).Entity;
         await _context.SaveChangesAsync();
     }
 
-    public async Task<PasswordEntity> GetPasswordById(Guid id)
+    public async Task<PasswordEntity> GetAsync(Guid id)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
 

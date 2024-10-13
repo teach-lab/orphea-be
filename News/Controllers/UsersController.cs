@@ -19,25 +19,25 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById([FromRoute] Guid id)
+    public async Task<IActionResult> GetAsync([FromRoute] Guid id)
     {
-        var user = await _service.GetUserById(id);
+        var user = await _service.GetAsync(id);
 
         return Ok(user);
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateUser([FromRoute] string id, [FromBody] JsonPatchDocument<UserUpdateModel> user)
+    public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] JsonPatchDocument<UserUpdateModel> user)
     {
-        var updatedUser = await _service.UpdateUser(user, id);
+        var updatedUser = await _service.UpdateAsync(user, id);
 
         return Ok(updatedUser);
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteUser([FromQuery] Guid id)
+    public async Task<IActionResult> DeleteAsync([FromQuery] Guid id)
     {
-        await _service.DeleteUser(id);
+        await _service.DeleteAsync(id);
 
         return Ok();
     }

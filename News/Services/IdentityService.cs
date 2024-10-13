@@ -20,29 +20,29 @@ public class IdentityService : IIdentityService
 
     public async Task<TokensPair> LoginAsync(LoginModel login, CancellationToken cancellationToken)
     {
-        var user = await _userService.Login(login);
+        var user = await _userService.LoginAsync(login);
 
-        var token = _tokenService.GenerateTokensPair(user, cancellationToken);
+        var token = _tokenService.GenerateTokensPairAsync(user, cancellationToken);
 
-        await _tokenService.SaveToken(token.Refresh, cancellationToken);
+        await _tokenService.SaveTokenAsync(token.Refresh, cancellationToken);
 
         return token;
     }
 
     public async Task<TokensPair> RegisterAsync(UserCreateModel newUser, CancellationToken cancellationToken)
     {
-        var user = await _userService.CreateUser(newUser);
+        var user = await _userService.CreateAsync(newUser);
 
-        var token = _tokenService.GenerateTokensPair(user, cancellationToken);
+        var token = _tokenService.GenerateTokensPairAsync(user, cancellationToken);
 
-        await _tokenService.SaveToken(token.Refresh, cancellationToken);
+        await _tokenService.SaveTokenAsync(token.Refresh, cancellationToken);
 
         return token;
     }
 
     public async Task<bool> LogOutAsync(string refresh, CancellationToken cancellation)
     {
-        await _tokenService.DeleteToken(refresh, cancellation);
+        await _tokenService.DeleteTokenAsync(refresh, cancellation);
 
         return true;
     }

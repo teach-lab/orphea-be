@@ -1,9 +1,8 @@
 ﻿using News.Entities;
 
-namespace News.DataAccess.Repo.RepoInterfaces
+namespace News.DataAccess.Repo.RepoInterfaces;
+
+public interface IArticleTagRepo
 {
-    public interface IArticleTagRepo
-    {
-        public Task AddRange(List<ArticleTagEntity> entity, CancellationToken cancellationToken);
-    }
+    public Task AddRangeAsync(List<ArticleTagEntity> entity, CancellationToken cancellationToken);
 }

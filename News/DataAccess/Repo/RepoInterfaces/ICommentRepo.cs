@@ -4,11 +4,8 @@ namespace News.DataAccess.Repo.RepoInterfaces;
 
 public interface ICommentRepo
 {
-    Task<CommentEntity> GetCommentById(Guid id);
-
-    Task<CommentEntity> CreateComment(CommentEntity comment);
-
-    Task<CommentEntity> UpdateComment(CommentEntity comment);
-
-    Task DeleteComment(Guid id);
+    Task<CommentEntity> CreateAsync(CommentEntity comment);
+    Task<CommentEntity> GetAsync(Guid id);    
+    Task<CommentEntity> UpdateAsync(CommentEntity comment);
+    Task DeleteAsync(Guid id);
 }

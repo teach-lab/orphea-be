@@ -5,9 +5,9 @@ namespace News.Services.ServicesInterface
 {
     public interface IPublisherService
     {
-        Task<PublisherModel> GetById(Guid id, CancellationToken cancellationToken);
-        Task<PublisherCreateModel> Add(PublisherCreateModel model, CancellationToken cancellationToken);        
-        Task<PublisherModel> Update(PublisherModel model, CancellationToken cancellationToken);
-        Task Remove(Guid id, CancellationToken cancellationToken);
+        Task<PublisherCreateModel> CreateAsync(PublisherCreateModel model, CancellationToken cancellationToken);
+        Task<PublisherModel> GetAsync(Guid id, CancellationToken cancellationToken);               
+        Task<PublisherModel> UpdateAsync(PublisherModel model, CancellationToken cancellationToken);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
     }
 }

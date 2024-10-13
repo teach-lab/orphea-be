@@ -15,14 +15,7 @@ public class TagRepo : ITagRepo
         _context = context;
     }
 
-    public async Task<TagEntity> GetById(Guid id, CancellationToken cancellationToken)
-    {
-        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-
-        return entity;
-    }
-
-    public async Task<TagEntity> Add(TagEntity entity, CancellationToken cancellationToken)
+        public async Task<TagEntity> CreateAsync(TagEntity entity, CancellationToken cancellationToken)
     {
         var result = (await _dbSet.AddAsync(entity)).Entity;
         await _context.SaveChangesAsync(cancellationToken);
@@ -30,7 +23,14 @@ public class TagRepo : ITagRepo
         return result;
     }
 
-    public async Task<TagEntity> Update(TagEntity entity, CancellationToken cancellationToken)
+    public async Task<TagEntity> GetAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+        return entity;
+    }
+    
+    public async Task<TagEntity> UpdateAsync(TagEntity entity, CancellationToken cancellationToken)
     {
         var result = _dbSet.Update(entity).Entity;
         await _context.SaveChangesAsync(cancellationToken);
@@ -38,9 +38,9 @@ public class TagRepo : ITagRepo
         return result;
     }
 
-    public async Task Remove(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await GetById(id, cancellationToken);
+        var result = await GetAsync(id, cancellationToken);
         _dbSet.Remove(result);
         await _context.SaveChangesAsync();
     }    

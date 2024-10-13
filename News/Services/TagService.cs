@@ -17,34 +17,34 @@ public class TagService : ITagService
         _repo = repo;
         _mapper = mapper;
     }
-    public async Task<TagCreateModel> Add(TagCreateModel model, CancellationToken cancellationToken)
+    public async Task<TagCreateModel> CreateAsync(TagCreateModel model, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<TagCreateModel, TagEntity>(model);
-        var addedEntity = await _repo.Add(entity, cancellationToken);
+        var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
         var result = _mapper.Map<TagEntity, TagCreateModel>(addedEntity);
 
         return result;
     }
 
-    public async Task<TagModel> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<TagModel> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetById(id, cancellationToken);
+        var entity = await _repo.GetAsync(id, cancellationToken);
         var result = _mapper.Map<TagEntity, TagModel>(entity);
 
         return result;
     }
-    public async Task<TagModel> Update(TagModel model, CancellationToken cancellationToken)
+    public async Task<TagModel> UpdateAsync(TagModel model, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<TagModel, TagEntity>(model);
-        var updatedEntity = await _repo.Update(entity, cancellationToken);
+        var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);
         var result = _mapper.Map<TagEntity, TagModel> (updatedEntity);
 
         return result;
     }
 
-    public async Task Remove(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await _repo.Remove(id, cancellationToken);
+        await _repo.DeleteAsync(id, cancellationToken);
     }        
 }
 

@@ -4,13 +4,13 @@ namespace News.DataAccess.Repo.RepoInterfaces;
 
 public interface IUserRepo
 {
-    Task<UserEntity> GetUserById(Guid id);
+    Task<UserEntity> GetAsync(Guid id);
 
-    Task<UserEntity> GetUserByLogin(string login);
+    Task<UserEntity> GetLoginAsync(string login);
 
-    Task<UserEntity> CreateUser(UserEntity user);
+    Task<UserEntity> CreateAsync(UserEntity user);
 
-    Task<UserEntity> UpdateUser(UserEntity user);
+    Task<UserEntity> UpdateAsync(UserEntity user);
 
-    Task DeleteUser(Guid id);
+    Task DeleteAsync(Guid id);
 }

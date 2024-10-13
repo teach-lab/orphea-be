@@ -5,11 +5,8 @@ namespace News.Services.ServicesInterface;
 
 public interface ITokenService
 {
-    public TokensPair GenerateTokensPair(UserResponseModel user, CancellationToken cancellationToken);
-
-    public Task<TokensPair> RefreshTokensPair(string refresh, CancellationToken cancellationToken);
-
-    Task SaveToken(string refresh, CancellationToken cancellationToken);
-
-    Task DeleteToken(string refresh, CancellationToken cancellationToken);
+    public TokensPair GenerateTokensPairAsync(UserResponseModel user, CancellationToken cancellationToken);
+    public Task<TokensPair> RefreshTokensPairAsync(string refresh, CancellationToken cancellationToken);
+    Task SaveTokenAsync(string refresh, CancellationToken cancellationToken);
+    Task DeleteTokenAsync(string refresh, CancellationToken cancellationToken);
 }

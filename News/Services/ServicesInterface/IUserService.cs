@@ -9,13 +9,9 @@ namespace News.Services.ServicesInterface;
 
 public interface IUserService
 {
-    Task<UserResponseModel> GetUserById(Guid id);
-
-    Task<UserResponseModel> Login(LoginModel login);
-
-    Task<UserResponseModel> CreateUser(UserCreateModel user);
-
-    Task<UserResponseModel> UpdateUser(JsonPatchDocument<UserUpdateModel> user, string id);
-
-    Task DeleteUser(Guid id);
+    Task<UserResponseModel> CreateAsync(UserCreateModel user);
+    Task<UserResponseModel> GetAsync(Guid id);
+    Task<UserResponseModel> LoginAsync(LoginModel login);   
+    Task<UserResponseModel> UpdateAsync(JsonPatchDocument<UserUpdateModel> user, string id);
+    Task DeleteAsync(Guid id);
 }

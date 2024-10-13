@@ -7,11 +7,8 @@ namespace News.Services.ServicesInterface;
 
 public interface ICommentService
 {
-    Task<CommentModel> GetCommentById(Guid id);
-
-    Task<CommentResponseModel> CreateComment(CommentCreateModel user);
-
-    Task<CommentResponseModel> UpdateComment(CommentUpdateModel user, string id);
-
-    Task DeleteComment(Guid id);
+    Task<CommentResponseModel> CreateAsync(CommentCreateModel user);
+    Task<CommentModel> GetAsync(Guid id);
+    Task<CommentResponseModel> UpdateAsync(CommentUpdateModel user, string id);
+    Task DeleteAsync(Guid id);
 }
