@@ -12,8 +12,8 @@ using News.DataAccess;
 namespace News.Migrations;
 
 [DbContext(typeof(NewsDb))]
-[Migration("20240927092203_new")]
-partial class @new
+[Migration("20241010204017_InitialCreate")]
+partial class InitialCreate
 {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,7 @@ partial class @new
                 b.Property<Guid>("ArticleId")
                     .HasColumnType("uniqueidentifier");
 
-                b.Property<string>("Comment")
+                b.Property<string>("Content")
                     .IsRequired()
                     .HasColumnType("nvarchar(max)");
 
@@ -101,7 +101,26 @@ partial class @new
 
                 b.HasIndex("UserId");
 
-                b.ToTable("Comments");
+                b.ToTable("Comments", (string)null);
+            });
+
+        modelBuilder.Entity("News.Entities.PasswordEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<string>("Hash")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<byte[]>("Salt")
+                    .IsRequired()
+                    .HasColumnType("varbinary(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Password");
             });
 
         modelBuilder.Entity("News.Entities.PublisherEntity", b =>
@@ -137,6 +156,26 @@ partial class @new
                 b.ToTable("Tags");
             });
 
+        modelBuilder.Entity("News.Entities.TokenEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<string>("Refresh")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<Guid>("UserId")
+                    .HasColumnType("uniqueidentifier");
+
+                b.HasKey("Id");
+
+                b.HasIndex("UserId");
+
+                b.ToTable("Tokens", (string)null);
+            });
+
         modelBuilder.Entity("News.Entities.UserEntity", b =>
             {
                 b.Property<Guid>("Id")
@@ -146,21 +185,21 @@ partial class @new
                 b.Property<string>("Email")
                     .HasColumnType("nvarchar(max)");
 
+                b.Property<string>("FirstName")
+                    .HasColumnType("nvarchar(max)");
+
                 b.Property<string>("Login")
                     .HasColumnType("nvarchar(max)");
 
-                b.Property<string>("Password")
-                    .HasColumnType("nvarchar(max)");
-
-                b.Property<byte[]>("Salt")
-                    .HasColumnType("varbinary(max)");
-
-                b.Property<string>("Username")
-                    .HasColumnType("nvarchar(max)");
+                b.Property<Guid>("PasswordId")
+                    .HasColumnType("uniqueidentifier");
 
                 b.HasKey("Id");
 
-                b.ToTable("Users");
+                b.HasIndex("PasswordId")
+                    .IsUnique();
+
+                b.ToTable("Users", (string)null);
             });
 
         modelBuilder.Entity("News.Entities.ArticleEntity", b =>
@@ -204,6 +243,28 @@ partial class @new
                 b.Navigation("User");
             });
 
+        modelBuilder.Entity("News.Entities.TokenEntity", b =>
+            {
+                b.HasOne("News.Entities.UserEntity", "User")
+                    .WithMany("RefreshTokens")
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("User");
+            });
+
+        modelBuilder.Entity("News.Entities.UserEntity", b =>
+            {
+                b.HasOne("News.Entities.PasswordEntity", "Password")
+                    .WithOne()
+                    .HasForeignKey("News.Entities.UserEntity", "PasswordId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Password");
+            });
+
         modelBuilder.Entity("News.Entities.ArticleEntity", b =>
             {
                 b.Navigation("ArticleTags");
@@ -222,6 +283,8 @@ partial class @new
         modelBuilder.Entity("News.Entities.UserEntity", b =>
             {
                 b.Navigation("Comments");
+
+                b.Navigation("RefreshTokens");
             });
 #pragma warning restore 612, 618
     }

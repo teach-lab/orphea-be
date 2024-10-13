@@ -21,7 +21,7 @@ public class PasswordRepo : IPasswordRepo
         await _context.SaveChangesAsync();
     }
 
-    public async Task<PasswordEntity> GetPasswordById(Guid id)
+    public async Task<PasswordEntity> GetPasswordById(Guid? id)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
 

@@ -1,31 +1,28 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
 
 #nullable disable
 
 namespace News.Migrations;
 
 /// <inheritdoc />
-public partial class @new : Migration
+public partial class InitialCreate : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.AlterColumn<string>(
+        migrationBuilder.CreateTable(
             name: "Password",
-            table: "Users",
-            type: "nvarchar(max)",
-            nullable: true,
-            oldClrType: typeof(string),
-            oldType: "nvarchar(max)");
-
-        migrationBuilder.AlterColumn<string>(
-            name: "Email",
-            table: "Users",
-            type: "nvarchar(max)",
-            nullable: true,
-            oldClrType: typeof(string),
-            oldType: "nvarchar(max)");
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                Hash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                Salt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Password", x => x.Id);
+            });
 
         migrationBuilder.CreateTable(
             name: "Publishers",
@@ -53,6 +50,27 @@ public partial class @new : Migration
             });
 
         migrationBuilder.CreateTable(
+            name: "Users",
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                Login = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                PasswordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Users", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_Users_Password_PasswordId",
+                    column: x => x.PasswordId,
+                    principalTable: "Password",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
+
+        migrationBuilder.CreateTable(
             name: "Articles",
             columns: table => new
             {
@@ -72,6 +90,46 @@ public partial class @new : Migration
                     name: "FK_Articles_Publishers_PublisherId",
                     column: x => x.PublisherId,
                     principalTable: "Publishers",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
+
+        migrationBuilder.CreateTable(
+            name: "Comments",
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                LikeCount = table.Column<int>(type: "int", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Comments", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_Comments_Users_UserId",
+                    column: x => x.UserId,
+                    principalTable: "Users",
+                    principalColumn: "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
+
+        migrationBuilder.CreateTable(
+            name: "Tokens",
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                Refresh = table.Column<string>(type: "nvarchar(max)", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_Tokens", x => x.Id);
+                table.ForeignKey(
+                    name: "FK_Tokens_Users_UserId",
+                    column: x => x.UserId,
+                    principalTable: "Users",
                     principalColumn: "Id",
                     onDelete: ReferentialAction.Cascade);
             });
@@ -101,11 +159,6 @@ public partial class @new : Migration
             });
 
         migrationBuilder.CreateIndex(
-            name: "IX_Comments_UserId",
-            table: "Comments",
-            column: "UserId");
-
-        migrationBuilder.CreateIndex(
             name: "IX_Articles_PublisherId",
             table: "Articles",
             column: "PublisherId");
@@ -115,24 +168,34 @@ public partial class @new : Migration
             table: "ArticleTags",
             column: "TagId");
 
-        migrationBuilder.AddForeignKey(
-            name: "FK_Comments_Users_UserId",
+        migrationBuilder.CreateIndex(
+            name: "IX_Comments_UserId",
             table: "Comments",
-            column: "UserId",
-            principalTable: "Users",
-            principalColumn: "Id",
-            onDelete: ReferentialAction.Cascade);
+            column: "UserId");
+
+        migrationBuilder.CreateIndex(
+            name: "IX_Tokens_UserId",
+            table: "Tokens",
+            column: "UserId");
+
+        migrationBuilder.CreateIndex(
+            name: "IX_Users_PasswordId",
+            table: "Users",
+            column: "PasswordId",
+            unique: true);
     }
 
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropForeignKey(
-            name: "FK_Comments_Users_UserId",
-            table: "Comments");
-
         migrationBuilder.DropTable(
             name: "ArticleTags");
+
+        migrationBuilder.DropTable(
+            name: "Comments");
+
+        migrationBuilder.DropTable(
+            name: "Tokens");
 
         migrationBuilder.DropTable(
             name: "Articles");
@@ -141,30 +204,12 @@ public partial class @new : Migration
             name: "Tags");
 
         migrationBuilder.DropTable(
+            name: "Users");
+
+        migrationBuilder.DropTable(
             name: "Publishers");
 
-        migrationBuilder.DropIndex(
-            name: "IX_Comments_UserId",
-            table: "Comments");
-
-        migrationBuilder.AlterColumn<string>(
-            name: "Password",
-            table: "Users",
-            type: "nvarchar(max)",
-            nullable: false,
-            defaultValue: "",
-            oldClrType: typeof(string),
-            oldType: "nvarchar(max)",
-            oldNullable: true);
-
-        migrationBuilder.AlterColumn<string>(
-            name: "Email",
-            table: "Users",
-            type: "nvarchar(max)",
-            nullable: false,
-            defaultValue: "",
-            oldClrType: typeof(string),
-            oldType: "nvarchar(max)",
-            oldNullable: true);
+        migrationBuilder.DropTable(
+            name: "Password");
     }
 }

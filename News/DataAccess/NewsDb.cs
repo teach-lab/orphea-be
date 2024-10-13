@@ -20,6 +20,8 @@ public class NewsDb : DbContext
 
     public DbSet<PasswordEntity> Password { get; set; }
 
+    public DbSet<TokenEntity> Tokens { get; set; }
+
     public NewsDb(DbContextOptions options) : base(options)
     {
     }

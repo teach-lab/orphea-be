@@ -12,8 +12,8 @@ using News.DataAccess;
 namespace News.Migrations;
 
 [DbContext(typeof(NewsDb))]
-[Migration("20240929092228_AddPasswordInfoTable")]
-partial class AddPasswordInfoTable
+[Migration("20241013080115_NullablePassworId")]
+partial class NullablePassworId
 {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,7 +87,7 @@ partial class AddPasswordInfoTable
                 b.Property<Guid>("ArticleId")
                     .HasColumnType("uniqueidentifier");
 
-                b.Property<string>("Comment")
+                b.Property<string>("Content")
                     .IsRequired()
                     .HasColumnType("nvarchar(max)");
 
@@ -101,7 +101,7 @@ partial class AddPasswordInfoTable
 
                 b.HasIndex("UserId");
 
-                b.ToTable("CommentEntity");
+                b.ToTable("Comments", (string)null);
             });
 
         modelBuilder.Entity("News.Entities.PasswordEntity", b =>
@@ -118,13 +118,7 @@ partial class AddPasswordInfoTable
                     .IsRequired()
                     .HasColumnType("varbinary(max)");
 
-                b.Property<Guid>("UserId")
-                    .HasColumnType("uniqueidentifier");
-
                 b.HasKey("Id");
-
-                b.HasIndex("UserId")
-                    .IsUnique();
 
                 b.ToTable("Password");
             });
@@ -162,6 +156,26 @@ partial class AddPasswordInfoTable
                 b.ToTable("Tags");
             });
 
+        modelBuilder.Entity("News.Entities.TokenEntity", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<string>("Refresh")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<Guid>("UserId")
+                    .HasColumnType("uniqueidentifier");
+
+                b.HasKey("Id");
+
+                b.HasIndex("UserId");
+
+                b.ToTable("Tokens", (string)null);
+            });
+
         modelBuilder.Entity("News.Entities.UserEntity", b =>
             {
                 b.Property<Guid>("Id")
@@ -171,18 +185,22 @@ partial class AddPasswordInfoTable
                 b.Property<string>("Email")
                     .HasColumnType("nvarchar(max)");
 
+                b.Property<string>("FirstName")
+                    .HasColumnType("nvarchar(max)");
+
                 b.Property<string>("Login")
                     .HasColumnType("nvarchar(max)");
 
-                b.Property<Guid>("PasswordId")
+                b.Property<Guid?>("PasswordId")
                     .HasColumnType("uniqueidentifier");
-
-                b.Property<string>("Username")
-                    .HasColumnType("nvarchar(max)");
 
                 b.HasKey("Id");
 
-                b.ToTable("UserEntity");
+                b.HasIndex("PasswordId")
+                    .IsUnique()
+                    .HasFilter("[PasswordId] IS NOT NULL");
+
+                b.ToTable("Users", (string)null);
             });
 
         modelBuilder.Entity("News.Entities.ArticleEntity", b =>
@@ -226,15 +244,24 @@ partial class AddPasswordInfoTable
                 b.Navigation("User");
             });
 
-        modelBuilder.Entity("News.Entities.PasswordEntity", b =>
+        modelBuilder.Entity("News.Entities.TokenEntity", b =>
             {
                 b.HasOne("News.Entities.UserEntity", "User")
-                    .WithOne("Password")
-                    .HasForeignKey("News.Entities.PasswordEntity", "UserId")
+                    .WithMany("RefreshTokens")
+                    .HasForeignKey("UserId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
                 b.Navigation("User");
+            });
+
+        modelBuilder.Entity("News.Entities.UserEntity", b =>
+            {
+                b.HasOne("News.Entities.PasswordEntity", "Password")
+                    .WithOne()
+                    .HasForeignKey("News.Entities.UserEntity", "PasswordId");
+
+                b.Navigation("Password");
             });
 
         modelBuilder.Entity("News.Entities.ArticleEntity", b =>
@@ -256,7 +283,7 @@ partial class AddPasswordInfoTable
             {
                 b.Navigation("Comments");
 
-                b.Navigation("Password");
+                b.Navigation("RefreshTokens");
             });
 #pragma warning restore 612, 618
     }

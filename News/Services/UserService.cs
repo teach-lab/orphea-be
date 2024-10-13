@@ -30,6 +30,14 @@ public class UserService : IUserService
         return result;
     }
 
+    public async Task<UserResponseModel> GetUserByEmail(string email)
+    {
+        var entity = await _repo.GetUserByEmail(email);
+        var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
+
+        return result;
+    }
+
     public async Task<UserResponseModel> Login(LoginModel login)
     {
         var user = await _repo.GetUserByLogin(login.Login);
@@ -95,6 +103,23 @@ public class UserService : IUserService
             Email = user.Email,
             Login = user.Login,
             PasswordId = passwordEntity.Id
+        };
+
+        var createdUser = await _repo.CreateUser(UserEntity);
+
+        var result = _mapper.Map<UserEntity, UserResponseModel>(createdUser);
+
+        return result;
+    }
+
+    public async Task<UserResponseModel> CreateUserViaSso(UserCreateModel user)
+    {
+        var UserEntity = new UserEntity
+        {
+            Id = Guid.NewGuid(),
+            FirstName = user.FirstName,
+            Email = user.Email,
+            Login = user.Login
         };
 
         var createdUser = await _repo.CreateUser(UserEntity);

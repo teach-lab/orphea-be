@@ -10,7 +10,7 @@ public class UserEntity
 
     public string? Login { get; set; }
 
-    public Guid PasswordId { get; set; }
+    public Guid? PasswordId { get; set; }
 
     public PasswordEntity? Password { get; set; }
 
