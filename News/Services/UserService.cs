@@ -65,13 +65,12 @@ public class UserService : IUserService
     public async Task<UserResponseModel> LoginAsync(LoginModel login)
     {
         var user = await _repo.GetLoginAsync(login.Login);
-        if (user == null)
+        if (user is null)
         {
             throw new Exception("User not found");
         }
 
         var password = await _passwordRepo.GetAsync(user.PasswordId);
-
         var hashedPassword = _passwordEncryptionHelper.VerifyPassword(login.Password, password.Hash, password.Salt);
 
         if (!hashedPassword)
@@ -101,7 +100,6 @@ public class UserService : IUserService
         entity.Login = userToUpdate.Login;
 
         await _repo.UpdateAsync(entity);
-
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;

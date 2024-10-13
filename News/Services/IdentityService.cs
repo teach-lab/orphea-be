@@ -21,9 +21,7 @@ public class IdentityService : IIdentityService
     public async Task<TokensPair> LoginAsync(LoginModel login, CancellationToken cancellationToken)
     {
         var user = await _userService.LoginAsync(login);
-
         var token = _tokenService.GenerateTokensPairAsync(user, cancellationToken);
-
         await _tokenService.SaveTokenAsync(token.Refresh, cancellationToken);
 
         return token;
@@ -32,11 +30,8 @@ public class IdentityService : IIdentityService
     public async Task<TokensPair> RegisterAsync(UserCreateModel newUser, CancellationToken cancellationToken)
     {
         var user = await _userService.CreateAsync(newUser);
-
         var token = _tokenService.GenerateTokensPairAsync(user, cancellationToken);
-
         await _tokenService.SaveTokenAsync(token.Refresh, cancellationToken);
-
         return token;
     }
 
