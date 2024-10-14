@@ -21,6 +21,11 @@ public class TagController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] TagCreateModel model, CancellationToken cancellationToken)
     {
+        if (model is null)
+        {
+            return BadRequest("Tag model cannot be null.");
+        }
+
         var createTag = await _service.CreateAsync(model, cancellationToken);
 
         return Ok(createTag);
@@ -30,14 +35,29 @@ public class TagController : Controller
     public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var getTag = await _service.GetAsync(id, cancellationToken);
-        
+        if (getTag is null)
+        {
+            return NotFound($"Tag with ID {id} was not found.");
+        }
+
         return Ok(getTag);
     }    
 
     [HttpPut]
     public async Task<IActionResult> UpdateAsync([FromBody] TagModel model, CancellationToken cancellationToken)
     {
-        var updateTag = await _service.UpdateAsync(model, cancellationToken);
+        if (model is null)
+        {
+            return BadRequest("Tag model cannot be null.");
+        }
+
+        var existingTag = await _service.GetAsync(model.Id, cancellationToken);
+        if (existingTag is null)
+        {
+            return NotFound($"Tag with ID {model.Id} was not found.");
+        }
+
+        var updateTag = await _service.UpdateAsync(model, cancellationToken);       
 
         return Ok(updateTag);
     }
@@ -46,6 +66,12 @@ public class TagController : Controller
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var deleteTag = await _service.GetAsync(id, cancellationToken);
+        if (deleteTag is null)
+        {
+            return NotFound($"Tag with ID {id} was not found.");
+        }
+
+        await _service.DeleteAsync(id, cancellationToken);
 
         return Ok(deleteTag);
     }

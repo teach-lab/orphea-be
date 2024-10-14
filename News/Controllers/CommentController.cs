@@ -19,6 +19,11 @@ public class CommentsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] CommentCreateModel comment)
     {
+        if (comment is null)
+        {
+            return BadRequest("Comment cannot be null.");
+        }
+
         var createdComment = await _service.CreateAsync(comment);
 
         return Ok(createdComment);
@@ -27,14 +32,23 @@ public class CommentsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetAsync([FromRoute] Guid id)
     {
-        var comment = await _service.GetAsync(id);
+        var commentGet = await _service.GetAsync(id);
+        if (commentGet is null)
+        {
+            return NotFound($"Comment with ID {id} was not found.");
+        }
 
-        return Ok(comment);
+        return Ok(commentGet);
     }   
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] CommentUpdateModel comment)
     {
+        if (comment is null)
+        {
+            return BadRequest("Comment update model cannot be null.");
+        }        
+
         var updatedComment = await _service.UpdateAsync(comment, id);
 
         return Ok(updatedComment);
@@ -43,6 +57,12 @@ public class CommentsController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> DeleteAsync([FromQuery] Guid id)
     {
+        var commentDelete = await _service.GetAsync(id);
+        if (commentDelete is null)
+        {
+            return NotFound($"Comment with ID {id} was not found.");
+        }
+
         await _service.DeleteAsync(id);
 
         return Ok();
