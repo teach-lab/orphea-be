@@ -7,5 +7,6 @@ public interface IArticleRepo
     Task<ArticleEntity> CreateAsync(ArticleEntity entity, CancellationToken cancellationToken);
     Task<ArticleEntity> GetAsync(Guid id, CancellationToken cancellationToken);
     Task<ArticleEntity> UpdateAsync(ArticleEntity entity, CancellationToken cancellationToken);
-    Task DeleteAsync(Guid id, CancellationToken cancellationToken);        
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task SaveChangesAsync(CancellationToken cancellationToken);
 }

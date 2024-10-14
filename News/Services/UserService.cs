@@ -26,7 +26,7 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public async Task<UserResponseModel> CreateAsync(UserCreateModel user)
+    public async Task<UserResponseModel> CreateAsync(UserCreateModel user, CancellationToken cancellationToken)
     {
         var salt = _passwordEncryptionHelper.GenerateSalt(user.Password);
         var hashedPassword = _passwordEncryptionHelper.HashPassword(user.Password, salt);
@@ -37,7 +37,7 @@ public class UserService : IUserService
             Hash = hashedPassword
         };
 
-        await _passwordRepo.CreateAsync(passwordEntity);
+        await _passwordRepo.CreateAsync(passwordEntity, cancellationToken);
 
         var UserEntity = new UserEntity
         {
@@ -48,29 +48,29 @@ public class UserService : IUserService
             PasswordId = passwordEntity.Id
         };
 
-        var createdUser = await _repo.CreateAsync(UserEntity);
+        var createdUser = await _repo.CreateAsync(UserEntity, cancellationToken);
         var result = _mapper.Map<UserEntity, UserResponseModel>(createdUser);
 
         return result;
     }
 
-    public async Task<UserResponseModel> GetAsync(Guid id)
+    public async Task<UserResponseModel> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(id);
+        var entity = await _repo.GetAsync(id, cancellationToken);
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;
     }
 
-    public async Task<UserResponseModel> LoginAsync(LoginModel login)
+    public async Task<UserResponseModel> LoginAsync(LoginModel login, CancellationToken cancellationToken)
     {
-        var user = await _repo.GetLoginAsync(login.Login);
+        var user = await _repo.GetLoginAsync(login.Login, cancellationToken);
         if (user is null)
         {
             throw new Exception("User not found");
         }
 
-        var password = await _passwordRepo.GetAsync(user.PasswordId);
+        var password = await _passwordRepo.GetAsync(user.PasswordId, cancellationToken);
         var hashedPassword = _passwordEncryptionHelper.VerifyPassword(login.Password, password.Hash, password.Salt);
 
         if (!hashedPassword)
@@ -83,9 +83,9 @@ public class UserService : IUserService
         return result;
     }
 
-    public async Task<UserResponseModel> UpdateAsync(JsonPatchDocument<UserUpdateModel> user, string id)
+    public async Task<UserResponseModel> UpdateAsync(JsonPatchDocument<UserUpdateModel> user, string id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(Guid.Parse(id));
+        var entity = await _repo.GetAsync(Guid.Parse(id), cancellationToken);
         var userToUpdate = new UserUpdateModel
         {
             FullName = entity.FullName,
@@ -99,14 +99,14 @@ public class UserService : IUserService
         entity.Email = userToUpdate.Email;
         entity.Login = userToUpdate.Login;
 
-        await _repo.UpdateAsync(entity);
+        await _repo.UpdateAsync(entity, cancellationToken);
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;
     }        
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await _repo.DeleteAsync(id);
+        await _repo.DeleteAsync(id, cancellationToken);
     }
 }

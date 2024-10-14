@@ -13,15 +13,18 @@ namespace News.Services
     {
         private readonly IPublisherRepo _repo;
         private readonly IMapper _mapper;
+
         public PublisherService(IPublisherRepo repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
+
         public async Task<PublisherCreateModel> CreateAsync(PublisherCreateModel model, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<PublisherCreateModel, PublisherEntity>(model);
             var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
+            await _repo.SaveChangesAsync(cancellationToken);
             var result = _mapper.Map<PublisherEntity, PublisherCreateModel>(addedEntity);
 
             return result;
@@ -39,13 +42,16 @@ namespace News.Services
         {
             var entity = _mapper.Map<PublisherModel, PublisherEntity>(model);
             var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);
+            await _repo.SaveChangesAsync(cancellationToken);
             var result = _mapper.Map<PublisherEntity, PublisherModel>(updatedEntity);
 
             return result;            
         }
+
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             await _repo.DeleteAsync(id, cancellationToken);
+            await _repo.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -52,7 +52,7 @@ public class TokenService : ITokenService
         var oldRefreshId = _tokenHelper.GetTokenIdFromRefresh(refresh);
         var userId = _tokenHelper.GetUserIdFromRefresh(refresh);
 
-        var user = await _userService.GetAsync(userId);
+        var user = await _userService.GetAsync(userId, cancellationToken);
         var newTokens = GenerateTokensPairAsync(user, cancellationToken);
 
         await DeleteTokenAsync(refresh, cancellationToken);
@@ -61,7 +61,7 @@ public class TokenService : ITokenService
         return newTokens;
     }
 
-    public async Task DeleteTokenAsync(string refresh, CancellationToken cancellation)
+    public async Task DeleteTokenAsync(string refresh, CancellationToken cancellationToken)
     {
         var isTokenValid = VerifyToken(refresh);
 
@@ -71,7 +71,7 @@ public class TokenService : ITokenService
         }
 
         var tokenId = _tokenHelper.GetTokenIdFromRefresh(refresh);
-        await _tokenRepo.DeleteAsync(tokenId, cancellation);
+        await _tokenRepo.DeleteAsync(tokenId, cancellationToken);
     }
 
     public async Task SaveTokenAsync(string refresh, CancellationToken cancellationToken)

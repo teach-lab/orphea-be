@@ -43,5 +43,10 @@ public class TagRepo : ITagRepo
         var result = await GetAsync(id, cancellationToken);
         _dbSet.Remove(result);
         await _context.SaveChangesAsync();
-    }    
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }

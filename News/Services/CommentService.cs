@@ -6,6 +6,7 @@ using News.Entities.Models.ModelsCreate;
 using News.Entities.Models.ModelsRespones;
 using News.Entities.Models.ModelsUpdate;
 using News.Services.ServicesInterface;
+using System.Threading;
 
 namespace News.Services;
 
@@ -20,35 +21,38 @@ public class CommentService : ICommentService
         _mapper = mapper;
     }
 
-    public async Task<CommentResponseModel> CreateAsync(CommentCreateModel comment)
+    public async Task<CommentResponseModel> CreateAsync(CommentCreateModel comment, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<CommentCreateModel, CommentEntity>(comment);
-        var addedEntity = await _repo.CreateAsync(entity);
+        var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
+        await _repo.SaveChangesAsync(cancellationToken);
         var result = _mapper.Map<CommentEntity, CommentResponseModel>(addedEntity);
 
         return result;
     }
 
-    public async Task<CommentModel> GetAsync(Guid id)
+    public async Task<CommentModel> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(id);
+        var entity = await _repo.GetAsync(id, cancellationToken);
         var result = _mapper.Map<CommentEntity, CommentModel>(entity);
 
         return result;
     }   
 
-    public async Task<CommentResponseModel> UpdateAsync(CommentUpdateModel comment, string id)
+    public async Task<CommentResponseModel> UpdateAsync(CommentUpdateModel comment, string id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(Guid.Parse(id));
+        var entity = await _repo.GetAsync(Guid.Parse(id), cancellationToken);
         entity.Content = comment.Content;
-        var updatedEntity = await _repo.UpdateAsync(entity);
+        var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);
+        await _repo.SaveChangesAsync(cancellationToken);
         var result = _mapper.Map<CommentEntity, CommentResponseModel>(updatedEntity);
 
         return result;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await _repo.DeleteAsync(id);
+        await _repo.DeleteAsync(id, cancellationToken);
+        await _repo.SaveChangesAsync(cancellationToken);
     }
 }

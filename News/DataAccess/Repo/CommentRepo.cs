@@ -15,32 +15,37 @@ public class CommentRepo : ICommentRepo
         _context = context;
     }   
 
-    public async Task<CommentEntity> CreateAsync(CommentEntity comment)
+    public async Task<CommentEntity> CreateAsync(CommentEntity comment, CancellationToken cancellationToken)
     {
-        var result = (await _dbSet.AddAsync(comment)).Entity;
-        await _context.SaveChangesAsync();
+        var result = (await _dbSet.AddAsync(comment, cancellationToken)).Entity;
+        await _context.SaveChangesAsync(cancellationToken);
 
         return result;
     }
-    public async Task<CommentEntity> GetAsync(Guid id)
+    public async Task<CommentEntity> GetAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id);
+        var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return result;
     }
 
-    public async Task<CommentEntity> UpdateAsync(CommentEntity comment)
+    public async Task<CommentEntity> UpdateAsync(CommentEntity comment, CancellationToken cancellationToken)
     {
         var entity = _dbSet.Update(comment).Entity;
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
 
         return entity;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await GetAsync(id);
+        var entity = await GetAsync(id, cancellationToken);
         _dbSet.Remove(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

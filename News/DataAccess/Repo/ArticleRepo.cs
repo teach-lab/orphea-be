@@ -16,7 +16,7 @@ public class ArticleRepo : IArticleRepo
 
     public async Task<ArticleEntity> CreateAsync(ArticleEntity entity, CancellationToken cancellationToken)
     {
-        var result = (await _dbSet.AddAsync(entity)).Entity;
+        var result = (await _dbSet.AddAsync(entity, cancellationToken)).Entity;
         await _context.SaveChangesAsync(cancellationToken);
 
         return result;
@@ -41,7 +41,12 @@ public class ArticleRepo : IArticleRepo
     {
         var entity = await GetAsync(id, cancellationToken);
         _dbSet.Remove(entity);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }
 

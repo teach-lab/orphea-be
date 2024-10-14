@@ -40,4 +40,9 @@ public class TokenRepo : ITokenRepo
         _dbSet.Remove(entity);
         await _context.SaveChangesAsync(cancellation);
     }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }

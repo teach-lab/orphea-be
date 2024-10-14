@@ -20,9 +20,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAsync([FromRoute] Guid id)
+    public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var user = await _service.GetAsync(id);
+        var user = await _service.GetAsync(id, cancellationToken);
         if (user is null)
         {
             return NotFound($"User with ID {id} was not found.");
@@ -32,34 +32,38 @@ public class UsersController : ControllerBase
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] JsonPatchDocument<UserUpdateModel> user)
+    public async Task<IActionResult> UpdateAsync(
+        [FromRoute] string id, 
+        [FromBody] JsonPatchDocument<UserUpdateModel> user,
+        CancellationToken cancellationToken
+        )
     {
         if (user is null)
         {
             return BadRequest("Patch document cannot be null.");
         }
 
-        var existingUser = await _service.GetAsync(Guid.Parse(id));
+        var existingUser = await _service.GetAsync(Guid.Parse(id), cancellationToken);
         if (existingUser is null)
         {
             return NotFound($"User with ID {id} was not found.");
         }
 
-        var updatedUser = await _service.UpdateAsync(user, id);
+        var updatedUser = await _service.UpdateAsync(user, id, cancellationToken);
 
         return Ok(updatedUser);
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteAsync([FromQuery] Guid id)
+    public async Task<IActionResult> DeleteAsync([FromQuery] Guid id, CancellationToken cancellationToken)
     {
-        var existingUser = await _service.GetAsync(id);
+        var existingUser = await _service.GetAsync(id, cancellationToken);
         if (existingUser is null)
         {
             return NotFound($"User with ID {id} was not found.");
         }
 
-        await _service.DeleteAsync(id);
+        await _service.DeleteAsync(id, cancellationToken);
 
         return Ok();
     }
