@@ -42,7 +42,7 @@ public class UserService : IUserService
         var UserEntity = new UserEntity
         {
             Id = Guid.NewGuid(),
-            FullName = user.FullName,
+            FirstName = user.FirstName,
             Email = user.Email,
             Login = user.Login,
             PasswordId = passwordEntity.Id
@@ -88,14 +88,14 @@ public class UserService : IUserService
         var entity = await _repo.GetAsync(Guid.Parse(id), cancellationToken);
         var userToUpdate = new UserUpdateModel
         {
-            FullName = entity.FullName,
+            FirstName = entity.FirstName,
             Email = entity.Email,
             Login = entity.Login
         };
 
         user.ApplyTo(userToUpdate);
 
-        entity.FullName = userToUpdate.FullName;
+        entity.FirstName = userToUpdate.FirstName;
         entity.Email = userToUpdate.Email;
         entity.Login = userToUpdate.Login;
 
