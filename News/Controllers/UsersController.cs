@@ -26,11 +26,7 @@ public class UsersController : ControllerBase
         )
     {
         var user = await _service.GetByIdAsync(id, cancellationToken);
-        if (user is null)
-        {
-            return NotFound($"User with ID {id} was not found.");
-        }
-
+        
         return Ok(user);
     }
 
@@ -41,17 +37,6 @@ public class UsersController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        if (user is null)
-        {
-            return BadRequest("Patch document cannot be null.");
-        }
-
-        var existingUser = await _service.GetByIdAsync(Guid.Parse(id), cancellationToken);
-        if (existingUser is null)
-        {
-            return NotFound($"User with ID {id} was not found.");
-        }
-
         var updatedUser = await _service.UpdateAsync(user, id, cancellationToken);
 
         return Ok(updatedUser);
@@ -63,12 +48,6 @@ public class UsersController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var existingUser = await _service.GetByIdAsync(id, cancellationToken);
-        if (existingUser is null)
-        {
-            return NotFound($"User with ID {id} was not found.");
-        }
-
         await _service.DeleteAsync(id, cancellationToken);
 
         return Ok();

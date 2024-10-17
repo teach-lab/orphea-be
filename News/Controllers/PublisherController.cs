@@ -24,11 +24,6 @@ public class PublisherController : Controller
         CancellationToken cancellationToken
         )
     {
-        if (model is null)
-        {
-            return BadRequest("Publisher model cannot be null.");
-        }
-
         var createPublisher = await _service.CreateAsync(model, cancellationToken);
 
         return Ok(createPublisher);
@@ -41,10 +36,6 @@ public class PublisherController : Controller
         )
     {
         var getPublisher = await _service.GetByIdAsync(id, cancellationToken);
-        if (getPublisher is null)
-        {
-            return NotFound($"Publisher with ID {id} was not found.");
-        }
 
         return Ok(getPublisher);
     }    
@@ -53,17 +44,6 @@ public class PublisherController : Controller
     public async Task<IActionResult> UpdateAsync([FromBody] PublisherModel model,
         CancellationToken cancellationToken)
     {
-        if (model is null)
-        {
-            return BadRequest("Publisher model cannot be null.");
-        }
-
-        var existingPublisher = await _service.GetByIdAsync(model.Id, cancellationToken);
-        if (existingPublisher is null)
-        {
-            return NotFound($"Publisher with ID {model.Id} was not found.");
-        }
-
         var updatePublisher = await _service.UpdateAsync(model, cancellationToken);
 
         return Ok(updatePublisher);

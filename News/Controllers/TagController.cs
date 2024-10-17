@@ -24,11 +24,6 @@ public class TagController : Controller
         CancellationToken cancellationToken
         )
     {
-        if (model is null)
-        {
-            return BadRequest("Tag model cannot be null.");
-        }
-
         var createTag = await _service.CreateAsync(model, cancellationToken);
 
         return Ok(createTag);
@@ -41,11 +36,7 @@ public class TagController : Controller
         )
     {
         var getTag = await _service.GetByIdAsync(id, cancellationToken);
-        if (getTag is null)
-        {
-            return NotFound($"Tag with ID {id} was not found.");
-        }
-
+        
         return Ok(getTag);
     }    
 
@@ -54,18 +45,7 @@ public class TagController : Controller
         [FromBody] TagModel model,
         CancellationToken cancellationToken
         )
-    {
-        if (model is null)
-        {
-            return BadRequest("Tag model cannot be null.");
-        }
-
-        var existingTag = await _service.GetByIdAsync(model.Id, cancellationToken);
-        if (existingTag is null)
-        {
-            return NotFound($"Tag with ID {model.Id} was not found.");
-        }
-
+    {        
         var updateTag = await _service.UpdateAsync(model, cancellationToken);       
 
         return Ok(updateTag);
