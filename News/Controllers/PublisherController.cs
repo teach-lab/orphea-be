@@ -72,14 +72,8 @@ public class PublisherController : Controller
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var deletePublisher = await _service.GetByIdAsync(id, cancellationToken);
-        if (deletePublisher is null)
-        {
-            return NotFound($"Publisher with ID {id} was not found.");
-        }
-
         await _service.DeleteAsync(id, cancellationToken);
 
-        return Ok(deletePublisher);
+        return Ok();
     }
 }

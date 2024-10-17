@@ -22,11 +22,6 @@ public class CommentsController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        if (comment is null)
-        {
-            return BadRequest("Comment cannot be null.");
-        }
-
         var createdComment = await _service.CreateAsync(comment, cancellationToken);
 
         return Ok(createdComment);
@@ -38,11 +33,7 @@ public class CommentsController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var commentGet = await _service.GetByIdAsync(id, cancellationToken);
-        if (commentGet is null)
-        {
-            return NotFound($"Comment with ID {id} was not found.");
-        }
+        var commentGet = await _service.GetByIdAsync(id, cancellationToken);        
 
         return Ok(commentGet);
     }   
@@ -54,11 +45,6 @@ public class CommentsController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        if (comment is null)
-        {
-            return BadRequest("Comment update model cannot be null.");
-        }        
-
         var updatedComment = await _service.UpdateAsync(comment, id, cancellationToken);
 
         return Ok(updatedComment);
@@ -70,12 +56,6 @@ public class CommentsController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var commentDelete = await _service.GetByIdAsync(id, cancellationToken);
-        if (commentDelete is null)
-        {
-            return NotFound($"Comment with ID {id} was not found.");
-        }
-
         await _service.DeleteAsync(id, cancellationToken);
 
         return Ok();

@@ -24,11 +24,6 @@ public class ArticleController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        if (model is null)
-        {
-            return BadRequest("Model cannot be null.");
-        }
-
         var createArticle = await _service.CreateAsync(model, cancellationToken);
 
         return Ok(createArticle);
@@ -40,11 +35,7 @@ public class ArticleController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var getArticle = await _service.GetByIdAsync(id, cancellationToken);
-        if (getArticle is null)
-        {
-            return NotFound($"Article with ID {id} was not found.");
-        }
+        var getArticle = await _service.GetByIdAsync(id, cancellationToken);        
 
         return Ok(getArticle);
     }
@@ -55,27 +46,19 @@ public class ArticleController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        if (model is null)
-        {
-            return BadRequest("Model cannot be null.");
-        }
-
         var updateArticle = await _service.UpdateAsync(model, cancellationToken);        
 
         return Ok(updateArticle);
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var deleteArticle = await _service.GetByIdAsync(id, cancellationToken);
-        if (deleteArticle is null)
-        {
-            return NotFound($"Article with ID {id} was not found.");
-        }
-
         await _service.DeleteAsync(id, cancellationToken);
 
-        return Ok(deleteArticle);
+        return Ok();
     }
 }

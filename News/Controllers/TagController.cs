@@ -74,14 +74,8 @@ public class TagController : Controller
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var deleteTag = await _service.GetByIdAsync(id, cancellationToken);
-        if (deleteTag is null)
-        {
-            return NotFound($"Tag with ID {id} was not found.");
-        }
-
         await _service.DeleteAsync(id, cancellationToken);
 
-        return Ok(deleteTag);
+        return Ok();
     }
 }

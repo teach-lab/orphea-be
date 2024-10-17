@@ -12,7 +12,10 @@ public class IdentitiesController : ControllerBase
     private readonly IIdentityService _identityService;
     private readonly ITokenService _tokenService;
 
-    public IdentitiesController(IIdentityService identityService, ITokenService tokenService)
+    public IdentitiesController(
+        IIdentityService identityService,
+        ITokenService tokenService
+        )
     {
         _identityService = identityService;
         _tokenService = tokenService;
@@ -89,7 +92,8 @@ public class IdentitiesController : ControllerBase
             return BadRequest("Refresh token cannot be null or empty.");
         }
 
-        var token = await _tokenService.RefreshTokensPairAsync(refresh, cancellationToken);
+        var token = await _tokenService
+            .RefreshTokensPairAsync(refresh, cancellationToken);
         if (token is null)
         {
             return Unauthorized("Invalid or expired refresh token.");
