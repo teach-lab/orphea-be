@@ -19,7 +19,10 @@ public class ArticleService : IArticleService
         _mapper = mapper;
     }
 
-    public async Task<ArticleCreateModel> CreateAsync(ArticleCreateModel model, CancellationToken cancellationToken)
+    public async Task<ArticleCreateModel> CreateAsync(
+        ArticleCreateModel model,
+        CancellationToken cancellationToken
+        )
     {
         var entity = _mapper.Map<ArticleCreateModel, ArticleEntity>(model);
         var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
@@ -29,7 +32,10 @@ public class ArticleService : IArticleService
         return result;
     }
 
-    public async Task<ArticleModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ArticleModel> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var entity = await _repo.GetByIdAsync(id, cancellationToken);        
         var result = _mapper.Map<ArticleEntity, ArticleModel>(entity);
@@ -37,7 +43,10 @@ public class ArticleService : IArticleService
         return result;
     }
 
-    public async Task<ArticleModel> UpdateAsync(ArticleModel model, CancellationToken cancellationToken)
+    public async Task<ArticleModel> UpdateAsync(
+        ArticleModel model,
+        CancellationToken cancellationToken
+        )
     {   
         var entity = _mapper.Map<ArticleModel, ArticleEntity>(model);
         var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);

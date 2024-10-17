@@ -20,7 +20,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var user = await _service.GetByIdAsync(id, cancellationToken);
         if (user is null)
@@ -55,7 +58,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteAsync([FromQuery] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync(
+        [FromQuery] Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var existingUser = await _service.GetByIdAsync(id, cancellationToken);
         if (existingUser is null)

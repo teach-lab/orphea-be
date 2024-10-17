@@ -15,21 +15,31 @@ public class CommentRepo : ICommentRepo
         _context = context;
     }   
 
-    public async Task<CommentEntity> CreateAsync(CommentEntity comment, CancellationToken cancellationToken)
+    public async Task<CommentEntity> CreateAsync(
+        CommentEntity comment,
+        CancellationToken cancellationToken
+        )
     {
         var result = (await _dbSet.AddAsync(comment, cancellationToken)).Entity;
         await _context.SaveChangesAsync(cancellationToken);
 
         return result;
     }
-    public async Task<CommentEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<CommentEntity> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        var result = await _dbSet
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return result;
     }
 
-    public async Task<CommentEntity> UpdateAsync(CommentEntity comment, CancellationToken cancellationToken)
+    public async Task<CommentEntity> UpdateAsync(
+        CommentEntity comment,
+        CancellationToken cancellationToken
+        )
     {
         var entity = _dbSet.Update(comment).Entity;
         await _context.SaveChangesAsync(cancellationToken);

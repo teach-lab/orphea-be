@@ -15,7 +15,10 @@ public class PublisherRepo : IPublisherRepo
         _context = context;
     }
 
-    public async Task<PublisherEntity> CreateAsync(PublisherEntity entity, CancellationToken cancellationToken)
+    public async Task<PublisherEntity> CreateAsync(
+        PublisherEntity entity,
+        CancellationToken cancellationToken
+        )
     {
         var result = (await _dbSet.AddAsync(entity)).Entity;
         await _context.SaveChangesAsync(cancellationToken);
@@ -23,16 +26,23 @@ public class PublisherRepo : IPublisherRepo
         return result;
     }
 
-    public async Task<PublisherEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<PublisherEntity> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        var result = await _dbSet
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return result;
     }
 
     
 
-    public async Task<PublisherEntity> UpdateAsync(PublisherEntity entity, CancellationToken cancellationToken)
+    public async Task<PublisherEntity> UpdateAsync(
+        PublisherEntity entity,
+        CancellationToken cancellationToken
+        )
     {
         var result = _dbSet.Update(entity).Entity;
         await _context.SaveChangesAsync(cancellationToken);

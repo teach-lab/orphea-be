@@ -15,15 +15,25 @@ public class PasswordRepo : IPasswordRepo
         _context = context;
     }
 
-    public async Task CreateAsync(PasswordEntity password, CancellationToken cancellationToken)
+    public async Task CreateAsync(
+        PasswordEntity password,
+        CancellationToken cancellationToken
+        )
     {
-        var entity = (await _dbSet.AddAsync(password, cancellationToken)).Entity;
+        var entity = (await _dbSet.AddAsync(
+            password,
+            cancellationToken
+            )).Entity;
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<PasswordEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<PasswordEntity> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        var entity = await _dbSet
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return entity;
     }

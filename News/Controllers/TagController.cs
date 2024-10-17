@@ -19,7 +19,10 @@ public class TagController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] TagCreateModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync(
+        [FromBody] TagCreateModel model,
+        CancellationToken cancellationToken
+        )
     {
         if (model is null)
         {
@@ -32,7 +35,10 @@ public class TagController : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var getTag = await _service.GetByIdAsync(id, cancellationToken);
         if (getTag is null)
@@ -44,7 +50,10 @@ public class TagController : Controller
     }    
 
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync([FromBody] TagModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync(
+        [FromBody] TagModel model,
+        CancellationToken cancellationToken
+        )
     {
         if (model is null)
         {

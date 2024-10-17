@@ -15,21 +15,32 @@ public class UserRepo : IUserRepo
         _context = context;
     }
 
-    public async Task<UserEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<UserEntity> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        var entity = await _dbSet
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return entity;
     }
 
-    public async Task<UserEntity> GetLoginAsync(string login, CancellationToken cancellationToken)
+    public async Task<UserEntity> GetLoginAsync(
+        string login,
+        CancellationToken cancellationToken
+        )
     {
-        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Login == login, cancellationToken);
+        var entity = await _dbSet
+            .FirstOrDefaultAsync(e => e.Login == login, cancellationToken);
 
         return entity;
     }
 
-    public async Task<UserEntity> CreateAsync(UserEntity user, CancellationToken cancellationToken)
+    public async Task<UserEntity> CreateAsync(
+        UserEntity user,
+        CancellationToken cancellationToken
+        )
     {
         var entity = (await _dbSet.AddAsync(user)).Entity;
         await _context.SaveChangesAsync(cancellationToken);
@@ -37,7 +48,10 @@ public class UserRepo : IUserRepo
         return entity;
     }
 
-    public async Task<UserEntity> UpdateAsync(UserEntity user, CancellationToken cancellationToken)
+    public async Task<UserEntity> UpdateAsync(
+        UserEntity user,
+        CancellationToken cancellationToken
+        )
     {
         var entity = _dbSet.Update(user).Entity;
         await _context.SaveChangesAsync( cancellationToken);
@@ -45,7 +59,10 @@ public class UserRepo : IUserRepo
         return entity;
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(entity);

@@ -17,7 +17,10 @@ public class TagService : ITagService
         _repo = repo;
         _mapper = mapper;
     }
-    public async Task<TagCreateModel> CreateAsync(TagCreateModel model, CancellationToken cancellationToken)
+    public async Task<TagCreateModel> CreateAsync(
+        TagCreateModel model,
+        CancellationToken cancellationToken
+        )
     {
         var entity = _mapper.Map<TagCreateModel, TagEntity>(model);
         var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
@@ -27,14 +30,20 @@ public class TagService : ITagService
         return result;
     }
 
-    public async Task<TagModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<TagModel> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var entity = await _repo.GetByIdAsync(id, cancellationToken);
         var result = _mapper.Map<TagEntity, TagModel>(entity);
 
         return result;
     }
-    public async Task<TagModel> UpdateAsync(TagModel model, CancellationToken cancellationToken)
+    public async Task<TagModel> UpdateAsync(
+        TagModel model,
+        CancellationToken cancellationToken
+        )
     {
         var entity = _mapper.Map<TagModel, TagEntity>(model);
         var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);

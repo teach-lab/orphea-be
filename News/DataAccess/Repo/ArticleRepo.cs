@@ -14,7 +14,10 @@ public class ArticleRepo : IArticleRepo
         _context = context;
     }        
 
-    public async Task<ArticleEntity> CreateAsync(ArticleEntity entity, CancellationToken cancellationToken)
+    public async Task<ArticleEntity> CreateAsync(
+        ArticleEntity entity,
+        CancellationToken cancellationToken
+        )
     {
         var result = (await _dbSet.AddAsync(entity, cancellationToken)).Entity;
         await _context.SaveChangesAsync(cancellationToken);
@@ -22,14 +25,21 @@ public class ArticleRepo : IArticleRepo
         return result;
     }
 
-    public async Task<ArticleEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ArticleEntity> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {      
-        var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        var result = await _dbSet
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return result;
     }
 
-    public async Task<ArticleEntity> UpdateAsync(ArticleEntity entity, CancellationToken cancellationToken)
+    public async Task<ArticleEntity> UpdateAsync(
+        ArticleEntity entity,
+        CancellationToken cancellationToken
+        )
     {
         var result = _dbSet.Update(entity).Entity;
         await _context.SaveChangesAsync(cancellationToken);
@@ -37,7 +47,10 @@ public class ArticleRepo : IArticleRepo
         return result;
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(entity);

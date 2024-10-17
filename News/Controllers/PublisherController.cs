@@ -19,7 +19,10 @@ public class PublisherController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] PublisherCreateModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync(
+        [FromBody] PublisherCreateModel model,
+        CancellationToken cancellationToken
+        )
     {
         if (model is null)
         {
@@ -32,7 +35,10 @@ public class PublisherController : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+        )
     {
         var getPublisher = await _service.GetByIdAsync(id, cancellationToken);
         if (getPublisher is null)
@@ -44,7 +50,8 @@ public class PublisherController : Controller
     }    
 
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync([FromBody] PublisherModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromBody] PublisherModel model,
+        CancellationToken cancellationToken)
     {
         if (model is null)
         {

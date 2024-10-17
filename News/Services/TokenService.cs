@@ -20,7 +20,12 @@ public class TokenService : ITokenService
     private readonly IUserService _userService;
     private readonly ITokenHelper _tokenHelper;
 
-    public TokenService(IOptions<JwtOptions> options, ITokenRepo tokenRepo, IUserService userService, ITokenHelper tokenHelper)
+    public TokenService(
+        IOptions<JwtOptions> options,
+        ITokenRepo tokenRepo,
+        IUserService userService,
+        ITokenHelper tokenHelper
+        )
     {
         _options = options.Value;
         _tokenRepo = tokenRepo;
@@ -28,7 +33,10 @@ public class TokenService : ITokenService
         _tokenHelper = tokenHelper;
     }
 
-    public TokensPair GenerateTokensPairAsync(UserResponseModel user, CancellationToken cancellationToken)
+    public TokensPair GenerateTokensPairAsync(
+        UserResponseModel user,
+        CancellationToken cancellationToken
+        )
     {
         var accessToken = GenerateAccessToken(user, cancellationToken);
         var refreshToken = GenerateRefreshToken(user, cancellationToken);
@@ -40,7 +48,10 @@ public class TokenService : ITokenService
         };
     }
 
-    public async Task<TokensPair> RefreshTokensPairAsync(string refresh, CancellationToken cancellationToken)
+    public async Task<TokensPair> RefreshTokensPairAsync(
+        string refresh,
+        CancellationToken cancellationToken
+        )
     {
         var isTokenValid = VerifyToken(refresh);
 
@@ -89,7 +100,10 @@ public class TokenService : ITokenService
         await _tokenRepo.SaveAsync(refreshEntity, cancellationToken);
     }
 
-    private string GenerateAccessToken(UserResponseModel user, CancellationToken cancellationToken)
+    private string GenerateAccessToken(
+        UserResponseModel user,
+        CancellationToken cancellationToken
+        )
     {
         var claims = new[]
         {
@@ -117,7 +131,10 @@ public class TokenService : ITokenService
         return tokenValue;
     }
 
-    private string GenerateRefreshToken(UserResponseModel user, CancellationToken cancellationToken)
+    private string GenerateRefreshToken(
+        UserResponseModel user,
+        CancellationToken cancellationToken
+        )
     {
         var claims = new[]
         {
