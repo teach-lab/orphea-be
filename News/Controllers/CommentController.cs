@@ -1,32 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using News.Entities.Models;
 using News.Entities.Models.ModelsCreate;
+using News.Entities.Models.ModelsUpdate;
 using News.Services.ServicesInterface;
-using System.Threading;
 
 namespace News.Controllers;
 
 [ApiController]
-[Route("articles")]
-public class ArticleController : ControllerBase
-{    
-    private readonly IArticleService _service;
+[Route("comments")]
+public class CommentsController : ControllerBase
+{
+    private readonly ICommentService _service;
 
-    public ArticleController(DbContext context, IArticleService service)
-    {        
+    public CommentsController(ICommentService service)
+    {
         _service = service;
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateAsync(
-        [FromBody] ArticleCreateModel model,
+        [FromBody] CommentCreateModel comment,
         CancellationToken cancellationToken
         )
     {
-        var createArticle = await _service.CreateAsync(model, cancellationToken);
+        var createdComment = await _service.CreateAsync(comment, cancellationToken);
 
-        return Ok(createArticle);
+        return Ok(createdComment);
     }
 
     [HttpGet("{id}")]
@@ -35,25 +33,26 @@ public class ArticleController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var getArticle = await _service.GetByIdAsync(id, cancellationToken);        
+        var commentGet = await _service.GetByIdAsync(id, cancellationToken);        
 
-        return Ok(getArticle);
-    }
+        return Ok(commentGet);
+    }   
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdateAsync(
-        [FromBody] ArticleModel model,
+        [FromRoute] string id,
+        [FromBody] CommentUpdateModel comment,
         CancellationToken cancellationToken
         )
     {
-        var updateArticle = await _service.UpdateAsync(model, cancellationToken);        
+        var updatedComment = await _service.UpdateAsync(comment, id, cancellationToken);
 
-        return Ok(updateArticle);
+        return Ok(updatedComment);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete]
     public async Task<IActionResult> DeleteAsync(
-        Guid id,
+        [FromQuery] Guid id,
         CancellationToken cancellationToken
         )
     {

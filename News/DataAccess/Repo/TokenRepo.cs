@@ -15,31 +15,41 @@ public class TokenRepo : ITokenRepo
         _context = context;
     }
 
-    public async Task<TokenEntity> GetRefreshById(Guid id, CancellationToken cancellationToken)
+    public async Task<TokenEntity> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        var entity = await _dbSet
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
         return entity;
     }
 
-    public async Task SaveToken(TokenEntity refreshEntity, CancellationToken cancellationToken)
+    public async Task SaveAsync(
+         TokenEntity refreshEntity,
+        CancellationToken cancellationToken
+        )
     {
         var entity = (await _dbSet.AddAsync(refreshEntity, cancellationToken)).Entity;
-
-        await _context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);        
     }
 
-    public async Task DeleteToken(Guid tokenId, CancellationToken cancellation)
+    public async Task DeleteAsync(Guid tokenId, CancellationToken cancellation)
     {
-        var entity = await GetRefreshById(tokenId, cancellation);
+        var entity = await GetByIdAsync(tokenId, cancellation);
 
-        if (entity == null)
+        if (entity is null)
         {
             throw new Exception($"Token with ID {tokenId} not found.");
         }
 
         _dbSet.Remove(entity);
-
         await _context.SaveChangesAsync(cancellation);
+    }
+
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

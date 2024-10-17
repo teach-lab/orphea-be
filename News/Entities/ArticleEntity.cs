@@ -1,4 +1,6 @@
-﻿namespace News.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace News.Entities;
 
 public class ArticleEntity
 {
@@ -9,9 +11,7 @@ public class ArticleEntity
     public string Description { get; set; }
     public DateTime PublishedAt { get; set; }
     public int TrustScore { get; set; }
-
     public Guid PublisherId { get; set; }
     public PublisherEntity? Publisher { get; set; }
-
     public List<ArticleTagEntity>? ArticleTags { get; set; } = new List<ArticleTagEntity>();
 }
