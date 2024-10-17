@@ -15,7 +15,7 @@ public class UserRepo : IUserRepo
         _context = context;
     }
 
-    public async Task<UserEntity> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<UserEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
@@ -47,7 +47,7 @@ public class UserRepo : IUserRepo
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await GetAsync(id, cancellationToken);
+        var entity = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(entity);
         await _context.SaveChangesAsync(cancellationToken);
     }

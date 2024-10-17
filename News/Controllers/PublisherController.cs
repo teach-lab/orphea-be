@@ -8,7 +8,7 @@ using News.Services.ServicesInterface;
 namespace News.Controllers;
 
 [ApiController]
-[Route("publisher")]
+[Route("publishers")]
 public class PublisherController : Controller
 {        
     private readonly IPublisherService _service;
@@ -32,9 +32,9 @@ public class PublisherController : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var getPublisher = await _service.GetAsync(id, cancellationToken);
+        var getPublisher = await _service.GetByIdAsync(id, cancellationToken);
         if (getPublisher is null)
         {
             return NotFound($"Publisher with ID {id} was not found.");
@@ -51,7 +51,7 @@ public class PublisherController : Controller
             return BadRequest("Publisher model cannot be null.");
         }
 
-        var existingPublisher = await _service.GetAsync(model.Id, cancellationToken);
+        var existingPublisher = await _service.GetByIdAsync(model.Id, cancellationToken);
         if (existingPublisher is null)
         {
             return NotFound($"Publisher with ID {model.Id} was not found.");
@@ -65,7 +65,7 @@ public class PublisherController : Controller
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var deletePublisher = await _service.GetAsync(id, cancellationToken);
+        var deletePublisher = await _service.GetByIdAsync(id, cancellationToken);
         if (deletePublisher is null)
         {
             return NotFound($"Publisher with ID {id} was not found.");

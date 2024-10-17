@@ -21,7 +21,7 @@ public class PasswordRepo : IPasswordRepo
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<PasswordEntity> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<PasswordEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 

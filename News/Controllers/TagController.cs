@@ -9,7 +9,7 @@ using News.Services.ServicesInterface;
 namespace News.Controllers;
 
 [ApiController]
-[Route("tag")]
+[Route("tags")]
 public class TagController : Controller
 {
     private readonly ITagService _service;
@@ -32,9 +32,9 @@ public class TagController : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var getTag = await _service.GetAsync(id, cancellationToken);
+        var getTag = await _service.GetByIdAsync(id, cancellationToken);
         if (getTag is null)
         {
             return NotFound($"Tag with ID {id} was not found.");
@@ -51,7 +51,7 @@ public class TagController : Controller
             return BadRequest("Tag model cannot be null.");
         }
 
-        var existingTag = await _service.GetAsync(model.Id, cancellationToken);
+        var existingTag = await _service.GetByIdAsync(model.Id, cancellationToken);
         if (existingTag is null)
         {
             return NotFound($"Tag with ID {model.Id} was not found.");
@@ -65,7 +65,7 @@ public class TagController : Controller
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var deleteTag = await _service.GetAsync(id, cancellationToken);
+        var deleteTag = await _service.GetByIdAsync(id, cancellationToken);
         if (deleteTag is null)
         {
             return NotFound($"Tag with ID {id} was not found.");

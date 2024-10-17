@@ -8,7 +8,7 @@ using System.Threading;
 namespace News.Controllers;
 
 [ApiController]
-[Route("article")]
+[Route("articles")]
 public class ArticleController : ControllerBase
 {    
     private readonly IArticleService _service;
@@ -19,7 +19,10 @@ public class ArticleController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] ArticleCreateModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync(
+        [FromBody] ArticleCreateModel model,
+        CancellationToken cancellationToken
+        )
     {
         if (model is null)
         {
@@ -32,9 +35,12 @@ public class ArticleController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var getArticle = await _service.GetAsync(id, cancellationToken);
+        var getArticle = await _service.GetByIdAsync(id, cancellationToken);
         if (getArticle is null)
         {
             return NotFound($"Article with ID {id} was not found.");
@@ -44,7 +50,10 @@ public class ArticleController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateAsync([FromBody] ArticleModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync(
+        [FromBody] ArticleModel model,
+        CancellationToken cancellationToken
+        )
     {
         if (model is null)
         {
@@ -59,7 +68,7 @@ public class ArticleController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var deleteArticle = await _service.GetAsync(id, cancellationToken);
+        var deleteArticle = await _service.GetByIdAsync(id, cancellationToken);
         if (deleteArticle is null)
         {
             return NotFound($"Article with ID {id} was not found.");

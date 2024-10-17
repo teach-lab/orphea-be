@@ -52,7 +52,7 @@ public class TokenService : ITokenService
         var oldRefreshId = _tokenHelper.GetTokenIdFromRefresh(refresh);
         var userId = _tokenHelper.GetUserIdFromRefresh(refresh);
 
-        var user = await _userService.GetAsync(userId, cancellationToken);
+        var user = await _userService.GetByIdAsync(userId, cancellationToken);
         var newTokens = GenerateTokensPairAsync(user, cancellationToken);
 
         await DeleteTokenAsync(refresh, cancellationToken);

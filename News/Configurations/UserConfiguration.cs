@@ -12,13 +12,13 @@ internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 
         builder.HasKey(e => e.Id);
 
-        builder.HasMany(e => e.Comments)
-            .WithOne(e => e.User)
-            .HasForeignKey(e => e.UserId);
-
         builder.HasOne(e => e.Password)
             .WithOne()
             .HasForeignKey<UserEntity>(e => e.PasswordId);
+
+        builder.HasMany(e => e.Comments)
+            .WithOne(e => e.User)
+            .HasForeignKey(e => e.UserId);        
 
         builder.HasMany(e => e.RefreshTokens)
             .WithOne(e => e.User)

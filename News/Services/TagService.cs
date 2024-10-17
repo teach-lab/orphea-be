@@ -27,9 +27,9 @@ public class TagService : ITagService
         return result;
     }
 
-    public async Task<TagModel> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<TagModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(id, cancellationToken);
+        var entity = await _repo.GetByIdAsync(id, cancellationToken);
         var result = _mapper.Map<TagEntity, TagModel>(entity);
 
         return result;

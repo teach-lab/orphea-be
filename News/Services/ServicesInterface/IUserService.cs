@@ -10,7 +10,7 @@ namespace News.Services.ServicesInterface;
 public interface IUserService
 {
     Task<UserResponseModel> CreateAsync(UserCreateModel user, CancellationToken cancellationToken);
-    Task<UserResponseModel> GetAsync(Guid id, CancellationToken cancellationToken);
+    Task<UserResponseModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<UserResponseModel> LoginAsync(LoginModel login , CancellationToken cancellationToken);   
     Task<UserResponseModel> UpdateAsync(JsonPatchDocument<UserUpdateModel> user, string id, CancellationToken cancellationToken);
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);

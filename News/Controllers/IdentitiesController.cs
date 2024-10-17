@@ -19,7 +19,10 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel login, CancellationToken cancellationToken)
+    public async Task<IActionResult> Login(
+        [FromBody] LoginModel login,
+        CancellationToken cancellationToken
+        )
     {
         if (login is null)
         {
@@ -36,7 +39,10 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] UserCreateModel user, CancellationToken cancellationToken)
+    public async Task<IActionResult> Register(
+        [FromBody] UserCreateModel user,
+        CancellationToken cancellationToken
+        )
     {
         if (user is null)
         {
@@ -53,7 +59,10 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout([FromBody] string refresh, CancellationToken cancellationToken)
+    public async Task<IActionResult> Logout(
+        [FromBody] string refresh,
+        CancellationToken cancellationToken
+        )
     {
         if (string.IsNullOrEmpty(refresh))
         {
@@ -70,7 +79,10 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh([FromBody] string refresh, CancellationToken cancellationToken)
+    public async Task<IActionResult> Refresh(
+        [FromBody] string refresh,
+        CancellationToken cancellationToken
+        )
     {
         if (string.IsNullOrEmpty(refresh))
         {

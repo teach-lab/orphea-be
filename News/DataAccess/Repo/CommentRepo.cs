@@ -22,7 +22,7 @@ public class CommentRepo : ICommentRepo
 
         return result;
     }
-    public async Task<CommentEntity> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<CommentEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
@@ -39,7 +39,7 @@ public class CommentRepo : ICommentRepo
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await GetAsync(id, cancellationToken);
+        var entity = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(entity);
         await _context.SaveChangesAsync(cancellationToken);
     }

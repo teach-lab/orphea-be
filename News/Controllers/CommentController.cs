@@ -6,7 +6,7 @@ using News.Services.ServicesInterface;
 namespace News.Controllers;
 
 [ApiController]
-[Route("comment")]
+[Route("comments")]
 public class CommentsController : ControllerBase
 {
     private readonly ICommentService _service;
@@ -17,7 +17,10 @@ public class CommentsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync([FromBody] CommentCreateModel comment, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync(
+        [FromBody] CommentCreateModel comment,
+        CancellationToken cancellationToken
+        )
     {
         if (comment is null)
         {
@@ -30,9 +33,12 @@ public class CommentsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var commentGet = await _service.GetAsync(id, cancellationToken);
+        var commentGet = await _service.GetByIdAsync(id, cancellationToken);
         if (commentGet is null)
         {
             return NotFound($"Comment with ID {id} was not found.");
@@ -42,7 +48,11 @@ public class CommentsController : ControllerBase
     }   
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] CommentUpdateModel comment, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync(
+        [FromRoute] string id,
+        [FromBody] CommentUpdateModel comment,
+        CancellationToken cancellationToken
+        )
     {
         if (comment is null)
         {
@@ -55,9 +65,12 @@ public class CommentsController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteAsync([FromQuery] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync(
+        [FromQuery] Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var commentDelete = await _service.GetAsync(id, cancellationToken);
+        var commentDelete = await _service.GetByIdAsync(id, cancellationToken);
         if (commentDelete is null)
         {
             return NotFound($"Comment with ID {id} was not found.");

@@ -30,9 +30,9 @@ namespace News.Services
             return result;
         }
 
-        public async Task<PublisherModel> GetAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<PublisherModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await _repo.GetAsync(id, cancellationToken);
+            var entity = await _repo.GetByIdAsync(id, cancellationToken);
             var result = _mapper.Map<PublisherEntity, PublisherModel>(entity);
             
             return result;

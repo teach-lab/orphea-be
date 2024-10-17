@@ -23,7 +23,7 @@ public class PublisherRepo : IPublisherRepo
         return result;
     }
 
-    public async Task<PublisherEntity> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<PublisherEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
@@ -42,7 +42,7 @@ public class PublisherRepo : IPublisherRepo
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await GetAsync(id, cancellationToken);
+        var result = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(result);
         await _context.SaveChangesAsync(cancellationToken);
     }

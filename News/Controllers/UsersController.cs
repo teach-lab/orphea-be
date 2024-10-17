@@ -20,9 +20,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var user = await _service.GetAsync(id, cancellationToken);
+        var user = await _service.GetByIdAsync(id, cancellationToken);
         if (user is null)
         {
             return NotFound($"User with ID {id} was not found.");
@@ -43,7 +43,7 @@ public class UsersController : ControllerBase
             return BadRequest("Patch document cannot be null.");
         }
 
-        var existingUser = await _service.GetAsync(Guid.Parse(id), cancellationToken);
+        var existingUser = await _service.GetByIdAsync(Guid.Parse(id), cancellationToken);
         if (existingUser is null)
         {
             return NotFound($"User with ID {id} was not found.");
@@ -57,7 +57,7 @@ public class UsersController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> DeleteAsync([FromQuery] Guid id, CancellationToken cancellationToken)
     {
-        var existingUser = await _service.GetAsync(id, cancellationToken);
+        var existingUser = await _service.GetByIdAsync(id, cancellationToken);
         if (existingUser is null)
         {
             return NotFound($"User with ID {id} was not found.");

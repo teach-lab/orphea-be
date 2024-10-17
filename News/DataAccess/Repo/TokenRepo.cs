@@ -15,7 +15,7 @@ public class TokenRepo : ITokenRepo
         _context = context;
     }
 
-    public async Task<TokenEntity> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<TokenEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
@@ -30,9 +30,9 @@ public class TokenRepo : ITokenRepo
 
     public async Task DeleteAsync(Guid tokenId, CancellationToken cancellation)
     {
-        var entity = await GetAsync(tokenId, cancellation);
+        var entity = await GetByIdAsync(tokenId, cancellation);
 
-        if (entity == null)
+        if (entity is null)
         {
             throw new Exception($"Token with ID {tokenId} not found.");
         }

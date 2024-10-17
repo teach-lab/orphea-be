@@ -23,7 +23,7 @@ public class TagRepo : ITagRepo
         return result;
     }
 
-    public async Task<TagEntity> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<TagEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
@@ -40,7 +40,7 @@ public class TagRepo : ITagRepo
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await GetAsync(id, cancellationToken);
+        var result = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(result);
         await _context.SaveChangesAsync();
     }

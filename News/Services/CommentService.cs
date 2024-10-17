@@ -31,9 +31,9 @@ public class CommentService : ICommentService
         return result;
     }
 
-    public async Task<CommentModel> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<CommentModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(id, cancellationToken);
+        var entity = await _repo.GetByIdAsync(id, cancellationToken);
         var result = _mapper.Map<CommentEntity, CommentModel>(entity);
 
         return result;
@@ -41,7 +41,7 @@ public class CommentService : ICommentService
 
     public async Task<CommentResponseModel> UpdateAsync(CommentUpdateModel comment, string id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(Guid.Parse(id), cancellationToken);
+        var entity = await _repo.GetByIdAsync(Guid.Parse(id), cancellationToken);
         entity.Content = comment.Content;
         var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);
         await _repo.SaveChangesAsync(cancellationToken);

@@ -29,9 +29,9 @@ public class ArticleService : IArticleService
         return result;
     }
 
-    public async Task<ArticleModel> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<ArticleModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(id, cancellationToken);        
+        var entity = await _repo.GetByIdAsync(id, cancellationToken);        
         var result = _mapper.Map<ArticleEntity, ArticleModel>(entity);
 
         return result;
@@ -49,7 +49,7 @@ public class ArticleService : IArticleService
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        var getDelete = await _repo.GetAsync(id, cancellationToken);
+        var getDelete = await _repo.GetByIdAsync(id, cancellationToken);
         await _repo.DeleteAsync(id, cancellationToken);       
         await _repo.SaveChangesAsync(cancellationToken);
     }    

@@ -54,9 +54,9 @@ public class UserService : IUserService
         return result;
     }
 
-    public async Task<UserResponseModel> GetAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<UserResponseModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(id, cancellationToken);
+        var entity = await _repo.GetByIdAsync(id, cancellationToken);
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;
@@ -70,7 +70,7 @@ public class UserService : IUserService
             throw new Exception("User not found");
         }
 
-        var password = await _passwordRepo.GetAsync(user.PasswordId, cancellationToken);
+        var password = await _passwordRepo.GetByIdAsync(user.PasswordId, cancellationToken);
         var hashedPassword = _passwordEncryptionHelper.VerifyPassword(login.Password, password.Hash, password.Salt);
 
         if (!hashedPassword)
@@ -85,7 +85,7 @@ public class UserService : IUserService
 
     public async Task<UserResponseModel> UpdateAsync(JsonPatchDocument<UserUpdateModel> user, string id, CancellationToken cancellationToken)
     {
-        var entity = await _repo.GetAsync(Guid.Parse(id), cancellationToken);
+        var entity = await _repo.GetByIdAsync(Guid.Parse(id), cancellationToken);
         var userToUpdate = new UserUpdateModel
         {
             FirstName = entity.FirstName,
