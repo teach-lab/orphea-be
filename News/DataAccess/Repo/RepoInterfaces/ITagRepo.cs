@@ -1,11 +1,13 @@
 ﻿using News.Entities;
 
-namespace News.DataAccess.Repo.RepoInterfaces;
-
-public interface ITagRepo
+namespace News.DataAccess.Repo.RepoInterfaces
 {
-    Task<TagEntity> GetById(Guid id, CancellationToken cancellationToken);
-    Task<TagEntity> Add(TagEntity entity, CancellationToken cancellationToken);
-    Task<TagEntity> Update(TagEntity entity, CancellationToken cancellationToken);
-    Task Remove(Guid id, CancellationToken cancellationToken);
+    public interface ITagRepo
+    {
+        Task<TagEntity> CreateAsync(TagEntity entity, CancellationToken cancellationToken);
+        Task<TagEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);        
+        Task<TagEntity> UpdateAsync(TagEntity entity, CancellationToken cancellationToken);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+        Task SaveChangesAsync(CancellationToken cancellationToken);
+    }
 }

@@ -16,7 +16,7 @@ public class ArticleConfiguration : IEntityTypeConfiguration<ArticleEntity>
 
         builder.HasOne(e => e.Publisher)
             .WithMany(e => e.Articles)
-            .HasForeignKey(e => e.PublisherId);
+            .HasForeignKey(e => e.PublisherId);       
        
     }
 }

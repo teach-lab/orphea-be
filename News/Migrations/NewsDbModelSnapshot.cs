@@ -188,14 +188,13 @@ partial class NewsDbModelSnapshot : ModelSnapshot
                 b.Property<string>("Login")
                     .HasColumnType("nvarchar(max)");
 
-                b.Property<Guid?>("PasswordId")
+                b.Property<Guid>("PasswordId")
                     .HasColumnType("uniqueidentifier");
 
                 b.HasKey("Id");
 
                 b.HasIndex("PasswordId")
-                    .IsUnique()
-                    .HasFilter("[PasswordId] IS NOT NULL");
+                    .IsUnique();
 
                 b.ToTable("Users", (string)null);
             });
@@ -256,7 +255,9 @@ partial class NewsDbModelSnapshot : ModelSnapshot
             {
                 b.HasOne("News.Entities.PasswordEntity", "Password")
                     .WithOne()
-                    .HasForeignKey("News.Entities.UserEntity", "PasswordId");
+                    .HasForeignKey("News.Entities.UserEntity", "PasswordId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
                 b.Navigation("Password");
             });

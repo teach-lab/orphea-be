@@ -1,11 +1,13 @@
 ﻿using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
 
-namespace News.Services.ServicesInterface;
-
-public interface IPublisherService
+namespace News.Services.ServicesInterface
 {
-    Task<PublisherModel> GetById(Guid id, CancellationToken cancellationToken);
-    Task<PublisherCreateModel> Add(PublisherCreateModel model, CancellationToken cancellationToken);        
-    Task<PublisherModel> Update(PublisherModel model, CancellationToken cancellationToken);
-    Task Remove(Guid id, CancellationToken cancellationToken);
+    public interface IPublisherService
+    {
+        Task<PublisherCreateModel> CreateAsync(PublisherCreateModel model, CancellationToken cancellationToken);
+        Task<PublisherModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);               
+        Task<PublisherModel> UpdateAsync(PublisherModel model, CancellationToken cancellationToken);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+    }
 }

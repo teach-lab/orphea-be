@@ -10,6 +10,7 @@ using News.Services.ServicesInterface;
 using News.Services;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
+using News.Infrastructure.IInfrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,6 +81,8 @@ builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
 builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
+
+
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 

@@ -2,6 +2,11 @@
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Entities;
 using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
+using News.Entities.Models.ModelsRespones;
+using News.Entities.Models.ModelsUpdate;
+using News.Services.ServicesInterface;
+using System.Threading;
 
 namespace News.Services;
 
@@ -16,37 +21,48 @@ public class CommentService : ICommentService
         _mapper = mapper;
     }
 
-    public async Task<CommentModel> GetCommentById(Guid id)
-    {
-        var entity = await _repo.GetCommentById(id);
-        var result = _mapper.Map<CommentEntity, CommentModel>(entity);
-
-        return result;
-    }
-
-    public async Task<CommentResponseModel> CreateComment(CommentCreateModel comment)
+    public async Task<CommentResponseModel> CreateAsync(
+        CommentCreateModel comment,
+        CancellationToken cancellationToken
+        )
     {
         var entity = _mapper.Map<CommentCreateModel, CommentEntity>(comment);
-        var addedEntity = await _repo.CreateComment(entity);
+        var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
+        await _repo.SaveChangesAsync(cancellationToken);
         var result = _mapper.Map<CommentEntity, CommentResponseModel>(addedEntity);
 
         return result;
     }
 
-    public async Task<CommentResponseModel> UpdateComment(CommentUpdateModel comment, string id)
+    public async Task<CommentModel> GetByIdAsync(
+        Guid id,
+        CancellationToken cancellationToken
+        )
     {
-        var entity = await _repo.GetCommentById(Guid.Parse(id));
+        var entity = await _repo.GetByIdAsync(id, cancellationToken);
+        var result = _mapper.Map<CommentEntity, CommentModel>(entity);
 
+        return result;
+    }   
+
+    public async Task<CommentResponseModel> UpdateAsync(
+        CommentUpdateModel comment,
+        string id,
+        CancellationToken cancellationToken
+        )
+    {
+        var entity = await _repo.GetByIdAsync(Guid.Parse(id), cancellationToken);
         entity.Content = comment.Content;
-
-        var updatedEntity = await _repo.UpdateComment(entity);
+        var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);
+        await _repo.SaveChangesAsync(cancellationToken);
         var result = _mapper.Map<CommentEntity, CommentResponseModel>(updatedEntity);
 
         return result;
     }
 
-    public async Task DeleteComment(Guid id)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
-        await _repo.DeleteComment(id);
+        await _repo.DeleteAsync(id, cancellationToken);
+        await _repo.SaveChangesAsync(cancellationToken);
     }
 }
