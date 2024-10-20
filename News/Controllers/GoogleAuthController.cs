@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using News.Services;
+using News.Services.ServicesInterface;
 
 namespace News.Controllers;
 
 [ApiController]
 [Route("google-auth")]
-public class GoogleAuthController: ControllerBase
+public class GoogleAuthController : ControllerBase
 {
     private readonly IGoogleAuthService _googleAuthService;
 

@@ -10,11 +10,11 @@ namespace News.Controllers;
 [ApiController]
 [Route("publishers")]
 public class PublisherController : Controller
-{        
+{
     private readonly IPublisherService _service;
 
     public PublisherController(IPublisherService service)
-    {            
+    {
         _service = service;
     }
 
@@ -38,7 +38,7 @@ public class PublisherController : Controller
         var getPublisher = await _service.GetByIdAsync(id, cancellationToken);
 
         return Ok(getPublisher);
-    }    
+    }
 
     [HttpPut]
     public async Task<IActionResult> UpdateAsync([FromBody] PublisherModel model,

@@ -1,5 +1,7 @@
 ﻿using Google.Apis.Auth;
 using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
+using News.Services.ServicesInterface;
 
 namespace News.Services;
 
@@ -18,7 +20,7 @@ public class GoogleAuthService : IGoogleAuthService
     {
         var payload = await GoogleJsonWebSignature.ValidateAsync(googleAccess);
 
-        var user = await _userService.GetUserByEmail(payload.Email);
+        var user = await _userService.GetByEmailAsync(payload.Email, cancellationToken);
 
         if (user is null)
         {
@@ -29,18 +31,18 @@ public class GoogleAuthService : IGoogleAuthService
                 Login = payload.Email,
             };
 
-            var createdUser = await _userService.CreateUserViaSso(newUser);
+            var createdUser = await _userService.CreateViaSsoAsync(newUser, cancellationToken);
 
-            var newToken = _tokenService.GenerateTokensPair(createdUser, cancellationToken);
+            var newToken = _tokenService.GenerateTokensPairAsync(createdUser, cancellationToken);
 
-            await _tokenService.SaveToken(newToken.Refresh, cancellationToken);
+            await _tokenService.SaveTokenAsync(newToken.Refresh, cancellationToken);
 
             return newToken;
         }
 
-        var token = _tokenService.GenerateTokensPair(user, cancellationToken);
+        var token = _tokenService.GenerateTokensPairAsync(user, cancellationToken);
 
-        await _tokenService.SaveToken(token.Refresh, cancellationToken);
+        await _tokenService.SaveTokenAsync(token.Refresh, cancellationToken);
 
         return token;
     }

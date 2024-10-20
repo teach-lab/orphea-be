@@ -1,6 +1,6 @@
 ﻿using News.Entities.Models;
 
-namespace News.Services;
+namespace News.Services.ServicesInterface;
 
 public interface IGoogleAuthService
 {

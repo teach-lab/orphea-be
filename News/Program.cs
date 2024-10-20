@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000") // Укажите ваш фронтенд-URI
+            builder.WithOrigins("http://localhost:3000")
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
@@ -81,8 +81,6 @@ builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
 builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
-
-
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 

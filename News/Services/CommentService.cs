@@ -6,7 +6,6 @@ using News.Entities.Models.ModelsCreate;
 using News.Entities.Models.ModelsRespones;
 using News.Entities.Models.ModelsUpdate;
 using News.Services.ServicesInterface;
-using System.Threading;
 
 namespace News.Services;
 
@@ -43,7 +42,7 @@ public class CommentService : ICommentService
         var result = _mapper.Map<CommentEntity, CommentModel>(entity);
 
         return result;
-    }   
+    }
 
     public async Task<CommentResponseModel> UpdateAsync(
         CommentUpdateModel comment,
