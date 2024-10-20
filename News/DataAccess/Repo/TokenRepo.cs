@@ -32,6 +32,7 @@ public class TokenRepo : ITokenRepo
         )
     {
         var entity = (await _dbSet.AddAsync(refreshEntity, cancellationToken)).Entity;
+
         await _context.SaveChangesAsync(cancellationToken);        
     }
 
@@ -45,6 +46,7 @@ public class TokenRepo : ITokenRepo
         }
 
         _dbSet.Remove(entity);
+
         await _context.SaveChangesAsync(cancellation);
     }
 

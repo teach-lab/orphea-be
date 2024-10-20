@@ -3,18 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using News.Entities.Models;
 using News.Entities.Models.ModelsCreate;
 using News.Services.ServicesInterface;
-using System.Threading;
 
 namespace News.Controllers;
 
 [ApiController]
 [Route("articles")]
 public class ArticleController : ControllerBase
-{    
+{
     private readonly IArticleService _service;
 
     public ArticleController(DbContext context, IArticleService service)
-    {        
+    {
         _service = service;
     }
 
@@ -35,7 +34,7 @@ public class ArticleController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var getArticle = await _service.GetByIdAsync(id, cancellationToken);        
+        var getArticle = await _service.GetByIdAsync(id, cancellationToken);
 
         return Ok(getArticle);
     }
@@ -46,7 +45,7 @@ public class ArticleController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var updateArticle = await _service.UpdateAsync(model, cancellationToken);        
+        var updateArticle = await _service.UpdateAsync(model, cancellationToken);
 
         return Ok(updateArticle);
     }

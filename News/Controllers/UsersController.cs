@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using News.Entities.Models.ModelsUpdate;
 using News.Services.ServicesInterface;
-using System.Xml.XPath;
 
 namespace News.Controllers;
 
@@ -26,13 +25,13 @@ public class UsersController : ControllerBase
         )
     {
         var user = await _service.GetByIdAsync(id, cancellationToken);
-        
+
         return Ok(user);
     }
 
     [HttpPatch("{id}")]
     public async Task<IActionResult> UpdateAsync(
-        [FromRoute] string id, 
+        [FromRoute] string id,
         [FromBody] JsonPatchDocument<UserUpdateModel> user,
         CancellationToken cancellationToken
         )

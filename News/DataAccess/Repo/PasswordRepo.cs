@@ -28,7 +28,7 @@ public class PasswordRepo : IPasswordRepo
     }
 
     public async Task<PasswordEntity> GetByIdAsync(
-        Guid id,
+        Guid? id,
         CancellationToken cancellationToken
         )
     {

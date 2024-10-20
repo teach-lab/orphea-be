@@ -62,12 +62,37 @@ public class UserService : IUserService
         return result;
     }
 
+    public async Task<UserResponseModel> CreateViaSsoAsync(UserCreateModel user, CancellationToken cancellationToken)
+    {
+        var UserEntity = new UserEntity
+        {
+            Id = Guid.NewGuid(),
+            FirstName = user.FirstName,
+            Email = user.Email,
+            Login = user.Login
+        };
+
+        var createdUser = await _repo.CreateAsync(UserEntity, cancellationToken);
+
+        var result = _mapper.Map<UserEntity, UserResponseModel>(createdUser);
+
+        return result;
+    }
+
     public async Task<UserResponseModel> GetByIdAsync(
         Guid id,
         CancellationToken cancellationToken
         )
     {
         var entity = await _repo.GetByIdAsync(id, cancellationToken);
+        var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
+
+        return result;
+    }
+
+    public async Task<UserResponseModel> GetByEmailAsync(string email, CancellationToken cancellationToken)
+    {
+        var entity = await _repo.GetByEmailAsync(email, cancellationToken);
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;
@@ -84,7 +109,7 @@ public class UserService : IUserService
             throw new Exception("User not found");
         }
 
-        var password = await _passwordRepo.GetByIdAsync(user.PasswordId,cancellationToken);
+        var password = await _passwordRepo.GetByIdAsync(user.PasswordId, cancellationToken);
         var hashedPassword = _passwordEncryptionHelper.VerifyPassword(
             login.Password,
             password.Hash,
@@ -125,7 +150,7 @@ public class UserService : IUserService
         var result = _mapper.Map<UserEntity, UserResponseModel>(entity);
 
         return result;
-    }        
+    }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {

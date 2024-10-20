@@ -12,6 +12,6 @@ public class TagConfiguration : IEntityTypeConfiguration<TagEntity>
 
         builder.HasMany(e => e.ArticleTags)
             .WithOne(e => e.Tag)
-            .HasForeignKey(e => e.TagId);           
+            .HasForeignKey(e => e.TagId);
     }
 }

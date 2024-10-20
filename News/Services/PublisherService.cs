@@ -38,10 +38,10 @@ public class PublisherService : IPublisherService
     {
         var entity = await _repo.GetByIdAsync(id, cancellationToken);
         var result = _mapper.Map<PublisherEntity, PublisherModel>(entity);
-        
+
         return result;
     }
-    
+
     public async Task<PublisherModel> UpdateAsync(
         PublisherModel model,
         CancellationToken cancellationToken
@@ -52,7 +52,7 @@ public class PublisherService : IPublisherService
         await _repo.SaveChangesAsync(cancellationToken);
         var result = _mapper.Map<PublisherEntity, PublisherModel>(updatedEntity);
 
-        return result;            
+        return result;
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)

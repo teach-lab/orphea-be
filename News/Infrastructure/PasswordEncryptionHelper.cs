@@ -1,5 +1,4 @@
 ﻿using System.Security.Cryptography;
-using News.Infrastructure.IInfrastructure;
 
 namespace News.Infrastructure;
 

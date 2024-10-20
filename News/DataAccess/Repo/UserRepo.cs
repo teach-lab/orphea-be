@@ -26,6 +26,16 @@ public class UserRepo : IUserRepo
         return entity;
     }
 
+    public async Task<UserEntity> GetByEmailAsync(
+        string email,
+        CancellationToken cancellationToken
+        )
+    {
+        var entity = await _dbSet.FirstOrDefaultAsync(e => e.Email == email, cancellationToken);
+
+        return entity;
+    }
+
     public async Task<UserEntity> GetLoginAsync(
         string login,
         CancellationToken cancellationToken
@@ -54,7 +64,7 @@ public class UserRepo : IUserRepo
         )
     {
         var entity = _dbSet.Update(user).Entity;
-        await _context.SaveChangesAsync( cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return entity;
     }

@@ -27,7 +27,7 @@ public class IdentitiesController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var token = await _identityService.LoginAsync(login, cancellationToken);        
+        var token = await _identityService.LoginAsync(login, cancellationToken);
 
         return Ok(token);
     }
@@ -38,7 +38,7 @@ public class IdentitiesController : ControllerBase
         CancellationToken cancellationToken
         )
     {
-        var token = await _identityService.RegisterAsync(user, cancellationToken);        
+        var token = await _identityService.RegisterAsync(user, cancellationToken);
 
         return Ok(token);
     }
@@ -50,7 +50,7 @@ public class IdentitiesController : ControllerBase
         )
     {
         var result = await _identityService.LogOutAsync(refresh, cancellationToken);
-        
+
         return Ok(result);
     }
 

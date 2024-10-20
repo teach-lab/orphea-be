@@ -13,7 +13,7 @@ public class ArticleService : IArticleService
     private readonly IArticleRepo _repo;
     private readonly IMapper _mapper;
 
-    public ArticleService(IArticleRepo repo, IMapper mapper) 
+    public ArticleService(IArticleRepo repo, IMapper mapper)
     {
         _repo = repo;
         _mapper = mapper;
@@ -37,7 +37,7 @@ public class ArticleService : IArticleService
         CancellationToken cancellationToken
         )
     {
-        var entity = await _repo.GetByIdAsync(id, cancellationToken);        
+        var entity = await _repo.GetByIdAsync(id, cancellationToken);
         var result = _mapper.Map<ArticleEntity, ArticleModel>(entity);
 
         return result;
@@ -47,7 +47,7 @@ public class ArticleService : IArticleService
         ArticleModel model,
         CancellationToken cancellationToken
         )
-    {   
+    {
         var entity = _mapper.Map<ArticleModel, ArticleEntity>(model);
         var updatedEntity = await _repo.UpdateAsync(entity, cancellationToken);
         await _repo.SaveChangesAsync(cancellationToken);
@@ -59,7 +59,7 @@ public class ArticleService : IArticleService
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var getDelete = await _repo.GetByIdAsync(id, cancellationToken);
-        await _repo.DeleteAsync(id, cancellationToken);       
+        await _repo.DeleteAsync(id, cancellationToken);
         await _repo.SaveChangesAsync(cancellationToken);
-    }    
+    }
 }

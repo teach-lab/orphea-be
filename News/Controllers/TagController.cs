@@ -5,7 +5,6 @@ using News.Entities.Models;
 using News.Entities.Models.ModelsCreate;
 using News.Services.ServicesInterface;
 
-
 namespace News.Controllers;
 
 [ApiController]
@@ -13,8 +12,9 @@ namespace News.Controllers;
 public class TagController : Controller
 {
     private readonly ITagService _service;
+
     public TagController(ITagService service)
-    {            
+    {
         _service = service;
     }
 
@@ -36,17 +36,17 @@ public class TagController : Controller
         )
     {
         var getTag = await _service.GetByIdAsync(id, cancellationToken);
-        
+
         return Ok(getTag);
-    }    
+    }
 
     [HttpPut]
     public async Task<IActionResult> UpdateAsync(
         [FromBody] TagModel model,
         CancellationToken cancellationToken
         )
-    {        
-        var updateTag = await _service.UpdateAsync(model, cancellationToken);       
+    {
+        var updateTag = await _service.UpdateAsync(model, cancellationToken);
 
         return Ok(updateTag);
     }
