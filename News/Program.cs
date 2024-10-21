@@ -11,6 +11,7 @@ using News.Services;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
 using News.Infrastructure.IInfrastructure;
+using News.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,13 +71,14 @@ builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
 builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 
-
-
-
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
+
+app.UseCors();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
