@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using News.Entities;
 using News.Entities.Models;
+using News.Entities.Models.ModelsCreate;
+using News.Entities.Models.ModelsRespones;
+using News.Entities.Models.ModelsUpdate;
 
 namespace News.Mapping;
 
@@ -13,12 +16,15 @@ public class NewsMappingProfile : Profile
         CreateMap<CommentCreateModel, CommentEntity>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()));
         CreateMap<CommentEntity, CommentResponseModel>()
-            .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username));
+            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName));
         CreateMap<UserModel, UserEntity>().ReverseMap();
         CreateMap<ArticleModel, ArticleEntity>().ReverseMap();
+        CreateMap<ArticleCreateModel, ArticleEntity>().ReverseMap();
         CreateMap<TagModel, TagEntity>().ReverseMap();
+        CreateMap<TagCreateModel, TagEntity>().ReverseMap();
         CreateMap<ArticleTagModel, ArticleTagEntity>().ReverseMap();
         CreateMap<PublisherModel, PublisherEntity>().ReverseMap();
-        CreateMap<UserResponseModel, UserEntity>().ReverseMap();
+        CreateMap<PublisherCreateModel, PublisherEntity>().ReverseMap();
+        CreateMap<UserResponseModel, UserEntity>().ReverseMap();        
     }
 }
