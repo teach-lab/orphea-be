@@ -22,40 +22,40 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(
+    public async Task<IActionResult> LoginAsync(
         [FromBody] LoginModel login,
         CancellationToken cancellationToken
         )
     {
-        var token = await _identityService.LoginAsync(login, cancellationToken);        
+        var token = await _identityService.LoginAsync(login, cancellationToken);
 
         return Ok(token);
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(
+    public async Task<IActionResult> RegisterAsync(
         [FromBody] UserCreateModel user,
         CancellationToken cancellationToken
         )
     {
-        var token = await _identityService.RegisterAsync(user, cancellationToken);        
+        var token = await _identityService.RegisterAsync(user, cancellationToken);
 
         return Ok(token);
     }
 
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout(
+    public async Task<IActionResult> LogoutAsync(
         [FromBody] string refresh,
         CancellationToken cancellationToken
         )
     {
         var result = await _identityService.LogOutAsync(refresh, cancellationToken);
-        
+
         return Ok(result);
     }
 
     [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh(
+    public async Task<IActionResult> RefreshAsync(
         [FromBody] string refresh,
         CancellationToken cancellationToken
         )

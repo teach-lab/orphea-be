@@ -1,5 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using News.Infrastructure.IInfrastructure;
+﻿using News.Infrastructure.IInfrastructure;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace News.Infrastructure;
 
