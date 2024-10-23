@@ -22,7 +22,7 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(
+    public async Task<IActionResult> LoginAsync(
         [FromBody] LoginModel login,
         CancellationToken cancellationToken
         )
@@ -33,7 +33,7 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(
+    public async Task<IActionResult> RegisterAsync(
         [FromBody] UserCreateModel user,
         CancellationToken cancellationToken
         )
@@ -44,7 +44,7 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout(
+    public async Task<IActionResult> LogoutAsync(
         [FromBody] string refresh,
         CancellationToken cancellationToken
         )
@@ -55,7 +55,7 @@ public class IdentitiesController : ControllerBase
     }
 
     [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh(
+    public async Task<IActionResult> RefreshAsync(
         [FromBody] string refresh,
         CancellationToken cancellationToken
         )

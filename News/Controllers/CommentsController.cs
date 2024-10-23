@@ -17,7 +17,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetCommentById([FromRoute] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var comment = await _service.GetByIdAsync(id, cancellationToken);
 
@@ -25,7 +25,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateComment([FromBody] CommentCreateModel comment, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateAsync([FromBody] CommentCreateModel comment, CancellationToken cancellationToken)
     {
         var createdComment = await _service.CreateAsync(comment, cancellationToken);
 
@@ -33,7 +33,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateComment([FromRoute] string id, [FromBody] CommentUpdateModel comment, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateAsync([FromRoute] string id, [FromBody] CommentUpdateModel comment, CancellationToken cancellationToken)
     {
         var updatedComment = await _service.UpdateAsync(comment, id, cancellationToken);
 
@@ -41,7 +41,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteComment([FromQuery] Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync([FromQuery] Guid id, CancellationToken cancellationToken)
     {
         await _service.DeleteAsync(id, cancellationToken);
 

@@ -16,7 +16,7 @@ public class GoogleAuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] string googleAccess, CancellationToken cancellationToken)
+    public async Task<IActionResult> LoginAsync([FromBody] string googleAccess, CancellationToken cancellationToken)
     {
         var token = await _googleAuthService.LoginGoogleAsync(googleAccess, cancellationToken);
 
