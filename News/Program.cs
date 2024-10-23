@@ -6,11 +6,10 @@ using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Infrastructure;
 using News.Mapping;
-using News.Services.ServicesInterface;
+using News.Middlewares;
 using News.Services;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
-using News.Infrastructure.IInfrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,7 +84,11 @@ builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
 var app = builder.Build();
-// Configure the HTTP request pipeline.
+
+app.UseCors();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
