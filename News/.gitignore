@@ -97,3 +97,6 @@ ipch/
 *.cachefile
 *.VC.db
 *.VC.VC.opendb
+
+# Migrations 
+[Mm]igrations/
