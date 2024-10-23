@@ -5,9 +5,11 @@ using News.DataAccess;
 using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Infrastructure;
+using News.Infrastructure.IInfrastructure;
 using News.Mapping;
 using News.Middlewares;
 using News.Services;
+using News.Services.ServicesInterface;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
 
