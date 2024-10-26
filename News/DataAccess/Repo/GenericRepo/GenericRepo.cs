@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using News.DataAccess.Repo.RepoInterfaces;
 
-namespace News.DataAccess.Repo;
+namespace News.DataAccess.Repo.GenericRepositories;
 
 public class GenericRepo<T> : IGenericRepo<T> where T : class
 {
-    private readonly DbContext _context;
-    private readonly DbSet<T> _dbSet;
+    protected readonly DbContext _context;
+    protected readonly DbSet<T> _dbSet;
 
     public GenericRepo(DbContext context)
     {
@@ -43,6 +42,7 @@ public class GenericRepo<T> : IGenericRepo<T> where T : class
 
         return entity;
     }
+
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
     {
         await _context.SaveChangesAsync(cancellationToken);

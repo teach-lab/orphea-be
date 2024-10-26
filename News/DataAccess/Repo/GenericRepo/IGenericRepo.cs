@@ -1,4 +1,4 @@
-﻿namespace News.DataAccess.Repo.RepoInterfaces;
+﻿namespace News.DataAccess.Repo.GenericRepositories;
 
 public interface IGenericRepo<T> where T : class
 {
