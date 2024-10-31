@@ -11,4 +11,15 @@ public class PasswordRepo : GenericRepo<PasswordEntity>, IPasswordRepo
         : base(context)
     {
     }
+
+    public async Task<PasswordEntity> GetByIdAsync(
+        Guid? id,
+        CancellationToken cancellationToken
+        )
+    {
+        var entity = await _dbSet
+            .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
+        return entity;
+    }
 }

@@ -8,7 +8,7 @@ public interface IGenericRepo<T> where T : class
 
     Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
 
-    Task<T> DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 
     Task SaveChangesAsync(CancellationToken cancellationToken);
 }

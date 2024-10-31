@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace News.Entities;
+﻿namespace News.Entities;
 
 public class ArticleEntity
 {

@@ -34,13 +34,11 @@ public class GenericRepo<T> : IGenericRepo<T> where T : class
         return entity;
     }
 
-    public async Task<T> DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(entity);
         await _context.SaveChangesAsync(cancellationToken);
-
-        return entity;
     }
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken)
