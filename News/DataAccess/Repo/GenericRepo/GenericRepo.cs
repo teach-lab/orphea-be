@@ -23,7 +23,7 @@ public class GenericRepo<T> : IGenericRepo<T> where T : class
 
     public async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _dbSet.FindAsync(new object[] { id }, cancellationToken);
+        return await _dbSet.FindAsync(id, cancellationToken);
     }
 
     public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)

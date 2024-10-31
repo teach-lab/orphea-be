@@ -109,7 +109,7 @@ public class UserService : IUserService
             throw new Exception("User not found");
         }
 
-        var password = await _passwordRepo.GetByIdAsync(user.PasswordId.Value, cancellationToken);
+        var password = await _passwordRepo.GetByIdAsync(user.PasswordId, cancellationToken);
         var hashedPassword = _passwordEncryptionHelper.VerifyPassword(
             login.Password,
             password.Hash,
