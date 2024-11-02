@@ -5,7 +5,7 @@ namespace News.Services.ServicesInterface
 {
     public interface ITagService
     {
-        Task<TagCreateModel> CreateAsync(TagCreateModel model, CancellationToken cancellationToken);
+        Task<TagModel> CreateAsync(TagCreateModel model, CancellationToken cancellationToken);
 
         Task<TagModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 

@@ -1,6 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using News.Entities.Models;
 using News.Entities.Models.ModelsCreate;
 using News.Services.ServicesInterface;
