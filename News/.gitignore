@@ -12,6 +12,10 @@ serviceDependencies.json
 serviceDependencies.local.json
 
 # User-specific files
+appsettings.json
+appsettings.Development.json
+
+# User-specific files
 *.suo
 *.user
 *.userosscache

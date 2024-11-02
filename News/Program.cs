@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+builder.Services.Configure<OpenAiOptions>(builder.Configuration.GetSection(nameof(OpenAiOptions)));
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
         options.SerializerSettings.ContractResolver = new DefaultContractResolver());
@@ -82,6 +83,7 @@ builder.Services.AddTransient<IPublisherRepo, PublisherRepo>();
 builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
+builder.Services.AddTransient<IAiIntegrationService, AiIntegrationService>();
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
