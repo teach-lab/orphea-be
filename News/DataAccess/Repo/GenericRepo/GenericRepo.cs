@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using News.Entities;
 
 namespace News.DataAccess.Repo.GenericRepositories;
 
-public class GenericRepo<T> : IGenericRepo<T> where T : class
+public class GenericRepo<T> : IGenericRepo<T> where T : BaseEntity
 {
     protected readonly DbContext _context;
     protected readonly DbSet<T> _dbSet;
@@ -23,7 +24,7 @@ public class GenericRepo<T> : IGenericRepo<T> where T : class
 
     public async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await _dbSet.FindAsync(id, cancellationToken);
+        return await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
     public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)

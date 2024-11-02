@@ -1,9 +1,7 @@
 ﻿namespace News.Entities;
 
-public class UserEntity
+public class UserEntity : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public string? FirstName { get; set; }
 
     public string? Email { get; set; }

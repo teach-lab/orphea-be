@@ -1,9 +1,7 @@
 ﻿namespace News.Entities;
 
-public class ArticleEntity
+public class ArticleEntity : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public string Title { get; set; }
 
     public string SourceUrl { get; set; }
@@ -20,5 +18,5 @@ public class ArticleEntity
 
     public PublisherEntity? Publisher { get; set; }
 
-    public List<ArticleTagEntity>? ArticleTags { get; set; } = new List<ArticleTagEntity>();
+    public List<ArticleTagEntity>? ArticleTags { get; set; }
 }
