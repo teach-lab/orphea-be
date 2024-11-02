@@ -97,7 +97,7 @@ public class TokenService : ITokenService
             Refresh = refresh
         };
 
-        await _tokenRepo.SaveAsync(refreshEntity, cancellationToken);
+        await _tokenRepo.CreateAsync(refreshEntity, cancellationToken);
     }
 
     private string GenerateAccessToken(

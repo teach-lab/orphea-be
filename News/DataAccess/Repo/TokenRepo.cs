@@ -11,14 +11,4 @@ public class TokenRepo : GenericRepo<TokenEntity>, ITokenRepo
         : base(context)
     {
     }
-
-    public async Task SaveAsync(
-         TokenEntity refreshEntity,
-        CancellationToken cancellationToken
-        )
-    {
-        var entity = (await _dbSet.AddAsync(refreshEntity, cancellationToken)).Entity;
-
-        await _context.SaveChangesAsync(cancellationToken);
-    }
 }

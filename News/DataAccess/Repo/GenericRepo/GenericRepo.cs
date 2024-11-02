@@ -22,7 +22,7 @@ public class GenericRepo<T> : IGenericRepo<T> where T : BaseEntity
         return entity;
     }
 
-    public async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<T> GetByIdAsync(Guid? id, CancellationToken cancellationToken)
     {
         return await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
@@ -35,7 +35,7 @@ public class GenericRepo<T> : IGenericRepo<T> where T : BaseEntity
         return entity;
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Guid? id, CancellationToken cancellationToken)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         _dbSet.Remove(entity);
