@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace News.Entities;
 
-namespace News.Entities;
-
-public class PublisherEntity
+public class PublisherEntity : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public string Name { get; set; }
 
     public int TrustScore { get; set; }

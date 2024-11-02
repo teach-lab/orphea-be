@@ -1,9 +1,7 @@
 ﻿namespace News.Entities;
 
-public class TokenEntity
+public class TokenEntity : BaseEntity
 {
-    public Guid Id { get; set; }
-
     public Guid UserId { get; set; }
 
     public string Refresh { get; set; }
