@@ -20,37 +20,37 @@ public class TagControllerTests
     }
 
     [Fact]
-    public async Task CreateAsync_createNewModel_ReturnsOkResult()
+    public async Task CreateAsync_CreateNewModel_ReturnsOkResult()
     {
         // Arrange
-        var tagModel = new TagCreateModel { Name = "TestTag" };
-        var createdTag = new TagModel { Name = "TestTag" };
+        var newModel = new TagCreateModel { Name = "TestTag" };
+        var expectedModel = new TagModel { Name = "TestTag" };
 
         _mockService.Setup(service => service.CreateAsync(
-            tagModel,
+            newModel,
             It.IsAny<CancellationToken>()))
-            .ReturnsAsync(createdTag);
+            .ReturnsAsync(expectedModel);
 
         // Act
-        var result = await _controller.CreateAsync(tagModel, CancellationToken.None);
+        var result = await _controller.CreateAsync(newModel, CancellationToken.None);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         var returnValue = Assert.IsType<TagModel>(okResult.Value);
-        Assert.Equal(createdTag.Name, returnValue.Name);
+        Assert.Equal(expectedModel.Name, returnValue.Name);
     }
 
     [Fact]
-    public async Task GetByIdAsync_getTagById_ReturnsOkResult()
+    public async Task GetByIdAsync_GetTagById_ReturnsOkResult()
     {
         // Arrange
         var tagId = Guid.NewGuid();
-        var tagModel = new TagModel { Id = tagId, Name = "TestTag" };
+        var newModel = new TagModel { Id = tagId, Name = "TestTag" };
 
         _mockService.Setup(service => service.GetByIdAsync(
             tagId,
             It.IsAny<CancellationToken>()))
-            .ReturnsAsync(tagModel);
+            .ReturnsAsync(newModel);
 
         // Act
         var result = await _controller.GetByIdAsync(tagId, CancellationToken.None);
@@ -58,23 +58,24 @@ public class TagControllerTests
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         var returnValue = Assert.IsType<TagModel>(okResult.Value);
-        Assert.Equal(tagModel.Name, returnValue.Name);
+        Assert.Equal(newModel.Name, returnValue.Name);
     }
 
     [Fact]
-    public async Task UpdateAsync_updateTag_ReturnsOkResult()
+    public async Task UpdateAsync_UpdateTag_ReturnsOkResult()
     {
         // Arrange
-        var tagModel = new TagModel { Id = Guid.NewGuid(), Name = "TestTagUpdate" };
-        var updatedTag = new TagModel { Id = tagModel.Id, Name = "TestTagUpdate" };
+        var tagId = Guid.NewGuid();
+        var newModel = new TagModel { Id = tagId, Name = "TestTag" };
+        var updatedTag = new TagModel { Id = tagId, Name = "TestTagUpdate" };
 
         _mockService.Setup(service => service.UpdateAsync(
-            tagModel,
+            newModel,
             It.IsAny<CancellationToken>()))
             .ReturnsAsync(updatedTag);
 
         // Act
-        var result = await _controller.UpdateAsync(tagModel, CancellationToken.None);
+        var result = await _controller.UpdateAsync(newModel, CancellationToken.None);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -83,7 +84,7 @@ public class TagControllerTests
     }
 
     [Fact]
-    public async Task DeleteAsync_deleteTag_ReturnsOkResult()
+    public async Task DeleteAsync_DeleteTag_ReturnsOkResult()
     {
         // Arrange
         var tagId = Guid.NewGuid();
@@ -93,6 +94,11 @@ public class TagControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkResult>(result);
+
+        _mockService.Verify(service => service.DeleteAsync(
+            tagId,
+            CancellationToken.None),
+            Times.Once);
     }
 
     [Fact]

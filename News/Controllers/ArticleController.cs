@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using News.Entities.Models;
 using News.Entities.Models.ModelsCreate;
 using News.Services.ServicesInterface;
@@ -12,7 +11,7 @@ public class ArticleController : ControllerBase
 {
     private readonly IArticleService _service;
 
-    public ArticleController(DbContext context, IArticleService service)
+    public ArticleController(IArticleService service)
     {
         _service = service;
     }

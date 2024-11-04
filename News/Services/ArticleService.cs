@@ -4,7 +4,6 @@ using News.Entities;
 using News.Entities.Models;
 using News.Entities.Models.ModelsCreate;
 using News.Services.ServicesInterface;
-using System.IO;
 
 namespace News.Services;
 
@@ -19,7 +18,7 @@ public class ArticleService : IArticleService
         _mapper = mapper;
     }
 
-    public async Task<ArticleCreateModel> CreateAsync(
+    public async Task<ArticleModel> CreateAsync(
         ArticleCreateModel model,
         CancellationToken cancellationToken
         )
@@ -27,7 +26,7 @@ public class ArticleService : IArticleService
         var entity = _mapper.Map<ArticleCreateModel, ArticleEntity>(model);
         var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
         await _repo.SaveChangesAsync(cancellationToken);
-        var result = _mapper.Map<ArticleEntity, ArticleCreateModel>(addedEntity);
+        var result = _mapper.Map<ArticleEntity, ArticleModel>(addedEntity);
 
         return result;
     }

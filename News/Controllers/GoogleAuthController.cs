@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using News.Services;
 using News.Services.ServicesInterface;
 
 namespace News.Controllers;
