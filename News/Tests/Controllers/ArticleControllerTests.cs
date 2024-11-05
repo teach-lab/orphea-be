@@ -23,7 +23,7 @@ public class ArticleControllerTests
     public async Task CreateAsync_CreateNewModel_ReturnsOkResult()
     {
         // Arrange
-        var dataTime = DateTime.Now;
+        var dataTime = DateTime.UtcNow;
         var publisherId = Guid.NewGuid();
         var newModel = new ArticleCreateModel
         {
@@ -56,12 +56,19 @@ public class ArticleControllerTests
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         var returnValue = Assert.IsType<ArticleModel>(okResult.Value);
+
+        Assert.Equal(expectedModel.Id, returnValue.Id);
         Assert.Equal(expectedModel.Title, returnValue.Title);
         Assert.Equal(expectedModel.SourceUrl, returnValue.SourceUrl);
         Assert.Equal(expectedModel.ImageUrl, returnValue.ImageUrl);
         Assert.Equal(expectedModel.Description, returnValue.Description);
         Assert.Equal(expectedModel.PublishedAt, returnValue.PublishedAt);
         Assert.Equal(expectedModel.PublisherId, returnValue.PublisherId);
+
+        _mockService.Verify(service => service.CreateAsync(
+            newModel,
+            CancellationToken.None),
+            Times.Once);
     }
 
     [Fact]
@@ -76,7 +83,7 @@ public class ArticleControllerTests
             SourceUrl = "https://www.google.com",
             ImageUrl = "https://picsum.photos/id/870/200/300?grayscale&blur=2",
             Description = "TestDescription",
-            PublishedAt = DateTime.Now,
+            PublishedAt = DateTime.UtcNow,
             TrustScore = 75,
             PublisherId = Guid.NewGuid(),
             Tags = new List<TagModel>()
@@ -101,6 +108,11 @@ public class ArticleControllerTests
         Assert.Equal(newModel.TrustScore, returnValue.TrustScore);
         Assert.Equal(newModel.PublisherId, returnValue.PublisherId);
         Assert.NotNull(returnValue.Tags);
+
+        _mockService.Verify(service => service.GetByIdAsync(
+            articleId,
+            CancellationToken.None),
+            Times.Once);
     }
 
     [Fact]
@@ -115,7 +127,7 @@ public class ArticleControllerTests
             SourceUrl = "https://www.example.com",
             ImageUrl = "https://picsum.photos/id/870/200/300?grayscale&blur=2",
             Description = "Test description",
-            PublishedAt = DateTime.Now,
+            PublishedAt = DateTime.UtcNow,
             TrustScore = 80,
             PublisherId = Guid.NewGuid(),
             Tags = new List<TagModel>()
@@ -128,7 +140,7 @@ public class ArticleControllerTests
             SourceUrl = "https://www.updatedurl.com",
             ImageUrl = "https://picsum.photos/id/871/200/300?grayscale&blur=2",
             Description = "Updated description",
-            PublishedAt = DateTime.Now.AddDays(1),
+            PublishedAt = DateTime.UtcNow.AddDays(1),
             TrustScore = 90,
             PublisherId = Guid.NewGuid(),
             Tags = new List<TagModel>()
@@ -185,7 +197,8 @@ public class ArticleControllerTests
         var controllerType = typeof(ArticleController);
 
         // Act
-        var apiControllerAttribute = controllerType.GetCustomAttributes(typeof(ApiControllerAttribute), false).FirstOrDefault();
+        var apiControllerAttribute = controllerType.GetCustomAttributes(
+            typeof(ApiControllerAttribute), false).FirstOrDefault();
         var routeAttribute = controllerType.GetCustomAttributes(
             typeof(RouteAttribute), false)
             .FirstOrDefault()

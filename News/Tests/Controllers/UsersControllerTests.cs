@@ -117,4 +117,23 @@ public class UsersControllerTests
 
         _serviceMock.Verify(service => service.DeleteAsync(id, It.IsAny<CancellationToken>()), Times.Once);
     }
+
+    [Fact]
+    public void AttributeChecking()
+    {
+        // Arrange
+        var controllerType = typeof(UsersController);
+
+        // Act
+        var apiControllerAttribute = controllerType.GetCustomAttributes(typeof(ApiControllerAttribute), false).FirstOrDefault();
+        var routeAttribute = controllerType.GetCustomAttributes(
+            typeof(RouteAttribute), false)
+            .FirstOrDefault()
+            as RouteAttribute;
+
+        // Assert
+        Assert.NotNull(apiControllerAttribute);
+        Assert.NotNull(routeAttribute);
+        Assert.Equal("users", routeAttribute?.Template);
+    }
 }

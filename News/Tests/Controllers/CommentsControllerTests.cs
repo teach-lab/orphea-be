@@ -28,13 +28,13 @@ public class CommentsControllerTests
         var userId = Guid.NewGuid();
         var articleId = Guid.NewGuid();
 
-        //userId.ToString();
         var newModel = new CommentCreateModel
         {
             Content = "TestContent",
             UserId = userId.ToString(),
             ArticleId = articleId.ToString()
         };
+
         var expectedModel = new CommentResponseModel
         {
             Content = "TestContent",
@@ -55,6 +55,11 @@ public class CommentsControllerTests
         var returnValue = Assert.IsType<CommentResponseModel>(okResult.Value);
         Assert.Equal(expectedModel.Content, returnValue.Content);
         Assert.Equal(expectedModel.ArticleId, returnValue.ArticleId);
+
+        _mockService.Verify(service => service.CreateAsync(
+            newModel,
+            CancellationToken.None),
+            Times.Once);
     }
 
     [Fact]
@@ -87,6 +92,11 @@ public class CommentsControllerTests
         Assert.Equal(expectedModel.LikeCount, returnValue.LikeCount);
         Assert.Equal(expectedModel.UserId, returnValue.UserId);
         Assert.Equal(expectedModel.ArticleId, returnValue.ArticleId);
+
+        _mockService.Verify(service => service.GetByIdAsync(
+            commentid,
+            CancellationToken.None),
+            Times.Once);
     }
 
     [Fact]
@@ -119,6 +129,12 @@ public class CommentsControllerTests
         var returnValue = Assert.IsType<CommentResponseModel>(okResult.Value);
         Assert.Equal(expectedModel.Content, returnValue.Content);
         Assert.Equal(expectedModel.ArticleId, returnValue.ArticleId);
+
+        _mockService.Verify(service => service.UpdateAsync(
+            newModel,
+            commentid.ToString(),
+            CancellationToken.None),
+            Times.Once);
     }
 
     [Fact]

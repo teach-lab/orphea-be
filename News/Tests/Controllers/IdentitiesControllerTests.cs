@@ -50,6 +50,10 @@ public class IdentitiesControllerTests
         var returnValue = Assert.IsType<TokensPair>(okResult.Value);
         Assert.Equal(tokensPair.Access, returnValue.Access);
         Assert.Equal(tokensPair.Refresh, returnValue.Refresh);
+
+        _mockService.Verify(service => service.LoginAsync(
+            login,
+            It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -83,6 +87,10 @@ public class IdentitiesControllerTests
         var returnValue = Assert.IsType<TokensPair>(okResult.Value);
         Assert.Equal(tokensPair.Access, returnValue.Access);
         Assert.Equal(tokensPair.Refresh, returnValue.Refresh);
+
+        _mockService.Verify(service => service.RegisterAsync(
+            newUser,
+            It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -103,6 +111,10 @@ public class IdentitiesControllerTests
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         Assert.Equal(expectedResult, okResult.Value);
+
+        _mockService.Verify(service => service.LogOutAsync(
+        refreshToken,
+        It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -129,5 +141,25 @@ public class IdentitiesControllerTests
         var returnValue = Assert.IsType<TokensPair>(okResult.Value);
         Assert.Equal(newTokensPair.Access, returnValue.Access);
         Assert.Equal(newTokensPair.Refresh, returnValue.Refresh);
+    }
+
+    [Fact]
+    public void AttributeChecking()
+    {
+        // Arrange
+        var controllerType = typeof(IdentitiesController);
+
+        // Act
+        var apiControllerAttribute = controllerType.GetCustomAttributes(
+            typeof(ApiControllerAttribute), false).FirstOrDefault();
+        var routeAttribute = controllerType.GetCustomAttributes(
+            typeof(RouteAttribute), false)
+            .FirstOrDefault()
+            as RouteAttribute;
+
+        // Assert
+        Assert.NotNull(apiControllerAttribute);
+        Assert.NotNull(routeAttribute);
+        Assert.Equal("identities", routeAttribute?.Template);
     }
 }

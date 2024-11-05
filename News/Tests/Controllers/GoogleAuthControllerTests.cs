@@ -40,5 +40,30 @@ public class GoogleAuthControllerTests
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         Assert.Equal(expectedToken, okResult.Value);
+
+        _mockGoogleAuthService.Verify(service => service.LoginGoogleAsync(
+            googleAccess,
+            It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public void AttributeChecking()
+    {
+        // Arrange
+        var controllerType = typeof(GoogleAuthController);
+
+        // Act
+        var apiControllerAttribute = controllerType.GetCustomAttributes(
+            typeof(ApiControllerAttribute), false).FirstOrDefault();
+        var routeAttribute = controllerType.GetCustomAttributes(
+            typeof(RouteAttribute), false)
+            .FirstOrDefault()
+            as RouteAttribute;
+
+        // Assert
+        Assert.NotNull(apiControllerAttribute);
+        Assert.NotNull(routeAttribute);
+        Assert.Equal("google-auth", routeAttribute?.Template);
     }
 }
