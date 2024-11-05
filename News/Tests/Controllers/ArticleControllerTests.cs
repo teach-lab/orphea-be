@@ -166,6 +166,11 @@ public class ArticleControllerTests
         Assert.Equal(updatedArticle.TrustScore, returnValue.TrustScore);
         Assert.Equal(updatedArticle.PublisherId, returnValue.PublisherId);
         Assert.Equal(updatedArticle.Tags, returnValue.Tags);
+
+        _mockService.Verify(service => service.UpdateAsync(
+            newModel,
+            CancellationToken.None),
+            Times.Once);
     }
 
     [Fact]

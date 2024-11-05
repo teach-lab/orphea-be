@@ -39,7 +39,10 @@ public class GoogleAuthControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
+        var returnValue = Assert.IsType<TokensPair>(okResult.Value);
         Assert.Equal(expectedToken, okResult.Value);
+        Assert.Equal(expectedToken.Access, returnValue.Access);
+        Assert.Equal(expectedToken.Refresh, returnValue.Refresh);
 
         _mockGoogleAuthService.Verify(service => service.LoginGoogleAsync(
             googleAccess,

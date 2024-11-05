@@ -113,8 +113,8 @@ public class IdentitiesControllerTests
         Assert.Equal(expectedResult, okResult.Value);
 
         _mockService.Verify(service => service.LogOutAsync(
-        refreshToken,
-        It.IsAny<CancellationToken>()), Times.Once);
+            refreshToken,
+            It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -141,6 +141,11 @@ public class IdentitiesControllerTests
         var returnValue = Assert.IsType<TokensPair>(okResult.Value);
         Assert.Equal(newTokensPair.Access, returnValue.Access);
         Assert.Equal(newTokensPair.Refresh, returnValue.Refresh);
+
+        _mockTokenService.Verify(service => service.RefreshTokensPairAsync(
+            refreshToken,
+            It.IsAny<CancellationToken>()),
+            Times.Once);
     }
 
     [Fact]
