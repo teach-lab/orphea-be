@@ -17,15 +17,9 @@ public class OpenAiTestController : ControllerBase
     [HttpPost("generate")]
     public async Task<IActionResult> GenerateText([FromBody] string userContent)
     {
-        try
-        {
-            var requestModel = _aiIntegrationService.CreateRequestModel(userContent);
-            var result = await _aiIntegrationService.GenerateText(requestModel);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Error generating text: {ex.Message}");
-        }
+        var requestModel = _aiIntegrationService.CreateRequestModel(userContent);
+        var result = await _aiIntegrationService.GenerateText(requestModel);
+
+        return Ok(result);
     }
 }
