@@ -12,10 +12,10 @@ public class AiIntegrationService : IAiIntegrationService
     private readonly OpenAiOptions _options;
     private readonly HttpClient _client;
 
-    public AiIntegrationService(IOptions<OpenAiOptions> options)
+    public AiIntegrationService(IHttpClientFactory httpClientFactory, IOptions<OpenAiOptions> options)
     {
         _options = options.Value;
-        _client = new HttpClient();
+        _client = httpClientFactory.CreateClient();
         _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_options.ApiKey}");
     }
 
