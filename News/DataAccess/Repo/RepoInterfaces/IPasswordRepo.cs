@@ -1,10 +1,8 @@
-﻿using News.Entities;
+﻿using News.DataAccess.Repo.GenericRepositories;
+using News.Entities;
 
 namespace News.DataAccess.Repo.RepoInterfaces;
 
-public interface IPasswordRepo
+public interface IPasswordRepo : IGenericRepo<PasswordEntity>
 {
-    Task CreateAsync(PasswordEntity password, CancellationToken cancellationToken);
-
-    Task<PasswordEntity> GetByIdAsync(Guid? id, CancellationToken cancellationToken);
 }
