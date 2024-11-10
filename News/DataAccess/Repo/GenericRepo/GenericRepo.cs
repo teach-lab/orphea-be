@@ -24,14 +24,7 @@ public class GenericRepo<T> : IGenericRepo<T> where T : BaseEntity
 
     public async Task<T> GetByIdAsync(Guid? id, CancellationToken cancellationToken)
     {
-        var result = await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-
-        if (result is null)
-        {
-            // TODO: Add not found exception
-            throw new Exception("Entity not found");
-        }
-        return result;
+        return await _dbSet.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
     public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken)
