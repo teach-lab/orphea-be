@@ -107,3 +107,5 @@ ipch/
 
 # Migrations 
 [Mm]igrations/
+
+.gitignore

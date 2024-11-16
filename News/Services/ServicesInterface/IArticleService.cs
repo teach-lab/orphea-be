@@ -5,7 +5,7 @@ namespace News.Services.ServicesInterface
 {
     public interface IArticleService
     {
-        Task<ArticleCreateModel> CreateAsync(ArticleCreateModel model, CancellationToken cancellationToken);
+        Task<ArticleModel> CreateAsync(ArticleCreateModel model, CancellationToken cancellationToken);
 
         Task<ArticleModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 

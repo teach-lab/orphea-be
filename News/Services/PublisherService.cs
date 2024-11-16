@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Entities;
 using News.Entities.Models;
@@ -20,13 +18,13 @@ public class PublisherService : IPublisherService
         _mapper = mapper;
     }
 
-    public async Task<PublisherCreateModel> CreateAsync(
+    public async Task<PublisherModel> CreateAsync(
         PublisherCreateModel model, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<PublisherCreateModel, PublisherEntity>(model);
         var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
         await _repo.SaveChangesAsync(cancellationToken);
-        var result = _mapper.Map<PublisherEntity, PublisherCreateModel>(addedEntity);
+        var result = _mapper.Map<PublisherEntity, PublisherModel>(addedEntity);
 
         return result;
     }

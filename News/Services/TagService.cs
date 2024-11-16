@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using News.DataAccess.Repo.RepoInterfaces;
 using News.Entities;
 using News.Entities.Models;
@@ -19,7 +18,7 @@ public class TagService : ITagService
         _mapper = mapper;
     }
 
-    public async Task<TagCreateModel> CreateAsync(
+    public async Task<TagModel> CreateAsync(
         TagCreateModel model,
         CancellationToken cancellationToken
         )
@@ -27,7 +26,7 @@ public class TagService : ITagService
         var entity = _mapper.Map<TagCreateModel, TagEntity>(model);
         var addedEntity = await _repo.CreateAsync(entity, cancellationToken);
         await _repo.SaveChangesAsync(cancellationToken);
-        var result = _mapper.Map<TagEntity, TagCreateModel>(addedEntity);
+        var result = _mapper.Map<TagEntity, TagModel>(addedEntity);
 
         return result;
     }
