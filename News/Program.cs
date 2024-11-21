@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using News.DataAccess;
 using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
+using News.Entities.Models;
 using News.Infrastructure;
 using News.Infrastructure.IInfrastructure;
 using News.Mapping;
@@ -56,6 +57,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Configure the app for SourceNewsApiConfigModel
+builder.Services.Configure<SourceNewsApiConfigModel>(builder.Configuration.GetSection("SourceNewsApi"));
+
 builder.Services.AddAuthorization();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -86,6 +90,7 @@ builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddTransient<IAiIntegrationService, AiIntegrationService>();
+builder.Services.AddTransient<ITheGuardianService, TheGuardianTestService>();
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
