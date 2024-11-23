@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
-using News.Entities.Models;
+using News.Entities.ModelsSourceNewsApi;
 using News.Services.ServicesInterface;
 
 namespace News.Services.ServicesSourceNews;
@@ -20,8 +20,8 @@ public class TheGuardianService : ITheGuardianService
 
     public async Task<string> GetAllArticlesAsync()
     {
-        string allArticles = $"search?{_apiKey}";
-        var response = await _client.GetAsync(allArticles);
+        string url = $"search?{_apiKey}";
+        var response = await _client.GetAsync(url);
         response.EnsureSuccessStatusCode();
 
         return await response.Content.ReadAsStringAsync();
@@ -29,9 +29,9 @@ public class TheGuardianService : ITheGuardianService
 
     public async Task<string> GetSignleAsync(string id)
     {
-        string singleArticleUrl = $"{id}?{_apiKey}&show-fields=all";
+        string url = $"{id}?{_apiKey}&show-fields=all";
 
-        var response = await _client.GetAsync(singleArticleUrl);
+        var response = await _client.GetAsync(url);
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadAsStringAsync();
     }

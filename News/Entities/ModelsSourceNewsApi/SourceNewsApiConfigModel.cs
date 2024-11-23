@@ -1,4 +1,4 @@
-﻿namespace News.Entities.Models;
+﻿namespace News.Entities.ModelsSourceNewsApi;
 
 public class SourceNewsApiConfigModel
 {

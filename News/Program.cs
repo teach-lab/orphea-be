@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using News.DataAccess;
 using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
-using News.Entities.Models;
+using News.Entities.ModelsSourceNewsApi;
 using News.Infrastructure;
 using News.Infrastructure.IInfrastructure;
 using News.Mapping;

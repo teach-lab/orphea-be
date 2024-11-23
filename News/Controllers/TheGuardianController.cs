@@ -21,7 +21,7 @@ public class TheGuardianController : ControllerBase
         return Ok(data);
     }
 
-    [HttpGet("article")]
+    [HttpGet("single-article")]
     public async Task<IActionResult> GetSignleAsync([FromQuery] string id)
     {
         var data = await _apiService.GetSignleAsync(id);
