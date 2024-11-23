@@ -2,5 +2,7 @@
 
 public interface ITheGuardianService
 {
-    Task<string> GetDataAsync(string url);
+    Task<string> GetAllArticlesAsync();
+
+    Task<string> GetSignleAsync(string id);
 }

@@ -11,6 +11,7 @@ using News.Mapping;
 using News.Middlewares;
 using News.Services;
 using News.Services.ServicesInterface;
+using News.Services.ServicesSourceNews;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
 
@@ -90,7 +91,7 @@ builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddTransient<IAiIntegrationService, AiIntegrationService>();
-builder.Services.AddTransient<ITheGuardianService, TheGuardianTestService>();
+builder.Services.AddTransient<ITheGuardianService, TheGuardianService>();
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
