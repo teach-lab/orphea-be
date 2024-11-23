@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using News.Entities.ModelsSourceNewsApi;
 using News.Services.ServicesInterface;
+using System.Text.Json;
 
 namespace News.Services.ServicesSourceNews;
 
@@ -18,21 +19,33 @@ public class TheGuardianService : ITheGuardianService
         _client.BaseAddress = new Uri("https://content.guardianapis.com/");
     }
 
-    public async Task<string> GetAllArticlesAsync()
+    public async Task<TheGuardianModel> GetAllArticlesAsync()
     {
         string url = $"search?{_apiKey}";
         var response = await _client.GetAsync(url);
         response.EnsureSuccessStatusCode();
+        var jsonString = await response.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-        return await response.Content.ReadAsStringAsync();
+        var result = JsonSerializer.Deserialize<TheGuardianModel>(jsonString, options);
+
+        return result;
     }
 
-    public async Task<string> GetSignleAsync(string id)
+    public async Task<TheGuardianArticleModel> GetSignleAsync(string id)
     {
         string url = $"{id}?{_apiKey}&show-fields=all";
-
         var response = await _client.GetAsync(url);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadAsStringAsync();
+        var jsonString = await response.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            WriteIndented = true
+        };
+
+        var result = JsonSerializer.Deserialize<TheGuardianArticleModel>(jsonString, options);
+
+        return result;
     }
 }

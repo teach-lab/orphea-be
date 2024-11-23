@@ -1,8 +1,10 @@
-﻿namespace News.Services.ServicesInterface;
+﻿using News.Entities.ModelsSourceNewsApi;
+
+namespace News.Services.ServicesInterface;
 
 public interface ITheGuardianService
 {
-    Task<string> GetAllArticlesAsync();
+    Task<TheGuardianModel> GetAllArticlesAsync();
 
-    Task<string> GetSignleAsync(string id);
+    Task<TheGuardianArticleModel> GetSignleAsync(string id);
 }
