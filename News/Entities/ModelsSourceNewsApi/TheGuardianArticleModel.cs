@@ -5,19 +5,19 @@ namespace News.Entities.ModelsSourceNewsApi;
 public class TheGuardianArticleModel
 {
     [JsonPropertyName("response")]
-    public ArticleTheG Response { get; set; }
+    public ResponseTheGuardian Response { get; set; }
 }
 
-public class ArticleTheG
+public class ResponseTheGuardian
 {
     [JsonPropertyName("total")]
     public int Total { get; set; }
 
     [JsonPropertyName("content")]
-    public ContentModel Content { get; set; }
+    public ContentTheGuardian Content { get; set; }
 }
 
-public class ContentModel
+public class ContentTheGuardian
 {
     [JsonPropertyName("id")]
     public string? Id { get; set; }
@@ -29,10 +29,10 @@ public class ContentModel
     public string? WebUrl { get; set; }
 
     [JsonPropertyName("fields")]
-    public FieldsArticle Fields { get; set; }
+    public FieldsArticleTheGuardian Fields { get; set; }
 }
 
-public class FieldsArticle
+public class FieldsArticleTheGuardian
 {
     [JsonPropertyName("headline")]
     public string? Headline { get; set; }
