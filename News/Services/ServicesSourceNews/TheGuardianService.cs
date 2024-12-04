@@ -11,20 +11,23 @@ public class TheGuardianService : ITheGuardianService
     private readonly SourceNewsApiConfigModel _config;
     private readonly string _apiKey;
 
-    public TheGuardianService(IHttpClientFactory client, IOptions<SourceNewsApiConfigModel> config)
+    public TheGuardianService(
+        IHttpClientFactory clientFactory,
+        IOptions<SourceNewsApiConfigModel> config)
     {
         _config = config.Value;
-        _apiKey = "api-key=" + _config.TheGuardian;
-        _client = client.CreateClient();
-        _client.BaseAddress = new Uri("https://content.guardianapis.com/");
+        _apiKey = "api-key=" + _config.TheGuardian.APIKey;
+        _client = clientFactory.CreateClient(nameof(TheGuardianService));
     }
 
-    public async Task<TheGuardianModel> GetAllArticlesAsync()
+    public async Task<TheGuardianModel> GetAllAsync(CancellationToken cancellationToken)
     {
-        string url = $"search?{_apiKey}";
-        var response = await _client.GetAsync(url);
+        string url = $"{_config.TheGuardian.BaseUrl}search?{_apiKey}";
+
+        var response = await _client.GetAsync(url, cancellationToken);
         response.EnsureSuccessStatusCode();
-        var jsonString = await response.Content.ReadAsStringAsync();
+
+        var jsonString = await response.Content.ReadAsStringAsync(cancellationToken);
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         var result = JsonSerializer.Deserialize<TheGuardianModel>(jsonString, options);
@@ -32,12 +35,15 @@ public class TheGuardianService : ITheGuardianService
         return result;
     }
 
-    public async Task<TheGuardianArticleModel> GetSignleAsync(string id)
+    public async Task<TheGuardianArticleModel> GetAsync(string id, CancellationToken cancellationToken)
     {
-        string url = $"{id}?{_apiKey}&show-fields=all";
-        var response = await _client.GetAsync(url);
+        string decodedId = Uri.UnescapeDataString(id);
+        string url = $"{_config.TheGuardian.BaseUrl}{decodedId}?{_apiKey}&show-fields=all";
+        var response = await _client.GetAsync(url, cancellationToken);
+
         response.EnsureSuccessStatusCode();
-        var jsonString = await response.Content.ReadAsStringAsync();
+
+        var jsonString = await response.Content.ReadAsStringAsync(cancellationToken);
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,

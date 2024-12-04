@@ -2,5 +2,11 @@
 
 public class SourceNewsApiConfigModel
 {
-    public string TheGuardian { get; set; }
+    public TheGuardianConfig TheGuardian { get; set; }
+}
+
+public class TheGuardianConfig
+{
+    public string APIKey { get; set; }
+    public string BaseUrl { get; set; }
 }

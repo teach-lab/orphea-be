@@ -4,7 +4,7 @@ namespace News.Services.ServicesInterface;
 
 public interface ITheGuardianService
 {
-    Task<TheGuardianModel> GetAllArticlesAsync();
+    Task<TheGuardianModel> GetAllAsync(CancellationToken cancellationToken);
 
-    Task<TheGuardianArticleModel> GetSignleAsync(string id);
+    Task<TheGuardianArticleModel> GetAsync(string id, CancellationToken cancellationToken);
 }
