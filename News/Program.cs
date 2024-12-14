@@ -60,12 +60,13 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Configure the app for SourceNewsApiConfigModel
-builder.Services.Configure<SourceNewsApiConfigModel>(builder.Configuration.GetSection("SourceNewsApi"));
+builder.Services.Configure<SourceNewsApiConfigModel>(
+    builder.Configuration.GetSection("SourceNewsApi")
+);
 
 builder.Services.AddHttpClient<ITheGuardianService, TheGuardianService>((serviceProvider, client) =>
 {
     var config = serviceProvider.GetRequiredService<IOptions<SourceNewsApiConfigModel>>().Value;
-
     client.BaseAddress = new Uri(config.TheGuardian.BaseUrl);
 });
 
@@ -99,7 +100,6 @@ builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<ITagRepo, TagRepo>();
 builder.Services.AddTransient<IGoogleAuthService, GoogleAuthService>();
 builder.Services.AddTransient<IAiIntegrationService, AiIntegrationService>();
-builder.Services.AddTransient<ITheGuardianService, TheGuardianService>();
 
 builder.Services.AddAutoMapper(typeof(NewsMappingProfile));
 
