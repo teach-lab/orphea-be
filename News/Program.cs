@@ -70,6 +70,9 @@ builder.Services.AddHttpClient<ITheGuardianService, TheGuardianService>((service
     client.BaseAddress = new Uri(config.TheGuardian.BaseUrl);
 });
 
+builder.Services.AddScoped<XPublisherFactoryService>();
+
+//
 builder.Services.AddAuthorization();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

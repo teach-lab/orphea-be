@@ -2,7 +2,7 @@
 
 namespace News.Services.ServicesInterface;
 
-public interface ITheGuardianService
+public interface IXPublisherService
 {
     Task<TheGuardianModel> GetAllAsync(CancellationToken cancellationToken);
 
