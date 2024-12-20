@@ -19,8 +19,10 @@ public class PublishersApiController : ControllerBase
         [FromRoute] string xPublisherTypeService,
         CancellationToken cancellationToken)
     {
-        var serviceType = Enum.GetValues<XPublisherTypeService>()
-            .FirstOrDefault(type => type.GetDisplayName().Equals(xPublisherTypeService, StringComparison.OrdinalIgnoreCase));
+        if (!Enum.TryParse<XPublisherTypeService>(xPublisherTypeService, true, out var serviceType))
+        {
+            return BadRequest($"Invalid xPublisherTypeService: {xPublisherTypeService}");
+        }
 
         var service = _factoryService.GetService(serviceType);
         var data = await service.GetAllAsync(cancellationToken);
@@ -33,8 +35,10 @@ public class PublishersApiController : ControllerBase
         [FromRoute] string id,
         CancellationToken cancellationToken)
     {
-        var serviceType = Enum.GetValues<XPublisherTypeService>()
-            .FirstOrDefault(type => type.GetDisplayName().Equals(xPublisherTypeService, StringComparison.OrdinalIgnoreCase));
+        if (!Enum.TryParse<XPublisherTypeService>(xPublisherTypeService, true, out var serviceType))
+        {
+            return BadRequest($"Invalid xPublisherTypeService: {xPublisherTypeService}");
+        }
 
         var service = _factoryService.GetService(serviceType);
         var data = await service.GetAsync(id, cancellationToken);
