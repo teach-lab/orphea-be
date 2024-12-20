@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/News/appsettings.Development.json
+/News/appsettings.Development.json
+/News/appsettings.Development.json
+/News/Services/ServicesSourceNews/TheGuardianService.cs
+/News/appsettings.Development.json

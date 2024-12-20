@@ -1,15 +1,18 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using News.DataAccess;
 using News.DataAccess.Repo;
 using News.DataAccess.Repo.RepoInterfaces;
+using News.Entities.ModelsSourceNewsApi;
 using News.Infrastructure;
 using News.Infrastructure.IInfrastructure;
 using News.Mapping;
 using News.Middlewares;
 using News.Services;
 using News.Services.ServicesInterface;
+using News.Services.ServicesSourceNews;
 using Newtonsoft.Json.Serialization;
 using System.Security.Cryptography;
 
@@ -56,6 +59,20 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Configure the app for SourceNewsApiConfigModel
+builder.Services.Configure<SourceNewsApiConfigModel>(
+    builder.Configuration.GetSection("SourceNewsApi")
+);
+
+builder.Services.AddHttpClient<ITheGuardianService, TheGuardianService>((serviceProvider, client) =>
+{
+    var config = serviceProvider.GetRequiredService<IOptions<SourceNewsApiConfigModel>>().Value;
+    client.BaseAddress = new Uri(config.TheGuardian.BaseUrl);
+});
+
+builder.Services.AddScoped<XPublisherFactoryService>();
+
+//
 builder.Services.AddAuthorization();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
